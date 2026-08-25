@@ -1,0 +1,59 @@
+{
+  "name": "zipli-backend",
+  "version": "1.0.0",
+  "description": "Zipli grocery delivery - Express/PostgreSQL backend",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "db:setup": "node src/db/setup.js",
+    "db:migrate": "node src/db/migrate.js",
+    "db:seed": "node src/db/seed.js",
+    "lint": "eslint src",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest --runInBand --forceExit",
+    "test:unit": "NODE_OPTIONS=\"--experimental-vm-modules\" jest tests/unit --runInBand --forceExit",
+    "test:integration": "NODE_OPTIONS=\"--experimental-vm-modules\" jest tests/integration --runInBand --forceExit",
+    "test:algo": "NODE_OPTIONS=\"--experimental-vm-modules\" jest tests/unit/algo.test.js",
+    "test:coverage": "NODE_OPTIONS=\"--experimental-vm-modules\" jest --coverage --runInBand --forceExit",
+    "test:ci": "bash ../scripts/test-ci.sh",
+    "sbom": "npm list --json --long > ../docs/evidence/sbom-inventory.json",
+    "eval:ai": "NODE_ENV=test node eval/evalHarness.js",
+    "test:e2e": "playwright test --config=../playwright.config.js",
+    "bench:load": "NODE_ENV=test node bench/httpLoadBenchmark.js",
+    "bench:all": "node bench/searchBenchmark.js && node bench/cacheBenchmark.js && node bench/geoBenchmark.js && node bench/graphBenchmark.js && node bench/inventoryBenchmark.js && node bench/securityBenchmark.js && NODE_ENV=test node bench/httpLoadBenchmark.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bullmq": "^6.3.16",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "express-validator": "^7.2.0",
+    "helmet": "^7.1.0",
+    "ioredis": "^6.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "pg": "^8.12.0",
+    "ws": "^8.22.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
+    "eslint": "^10.13.0",
+    "eslint-plugin-no-unsanitized": "^4.1.5",
+    "fast-check": "^4.10.2",
+    "jest": "^30.5.2",
+    "nodemon": "^3.1.4",
+    "prettier": "^3.9.10",
+    "supertest": "^7.3.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
