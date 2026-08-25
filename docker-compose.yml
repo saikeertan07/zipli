@@ -1,0 +1,110 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: zipli_postgres
+    restart: unless-stopped
+    command: postgres -c shared_buffers=256MB -c work_mem=16MB -c max_connections=150
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-zipli}
+      POSTGRES_USER: ${POSTGRES_USER:-zipli_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-zipli_pass}
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-zipli_user} -d ${POSTGRES_DB:-zipli}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - zipli_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: zipli_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru --requirepass ${REDIS_PASSWORD:-zipli_redis_secure_pass_123}
+    ports:
+      - '127.0.0.1:6379:6379'
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', '-a', '${REDIS_PASSWORD:-zipli_redis_secure_pass_123}', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - zipli_net
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: zipli_api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: 5001
+      DATABASE_URL: postgresql://${POSTGRES_USER:-zipli_user}:${POSTGRES_PASSWORD:-zipli_pass}@postgres:5432/${POSTGRES_DB:-zipli}
+      REDIS_URL: redis://:${REDIS_PASSWORD:-zipli_redis_secure_pass_123}@redis:6379
+      JWT_SECRET: ${JWT_SECRET}
+      BCRYPT_ROUNDS: ${BCRYPT_ROUNDS:-12}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost,http://localhost:80,http://localhost:3000,http://127.0.0.1:80}
+      DELIVERY_FEE: ${DELIVERY_FEE:-2}
+      AI_ENABLED: ${AI_ENABLED:-true}
+      AI_MODEL: ${AI_MODEL:-claude-3-5-sonnet-latest}
+      AI_MAX_TOKENS: ${AI_MAX_TOKENS:-1024}
+      AI_DAILY_TOKEN_BUDGET: ${AI_DAILY_TOKEN_BUDGET:-50000}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      EMBEDDING_PROVIDER: ${EMBEDDING_PROVIDER:-local}
+      EMBEDDING_API_KEY: ${EMBEDDING_API_KEY:-}
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID:-}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET:-}
+      RAZORPAY_WEBHOOK_SECRET: ${RAZORPAY_WEBHOOK_SECRET:-}
+    ports:
+      - '127.0.0.1:5001:5001'
+    healthcheck:
+      test: ['CMD', 'curl', '-fsS', 'http://localhost:5001/health/readiness']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - zipli_net
+
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: zipli_frontend
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - '127.0.0.1:80:80'
+      - '127.0.0.1:3000:80'
+    healthcheck:
+      test: ['CMD', 'wget', '--quiet', '--tries=1', '--spider', 'http://localhost/']
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    networks:
+      - zipli_net
+
+volumes:
+  pgdata:
+  redisdata:
+
+networks:
+  zipli_net:
+    driver: bridge
