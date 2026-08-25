@@ -1,0 +1,9 @@
+node_modules/
+package-lock.json
+dist/
+build/
+coverage/
+*.sql
+*.seed.json
+frontend/assets/
+backend/public/images/
