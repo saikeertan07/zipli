@@ -1,0 +1,97 @@
+[
+  {
+    "id": "all",
+    "name": "All",
+    "emoji": "🏠"
+  },
+  {
+    "id": "dairy",
+    "name": "Dairy, Bread & Eggs",
+    "emoji": "🥛"
+  },
+  {
+    "id": "fruits",
+    "name": "Fruits & Vegetables",
+    "emoji": "🍎"
+  },
+  {
+    "id": "drinks",
+    "name": "Cold Drinks & Juices",
+    "emoji": "🥤"
+  },
+  {
+    "id": "snacks",
+    "name": "Snacks & Munchies",
+    "emoji": "🍿"
+  },
+  {
+    "id": "breakfast",
+    "name": "Breakfast & Instant Food",
+    "emoji": "🥣"
+  },
+  {
+    "id": "sweet",
+    "name": "Sweet Tooth",
+    "emoji": "🍫"
+  },
+  {
+    "id": "bakery",
+    "name": "Bakery & Biscuits",
+    "emoji": "🍪"
+  },
+  {
+    "id": "tea",
+    "name": "Tea, Coffee & Milk Drinks",
+    "emoji": "☕"
+  },
+  {
+    "id": "staples",
+    "name": "Atta, Rice & Dal",
+    "emoji": "🌾"
+  },
+  {
+    "id": "masala",
+    "name": "Masala, Oil & More",
+    "emoji": "🌶️"
+  },
+  {
+    "id": "sauces",
+    "name": "Sauces & Spreads",
+    "emoji": "🫙"
+  },
+  {
+    "id": "meat",
+    "name": "Chicken, Meat & Fish",
+    "emoji": "🍗"
+  },
+  {
+    "id": "organic",
+    "name": "Organic & Healthy Living",
+    "emoji": "🥦"
+  },
+  {
+    "id": "baby",
+    "name": "Baby Care",
+    "emoji": "👶"
+  },
+  {
+    "id": "pharma",
+    "name": "Pharma & Wellness",
+    "emoji": "💊"
+  },
+  {
+    "id": "cleaning",
+    "name": "Cleaning Essentials",
+    "emoji": "🧹"
+  },
+  {
+    "id": "personal",
+    "name": "Personal Care",
+    "emoji": "🧴"
+  },
+  {
+    "id": "pet",
+    "name": "Pet Care",
+    "emoji": "🐾"
+  }
+]
