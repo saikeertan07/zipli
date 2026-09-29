@@ -1,0 +1,151 @@
+/**
+ * ZIPLI PRO — Design System Tokens
+ * Phase 11 Premium Frontend
+ *
+ * Light & Dark theme variables, 4/8px spacing scale, fluid typography,
+ * motion timings, elevation, and tabular numbers.
+ */
+
+:root {
+  /* Brand Accent Tokens (Preserving Zipli Brand) */
+  --color-brand: #0c831f;
+  --color-brand-hover: #096818;
+  --color-brand-active: #064e12;
+  --color-brand-light: #e8f5e9;
+  --color-brand-subtle: #f0fdf4;
+  --color-accent: #f8c000;
+  --color-accent-hover: #e0ab00;
+  --color-accent-light: #fff8d6;
+
+  /* Semantic Palette */
+  --color-success: #16a34a;
+  --color-success-bg: #dcfce7;
+  --color-success-text: #14532d;
+  --color-warning: #f59e0b;
+  --color-warning-bg: #fef3c7;
+  --color-warning-text: #78350f;
+  --color-danger: #dc2626;
+  --color-danger-bg: #fee2e2;
+  --color-danger-text: #7f1d1d;
+  --color-info: #2563eb;
+  --color-info-bg: #dbeafe;
+  --color-info-text: #1e3a8a;
+
+  /* Neutral Scale (Light Theme) */
+  --neutral-50: #f9fafb;
+  --neutral-100: #f3f4f6;
+  --neutral-200: #e5e7eb;
+  --neutral-300: #d1d5db;
+  --neutral-400: #9ca3af;
+  --neutral-500: #6b7280;
+  --neutral-600: #4b5563;
+  --neutral-700: #374151;
+  --neutral-800: #1f2937;
+  --neutral-900: #111827;
+
+  /* Semantic Surfaces & Text (Light Theme) */
+  --surface-bg: #f8fafc;
+  --surface-card: #ffffff;
+  --surface-elevated: #ffffff;
+  --surface-sidebar: #ffffff;
+  --surface-input: #f3f4f6;
+  --surface-input-focus: #ffffff;
+  --border-subtle: #e5e7eb;
+  --border-strong: #d1d5db;
+
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --text-inverse: #ffffff;
+
+  /* Spacing Scale (4/8px base) */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Border Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Elevation (3 Levels) */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.15);
+
+  /* Motion & Easing */
+  --duration-fast: 120ms;
+  --duration-normal: 200ms;
+  --duration-slow: 320ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in: cubic-bezier(0.3, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Fluid Typography with clamp() */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --text-xs: clamp(0.6875rem, 0.65rem + 0.15vw, 0.75rem); /* 11px - 12px */
+  --text-sm: clamp(0.8125rem, 0.78rem + 0.18vw, 0.875rem); /* 13px - 14px */
+  --text-base: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem); /* 15px - 16px */
+  --text-lg: clamp(1.0625rem, 1rem + 0.35vw, 1.1875rem); /* 17px - 19px */
+  --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem); /* 20px - 24px */
+  --text-2xl: clamp(1.5rem, 1.35rem + 0.75vw, 1.875rem); /* 24px - 30px */
+  --text-3xl: clamp(1.875rem, 1.6rem + 1.25vw, 2.25rem); /* 30px - 36px */
+
+  /* Tabular Numbers */
+  --font-tabular: tabular-nums;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Dark Theme Overrides */
+[data-theme='dark'] {
+  --surface-bg: #0b0f19;
+  --surface-card: #131b2e;
+  --surface-elevated: #1a243d;
+  --surface-sidebar: #0f1626;
+  --surface-input: #1a243d;
+  --surface-input-focus: #243050;
+  --border-subtle: #243050;
+  --border-strong: #334155;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #0b0f19;
+
+  --color-brand-light: rgba(12, 131, 31, 0.18);
+  --color-brand-subtle: rgba(12, 131, 31, 0.1);
+  --color-accent-light: rgba(248, 192, 0, 0.15);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* High Contrast Mode / Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
