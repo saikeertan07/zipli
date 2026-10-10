@@ -1,0 +1,82 @@
+name: Profile Streak Maintenance
+
+on:
+  schedule:
+    # Runs daily at 04:45 UTC (~10:15 AM IST)
+    - cron: '45 4 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force update even on scheduled weekly day off'
+        required: false
+        type: boolean
+        default: false
+      custom_message:
+        description: 'Optional custom maintenance message'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-streak-maintenance
+  cancel-in-progress: false
+
+jobs:
+  maintain-streak:
+    name: Maintain System & Profile Activity Streak
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository (main branch)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python Runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: false
+
+      - name: Execute Maintenance Script
+        id: run_script
+        run: |
+          ARGS=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ "${{ inputs.force }}" = "true" ]; then
+              ARGS="$ARGS --force"
+            fi
+            if [ -n "${{ inputs.custom_message }}" ]; then
+              ARGS="$ARGS --message '${{ inputs.custom_message }}'"
+            fi
+          fi
+          python3 scripts/automation/maintain_streak.py $ARGS
+
+      - name: Check for Maintenance Updates
+        id: check_diff
+        run: |
+          if git status --porcelain docs/logs/system_maintenance.log | grep -q "docs/logs/system_maintenance.log"; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+            echo "Changes detected in docs/logs/system_maintenance.log"
+          else
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            echo "No changes in docs/logs/system_maintenance.log (scheduled day off)"
+          fi
+
+      - name: Commit and Push Heartbeat Entry
+        if: steps.check_diff.outputs.has_changes == 'true'
+        run: |
+          git config user.name "Sai Keertan"
+          git config user.email "tedlasaikeertan@gmail.com"
+          
+          git add docs/logs/system_maintenance.log
+          git commit -m "chore(maintenance): routine system heartbeat and maintenance log update [skip ci]"
+          
+          for i in 1 2 3; do
+            git pull --rebase origin main || true
+            git push origin main && break || sleep 5
+          done
