@@ -1,0 +1,29 @@
+======================================================================
+  ZIPLI PRO — CACHE LAYER BENCHMARK (LRU vs LFU)
+======================================================================
+Parameters:
+  - Key Universe Size : 5,000 distinct items
+  - Total Requests    : 100,000 operations
+  - Cache Capacity    : 500 slots (10% cache ratio)
+
+--- 1. Zipfian Distribution (Skewed 80/20 Power-Law) ---
+  LRU Cache:
+    - Hit Ratio  : 75.25%
+    - Throughput : 12,670,658 ops/sec
+    - Evictions  : 24,248
+  LFU Cache:
+    - Hit Ratio  : 79.98%
+    - Throughput : 7,119,485 ops/sec
+    - Evictions  : 19,521
+
+--- 2. Uniform Random Distribution ---
+  LRU Hit Ratio: 9.89%
+  LFU Hit Ratio: 10.00%
+
+--- 3. Single-Flight Stampede Protection Under Concurrency ---
+{"timestamp":"2026-10-20T08:34:27.497Z","level":"info","message":"Connected to Redis server"}
+  Concurrent Requests    : 100
+  Database Hits (Loaders): 1 (Single-Flight Lock Active!)
+  Coalesced Callers      : 100 identical results delivered
+  Total Batch Duration   : 31.87 ms
+======================================================================

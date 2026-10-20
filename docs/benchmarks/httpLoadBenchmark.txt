@@ -1,0 +1,27 @@
+==============================================================================
+ ZIPLI PRO — HIGH-CONCURRENCY END-TO-END SYSTEM LOAD BENCHMARK (PHASE 12)
+==============================================================================
+Test Target Active: http://127.0.0.1:62731
+
+[1/4] Benchmarking Prefix Trie Autocomplete (`GET /api/search/suggest?q=mi`)...
+  -> Throughput: 316 req/sec | p50: 3.15ms | p95: 4.75ms | p99: 47.13ms
+
+[2/4] Benchmarking In-Memory BM25 Search (`GET /api/products?search=milk`)...
+  -> Throughput: 13,543 req/sec | p50: 3.50ms | p95: 5.06ms | p99: 5.74ms
+
+[3/4] Benchmarking Basket Threshold Knapsack Optimizer (`GET /api/pricing/basket-optimizer?targetGap=45`)...
+  -> Throughput: 9,253 req/sec | p50: 4.83ms | p95: 7.03ms | p99: 26.30ms
+
+[4/4] Benchmarking Hybrid Multi-Armed Bandit Recommendations (`GET /api/recommendations/home`)...
+  -> Throughput: 8,141 req/sec | p50: 5.41ms | p95: 7.26ms | p99: 19.98ms
+
+==============================================================================
+ SYSTEM BENCHMARK SUMMARY TABLE
+==============================================================================
+| Endpoint / Workload           | Concurrency | Throughput    | p50 Latency | p95 Latency | p99 Latency |
+|:------------------------------|:-----------:|:-------------:|:-----------:|:-----------:|:-----------:|
+| Trie Autocomplete (/suggest)  | 50          |    316 req/s |   3.15 ms |   4.75 ms |  47.13 ms |
+| In-Memory BM25 Search         | 50          | 13,543 req/s |   3.50 ms |   5.06 ms |   5.74 ms |
+| Basket Threshold Knapsack     | 50          |  9,253 req/s |   4.83 ms |   7.03 ms |  26.30 ms |
+| Hybrid Recommendations (/home)| 50          |  8,141 req/s |   5.41 ms |   7.26 ms |  19.98 ms |
+==============================================================================

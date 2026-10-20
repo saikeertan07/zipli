@@ -1,0 +1,29 @@
+===============================================================
+ZIPLI PRO SEARCH ENGINE BENCHMARK (100,000 Products)
+===============================================================
+Generating 100,000 synthetic products...
+Building in-memory Inverted Index, BK-Tree, and Trie...
+✓ Build Complete in 16.87s (16871.0 ms)
+✓ Heap Memory Delta: ~425.6 MB
+✓ Total Terms Indexed: 100,112 unique terms
+✓ BK-Tree Size: 200,112 unique terms
+
+Warming up JIT compiler...
+
+Benchmarking Autocomplete (Trie: GET /search/suggest?q=al)...
+  p50: 0.000 ms | p95: 0.001 ms | p99: 0.004 ms
+
+Benchmarking Exact BM25 Search (GET /search?q=alphonso mango)...
+  p50: 1.204 ms | p95: 1.325 ms | p99: 1.399 ms
+
+Benchmarking Fuzzy Typo Recovery (GET /search?q=alpnso mngo)...
+  p50: 6.605 ms | p95: 7.145 ms | p99: 8.511 ms
+
+Benchmarking Sequential Scan Baseline (Full 100k table iteration)...
+  Naive Scan Baseline p50: 2.883 ms | p95: 4.515 ms
+
+🚀 Speedup vs Naive Sequential Scan: 2.4x faster at p50 (3.4x at p95)!
+
+Written benchmark report to /Users/tedlasaikeertan/.gemini/antigravity/scratch/zipli/backend/BENCHMARKS.md
+===============================================================
+
