@@ -1,0 +1,17 @@
+
+> zipli-backend@1.0.0 test
+> jest --runInBand --forceExit tests/integration/route-security-audit.test.js
+
+PASS tests/integration/route-security-audit.test.js
+  Automated Route Table Security Audit (F-011, SEC-AZ-01, SEC-AZ-04)
+    ✓ successfully discovers and indexes all mounted routes (1 ms)
+    ✓ asserts EVERY private route mounts authentication and authorization checks (F-011)
+    ✓ asserts sensitive user mutations mount Zod schemas or strict authorization (1 ms)
+    ✓ fails if any unexpected private route exists outside the allowlist without authorization
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.158 s, estimated 1 s
+Ran all test suites matching tests/integration/route-security-audit.test.js.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?

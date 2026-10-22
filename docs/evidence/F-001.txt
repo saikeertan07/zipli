@@ -1,0 +1,63 @@
+================================================================================
+EVIDENCE FOR F-001: Untracked Credentials & Environment Variable Hygiene
+Date: 2026-10-20T08:04:03Z
+================================================================================
+
+1. Checking tracked .env files in git index:
+.env.example
+backend/.env.example
+
+2. Checking working directory for untracked .env files:
+
+3. Verifying .gitignore rules for environment files:
+67-
+68-# dotenv environment variable files
+69:.env
+70:.env.*
+71:!.env.example
+72-
+73-# parcel-bundler cache (https://parceljs.org/)
+
+4. Verifying .env.example contains no real production secrets:
+# ==============================================================================
+# Zipli Pro Quick-Commerce Environment Configuration Template (Docker & Root)
+# ==============================================================================
+
+# Server Network Configuration (Port 5001 avoids macOS AirPlay collision on 5000)
+PORT=5001
+NODE_ENV=development
+
+# Database Configuration (PostgreSQL 16 + pgvector)
+DATABASE_URL=postgresql://zipli_user:zipli_pass@localhost:5432/zipli
+PGHOST=localhost
+PGPORT=5432
+PGDATABASE=zipli
+PGUSER=zipli_user
+PGPASSWORD=zipli_pass
+PGPOOL_MAX=20
+PG_IDLE_TIMEOUT_MS=30000
+
+# Redis Cache & Message Broker
+REDIS_URL=redis://localhost:6379
+
+# Authentication & Cryptographic Security
+JWT_SECRET=zipli_dev_jwt_secret_must_be_long_and_secure_min32chars
+JWT_EXPIRES_IN=7d
+REFRESH_TOKEN_EXPIRES_IN=30d
+BCRYPT_ROUNDS=10
+
+# Cross-Origin Resource Sharing (Comma-separated list of origins)
+CORS_ORIGIN=http://localhost:3000,http://localhost:80,http://127.0.0.1:5500,http://127.0.0.1:80
+
+# Quick-Commerce Logistics & Business Rules
+DELIVERY_FEE=2
+FREE_DELIVERY_THRESHOLD=199
+STOCK_RESERVATION_TTL_MINUTES=10
+
+# Rate Limiting & GCRA Throttling
+RATE_LIMIT_WINDOW_MS=60000
+RATE_LIMIT_MAX_REQUESTS=100
+
+# Observability & Metrics
+METRICS_PORT=9090
+LOG_LEVEL=info

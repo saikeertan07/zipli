@@ -1,0 +1,83 @@
+================================================================================
+EVIDENCE FOR F-004: Canonical Single Migrations Directory
+Date: 2026-10-20T08:22:19Z
+================================================================================
+
+1. Checking all migration directories across repository:
+./backend/migrations
+
+2. Listing canonical migration files in backend/migrations:
+-rw-r--r--@ 1 tedlasaikeertan  staff  2344 Oct 18 16:26 backend/migrations/0001_init.sql
+-rw-r--r--@ 1 tedlasaikeertan  staff  4075 Oct 18 17:27 backend/migrations/0002_core_commerce.sql
+-rw-r--r--@ 1 tedlasaikeertan  staff  1670 Oct 18 18:24 backend/migrations/0003_recommendations.sql
+-rw-r--r--@ 1 tedlasaikeertan  staff  3202 Oct 18 18:59 backend/migrations/0004_delivery_dispatch.sql
+-rw-r--r--@ 1 tedlasaikeertan  staff  1958 Oct 18 19:57 backend/migrations/0005_inventory_pricing.sql
+-rw-r--r--@ 1 tedlasaikeertan  staff  1798 Oct 18 20:18 backend/migrations/0006_trust_security.sql
+-rw-r--r--@ 1 tedlasaikeertan  staff  2437 Oct 18 21:22 backend/migrations/0007_realtime_queues_caching.sql
+-rw-r--r--@ 1 tedlasaikeertan  staff   290 Oct 19 11:47 backend/migrations/0008_auth_session_device.sql
+-rw-r--r--@ 1 tedlasaikeertan  staff   255 Oct 19 14:16 backend/migrations/0009_staff_mfa.sql
+-rw-r--r--@ 1 tedlasaikeertan  staff  7289 Oct 19 14:30 backend/migrations/0010_row_level_security.sql
+-rw-r--r--@ 1 tedlasaikeertan  staff  5940 Oct 19 19:35 backend/migrations/0011_double_entry_ledger.sql
+
+3. Verifying migrate.js points to backend/migrations:
+6:const MIGRATIONS_DIR = path.resolve(__dirname, '../../migrations');
+29:  const dir = options.migrationsDir || MIGRATIONS_DIR;
+
+4. Checking schema_migrations table in PostgreSQL database:
+[
+  {
+    "id": 1,
+    "name": "0001_init.sql",
+    "applied_at": "2026-10-18T11:03:53.777Z"
+  },
+  {
+    "id": 2,
+    "name": "0002_core_commerce.sql",
+    "applied_at": "2026-10-18T11:57:32.909Z"
+  },
+  {
+    "id": 3,
+    "name": "0003_recommendations.sql",
+    "applied_at": "2026-10-18T12:54:38.534Z"
+  },
+  {
+    "id": 4,
+    "name": "0004_delivery_dispatch.sql",
+    "applied_at": "2026-10-18T13:29:12.221Z"
+  },
+  {
+    "id": 5,
+    "name": "0005_inventory_pricing.sql",
+    "applied_at": "2026-10-18T14:27:57.321Z"
+  },
+  {
+    "id": 6,
+    "name": "0006_trust_security.sql",
+    "applied_at": "2026-10-18T14:48:57.812Z"
+  },
+  {
+    "id": 7,
+    "name": "0007_realtime_queues_caching.sql",
+    "applied_at": "2026-10-18T15:52:33.306Z"
+  },
+  {
+    "id": 8,
+    "name": "0008_auth_session_device.sql",
+    "applied_at": "2026-10-19T06:17:19.173Z"
+  },
+  {
+    "id": 9,
+    "name": "0009_staff_mfa.sql",
+    "applied_at": "2026-10-19T08:46:59.220Z"
+  },
+  {
+    "id": 10,
+    "name": "0010_row_level_security.sql",
+    "applied_at": "2026-10-19T09:00:10.564Z"
+  },
+  {
+    "id": 11,
+    "name": "0011_double_entry_ledger.sql",
+    "applied_at": "2026-10-19T14:05:30.025Z"
+  }
+]

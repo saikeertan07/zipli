@@ -1,0 +1,47 @@
+
+> zipli-backend@1.0.0 test
+> jest --runInBand --forceExit tests/unit/policy.test.js
+
+PASS tests/unit/policy.test.js
+  Central Authorization Policy Engine (SEC-AZ-01, SEC-AZ-02, SEC-AZ-03)
+    Deny by Default
+      ✓ denies access when actor is null or undefined (1 ms)
+      ✓ denies access when actor role is missing or invalid
+      ✓ denies access when action is missing or unrecognized
+    Admin Role Matrix
+      ✓ grants explicit access to defined system actions
+      ✓ denies arbitrary or undefined permissions (no wildcard true)
+      ✓ enforces four-eyes approval on sensitive actions and blocks self-approval
+    Store Manager Role Matrix
+      ✓ allows inventory, catalog, dispatch and order management (1 ms)
+      ✓ denies administrative security audit and pricing writes
+    Support Role Matrix
+      ✓ allows reading orders and users
+      ✓ allows approving refunds within standard threshold (<= INR 1000)
+      ✓ denies approving refunds above threshold (> INR 1000) requiring four-eyes escalation
+      ✓ allows approving refunds above threshold (> INR 1000) when four-eyes second approver is provided
+      ✓ denies inventory changes, pricing changes, or security audit
+    Finance Role Matrix
+      ✓ allows reading orders, pricing, admin metrics, and admin access
+      ✓ allows refunds within threshold and requires four-eyes above threshold (1 ms)
+      ✓ requires four-eyes for payouts:write and blocks self-approval
+      ✓ denies inventory changes and catalog write
+    Delivery Rider Role Matrix (SEC-AZ-02 Object Level)
+      ✓ allows dispatch location ping
+      ✓ allows reading and updating order status only for assigned orders
+      ✓ denies reading or updating orders assigned to other riders
+      ✓ denies access to admin, inventory, or cart actions
+    Customer Role Matrix & IDOR Prevention (SEC-AZ-02)
+      ✓ allows browsing catalog and creating orders
+      ✓ allows reading and cancelling own orders
+      ✓ strictly denies reading or cancelling other customers orders (IDOR prevention)
+      ✓ allows managing own cart and denies other carts
+      ✓ allows managing own user profile and denies modifying other profiles
+      ✓ strictly denies any admin or staff actions
+
+Test Suites: 1 passed, 1 total
+Tests:       27 passed, 27 total
+Snapshots:   0 total
+Time:        0.045 s, estimated 1 s
+Ran all test suites matching tests/unit/policy.test.js.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?

@@ -1,0 +1,33 @@
+================================================================================
+EVIDENCE FOR F-002: Zero Nested Duplicate Repositories (zipli/zipli)
+Date: 2026-10-20T08:04:18Z
+================================================================================
+
+1. Checking directory structure for nested duplicate zipli folders:
+
+2. Top-level repository layout:
+total 152
+drwxr-xr-x@ 24 tedlasaikeertan  staff    768 Oct 20 13:33 .
+drwxr-xr-x@ 59 tedlasaikeertan  staff   1888 Oct 19 10:45 ..
+-rw-r--r--@  1 tedlasaikeertan  staff    188 Oct 18 16:18 .editorconfig
+-rw-r--r--@  1 tedlasaikeertan  staff   1274 Oct 19 10:13 .env.example
+-rw-r--r--@  1 tedlasaikeertan  staff    405 Oct 19 14:49 .eslintrc.json
+drwxr-xr-x@ 14 tedlasaikeertan  staff    448 Oct 20 13:33 .git
+drwxr-xr-x@  3 tedlasaikeertan  staff     96 Oct 18 17:08 .github
+-rw-r--r--@  1 tedlasaikeertan  staff   2298 Oct 19 09:40 .gitignore
+drwxr-xr-x@  3 tedlasaikeertan  staff     96 Oct 18 17:08 .husky
+-rw-r--r--@  1 tedlasaikeertan  staff    113 Oct 18 16:26 .prettierignore
+-rw-r--r--@  1 tedlasaikeertan  staff    106 Oct 18 16:18 .prettierrc
+-rw-r--r--@  1 tedlasaikeertan  staff   3652 Oct 19 13:49 AGENTS.md
+-rw-r--r--@  1 tedlasaikeertan  staff   7966 Oct 19 10:16 BENCHMARKS.md
+-rw-r--r--@  1 tedlasaikeertan  staff   3652 Oct 19 13:49 CLAUDE.md
+-rw-r--r--@  1 tedlasaikeertan  staff   1597 Oct 19 10:12 Dockerfile
+-rw-r--r--@  1 tedlasaikeertan  staff   3652 Oct 19 13:49 GEMINI.md
+-rw-r--r--@  1 tedlasaikeertan  staff  16490 Oct 19 10:17 README.md
+drwxr-xr-x@ 20 tedlasaikeertan  staff    640 Oct 20 13:30 backend
+-rw-r--r--@  1 tedlasaikeertan  staff   2360 Oct 19 10:13 docker-compose.yml
+drwxr-xr-x@ 13 tedlasaikeertan  staff    416 Oct 19 13:53 docs
+drwxr-xr-x@  4 tedlasaikeertan  staff    128 Oct 19 15:00 e2e
+drwxr-xr-x@ 11 tedlasaikeertan  staff    352 Oct 19 10:12 frontend
+-rw-r--r--@  1 tedlasaikeertan  staff   1110 Oct 19 14:53 playwright.config.js
+drwxr-xr-x@  3 tedlasaikeertan  staff     96 Oct 19 17:18 test-results

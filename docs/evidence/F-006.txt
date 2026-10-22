@@ -1,0 +1,25 @@
+================================================================================
+EVIDENCE FOR F-006: Reviewable Git History on autopilot/upgrade
+Date: 2026-10-20T08:23:20Z
+================================================================================
+
+1. Current branch verification:
+* autopilot/upgrade b3afab5 feat(finance): double-entry balanced ledger, delivery fee engine, and property-based invariant tests (F-043, F-051, F-052)
+  main              e5f9bbc [ahead 18] feat(wp-6): hybrid recommendation diversity guardrail, explainability reasons, and logistics geofence SLA checks
+
+2. Git commit history log (Conventional Commits):
+b3afab5 2026-10-19 | feat(finance): double-entry balanced ledger, delivery fee engine, and property-based invariant tests (F-043, F-051, F-052) (HEAD -> autopilot/upgrade)
+bda09e1 2026-10-19 | fix(frontend): database RLS, CSP, XSS safe render, SW cache hygiene, modular store, and WCAG AA a11y (F-013, F-020, F-021, F-023, F-024, F-025)
+c373c40 2026-10-19 | docs: update progress tracker with commit hashes for F-011, F-012, F-014, F-015
+3382826 2026-10-19 | fix(sec): route table audit, IDOR matrix, anti-enumeration, and staff TOTP MFA (F-011, F-012, F-014, F-015)
+ee1d955 2026-10-19 | fix(sec): boot guard credentials validation and central policy 4-eyes enforcement (F-005, F-010)
+e5f9bbc 2026-10-19 | feat(wp-6): hybrid recommendation diversity guardrail, explainability reasons, and logistics geofence SLA checks (main)
+15e8efc 2026-10-19 | feat(wp-5): in-flight idempotency concurrency lock and resilient order deduplication
+5267fe1 2026-10-19 | feat(wp-4): security headers, csp, hsts, permissions policy, cors and rate limiter cookie partitioning
+76973b6 2026-10-19 | feat(wp-3): central authorization policy engine and idor/bola protections
+ed184bb 2026-10-19 | feat(wp-2): httponly cookie auth, session security, alg:none rejection and device binding
+ffa8f2c 2026-10-19 | feat(wp-1): edge schema validation with zod strict and standardized api v1 envelope
+2508c3c 2026-10-19 | feat(phase-12): devops, docker compose, ci/cd pipeline, load benchmarks, master architecture, runbook, and resume kit
+4609d69 2026-10-19 | feat(phase-11): premium vanilla frontend, design system, styleguide, and e2e tests
+cc4bed4 2026-10-18 | feat(phase-10): real-time queues, LRU/LFU caching, stock reservations, and observability
+00576ec 2026-10-18 | feat(phase-9): trust, security, fraud prevention, and hash-chained audit logging
