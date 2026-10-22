@@ -1,0 +1,30 @@
+FEATURE ID: F-054
+DESCRIPTION: Database Schema Integrity Constraints & Foreign Key Indexes
+TIMESTAMP: 2026-10-24T20:01:00+05:30
+BRANCH: prod/ai-upgrade
+
+EVIDENCE:
+Migration Applied: backend/migrations/0012_integer_paise_and_constraints.sql
+
+1. Physical Domain CHECK Constraints:
+   - products: chk_products_stock_non_negative (stock >= 0)
+   - order_items: chk_order_items_qty_positive (quantity > 0)
+   - cart_items: chk_cart_items_qty_positive (quantity > 0)
+   - orders: item_total_paise >= 0, delivery_fee_paise >= 0, discount_paise >= 0, taxes_paise >= 0, grand_total_paise >= 0
+
+2. Foreign Key Performance Indexes:
+   - idx_order_items_order_id ON order_items (order_id)
+   - idx_order_items_product_id ON order_items (product_id)
+   - idx_orders_user_id ON orders (user_id)
+   - idx_orders_store_id ON orders (store_id)
+   - idx_cart_items_user_id ON cart_items (user_id)
+   - idx_cart_items_product_id ON cart_items (product_id)
+   - idx_product_batches_product_id ON product_batches (product_id)
+   - idx_price_changes_product_id ON price_changes (product_id)
+
+VERIFICATION OUTPUT:
+Command: npm run db:migrate
+Output:
+Applying migration: 0012_integer_paise_and_constraints.sql
+Successfully applied migration: 0012_integer_paise_and_constraints.sql
+Migration complete. 1 migration(s) applied.

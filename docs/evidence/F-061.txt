@@ -1,0 +1,8 @@
+================================================================================
+EVIDENCE FOR F-061: GCRA Rate Limiting Partitioned by User & Cookie
+Date: 2026-10-20T08:27:50Z
+Target Rule: F-061
+================================================================================
+
+Running GCRA and rate limiter unit tests:
+

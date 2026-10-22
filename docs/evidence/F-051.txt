@@ -1,0 +1,50 @@
+================================================================================
+EVIDENCE FOR FIX F-051: Double-Entry Balanced General Ledger
+================================================================================
+Date: 2026-10-19
+Target Rule: FIN-LE-01 / F-051
+Architecture: PostgreSQL 16 + Migration 0011 + Deferred Constraint Trigger + LedgerService
+
+Chart of Accounts:
+  - gateway_clearing (ASSET, normal: DEBIT)
+  - cash_in_transit (ASSET, normal: DEBIT)
+  - customer_wallet (LIABILITY, normal: CREDIT)
+  - store_payable (LIABILITY, normal: CREDIT)
+  - rider_payable (LIABILITY, normal: CREDIT)
+  - rider_tip_payable (LIABILITY, normal: CREDIT)
+  - tax_payable (LIABILITY, normal: CREDIT)
+  - platform_revenue (REVENUE, normal: CREDIT)
+  - delivery_fee_revenue (REVENUE, normal: CREDIT)
+  - promotional_expense (EXPENSE, normal: DEBIT)
+  - refund_expense (EXPENSE, normal: DEBIT)
+
+Constraints & Triggers Enforced:
+  1. `chk_debit_xor_credit`: Each line has (debit > 0 AND credit = 0) OR (credit > 0 AND debit = 0).
+  2. `trg_verify_journal_balance`: Deferred constraint trigger executed at commit time.
+     Validates that line count >= 2 AND SUM(debit_paise) == SUM(credit_paise).
+  3. `trg_immutable_journal_entries` & `trg_immutable_ledger_lines`:
+     Rejects direct UPDATE and DELETE operations. All adjustments must be reversing entries.
+
+================================================================================
+Test Execution Log:
+================================================================================
+PASS tests/integration/ledger.test.js
+  Double-Entry Balanced General Ledger (F-051, FIN-LE-01)
+    Order Payment Balanced Journal Entries
+      ✓ successfully posts balanced journal entry for standard order with delivery, tip, and taxes (15 ms)
+      ✓ rejects order payment if input parameters are mathematically unbalanced (2 ms)
+    Order Refund Balanced Journal Entries
+      ✓ successfully posts reversing journal entry for partial refund (1 ms)
+    Database Trigger & Constraint Enforcement
+      ✓ blocks committing an unbalanced entry directly at the PostgreSQL trigger level (2 ms)
+      ✓ blocks committing an entry with fewer than 2 lines at the trigger level (1 ms)
+      ✓ enforces immutability: blocks direct UPDATE or DELETE on ledger records (12 ms)
+    Trial Balance Verification
+      ✓ verifies that the entire ledger maintains a strictly balanced zero-sum state (5 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        0.163 s
+Ran all test suites matching tests/integration/ledger.test.js.
+All assertions verified against real PostgreSQL database.

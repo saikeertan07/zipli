@@ -1,0 +1,24 @@
+=== P0-reorders-auth.txt ===
+Timestamp: 2026-10-24T22:26:26+05:30
+Test: tests/integration/assistiveAI.test.js
+Command: npx jest tests/integration/assistiveAI.test.js
+
+PASS tests/integration/assistiveAI.test.js
+  Assistive AI Integration Tests (F-030, F-031)
+    POST /api/assistant/recipe-to-cart
+      ✓ converts a recipe query into matched inventory items and a proposed cart action (62 ms)
+      ✓ rejects invalid inputs with Zod validation error (8 ms)
+    GET /api/assistant/substitutes/:productId
+      ✓ returns ranked substitutes within the same category for an item (8 ms)
+      ✓ returns empty list for non-existent product (6 ms)
+    GET /api/assistant/reorders
+      ✓ predicts replenishment reorders based on previous order history (15 ms)
+      ✓ strictly returns 401 Unauthorized when unauthenticated guest calls /reorders (P0) (15 ms)
+      ✓ returns staple recommendations when authenticated user has no order history (10 ms)
+    GET /api/search?mode=hybrid
+      ✓ successfully queries hybrid search and returns fused results with metadata (9 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+Time:        0.501 s

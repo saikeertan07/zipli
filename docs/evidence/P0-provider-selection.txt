@@ -1,0 +1,17 @@
+=== P0-provider-selection.txt ===
+Timestamp: 2026-10-24T22:20:54+05:30
+Test: tests/unit/providerSelection.test.js
+Command: npx jest tests/unit/providerSelection.test.js
+
+PASS tests/unit/providerSelection.test.js
+  Production AI Provider Safety Rules (P0)
+    ✓ uses FakeLLMProvider in test environment or when AI_PROVIDER=fake (1 ms)
+    ✓ strictly refuses FakeLLMProvider in production when key is unset and falls back to OFFLINE
+    ✓ reports ai: degraded in readiness probe when Anthropic key is missing in production (8 ms)
+    ✓ reports ai: disabled when AI_ENABLED=false
+    ✓ extracts target product ID dynamically in FakeLLMProvider without hardcoding
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        0.198 s

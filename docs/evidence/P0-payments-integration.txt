@@ -1,0 +1,83 @@
+=== ZIPLI PRO P0 PAYMENTS & ADDRESS SECURITY TEST RUN ===
+Command: npx jest tests/unit/paymentSecurityP0.test.js tests/integration/payments.test.js tests/integration/addressAndOtp.test.js --runInBand
+Git SHA: 2555fbd
+Timestamp: 2026-10-25T06:17:07Z
+
+{"timestamp":"2026-10-25T06:17:10.644Z","level":"error","message":"CRITICAL: Payment amount tamper detected!","requestId":"32e22487-9252-4f78-981f-de3eac64cbc4","orderId":1,"expectedPaise":5200,"receivedAmount":100}
+PASS tests/integration/payments.test.js
+  Payment & Gateway Integration Tests (/api/payments)
+    POST /api/payments/create-order
+      ✓ returns 400 when orderId is missing (58 ms)
+      ✓ returns 401 when request is unauthenticated (26 ms)
+      ✓ returns 404 when orderId does not exist (27 ms)
+      ✓ returns 403 when customer attempts to create payment for another user order (27 ms)
+      ✓ successfully creates provider payment order and persists mapping (22 ms)
+      ✓ returns 400 when order is already confirmed or cancelled (19 ms)
+    POST /api/payments/webhook
+      ✓ rejects webhooks with missing signature header (16 ms)
+      ✓ rejects webhooks with forged/invalid signature (14 ms)
+      ✓ rejects webhooks with expired timestamp (> 300s drift) (15 ms)
+      ✓ returns 400 when event ID is missing from validly signed webhook (15 ms)
+      ✓ returns ignored when webhook has no matching internal order (15 ms)
+      ✓ processes valid payment.captured webhook, confirms order, posts balanced ledger entry, and emits outbox event (25 ms)
+      ✓ simulates payment success and triggers webhook transition via /api/payments/simulate-success (25 ms)
+      ✓ returns 403 when User A attempts to simulate payment for User B order (IDOR defense) (24 ms)
+      ✓ idempotently ignores duplicated webhook replay without side effects (23 ms)
+      ✓ detects server-side amount tamper, cancels order, records TAMPER_DETECTED, and initiates auto-refund (F-053) (22 ms)
+      ✓ cancels order and restores stock on payment.failed webhook (21 ms)
+      ✓ safely handles captured-before-created webhook using notes.internalOrderId (21 ms)
+      ✓ safely ignores late payment.failed webhook arriving after order was already confirmed (21 ms)
+      POST /api/payments/dismiss
+        ✓ allows customer to dismiss own payment order, restores stock, and cancels order (24 ms)
+        ✓ returns 403 when User A attempts to dismiss User B order (21 ms)
+        ✓ returns 400 when attempting to dismiss an already confirmed order (18 ms)
+      Payment Reconciliation Job (paymentReconcile.service.js)
+        ✓ auto-cancels and restocks orders stuck in placed beyond timeout threshold (22 ms)
+    POST /api/payments/refund (Four-Eyes Approval)
+      ✓ returns 400 when orderId or amountPaise is missing (18 ms)
+      ✓ returns 404 when refunding non-existent order (19 ms)
+      ✓ returns 403 when customer attempts refund (18 ms)
+      ✓ rejects high-value refund (> ₹1,000) when second approver is missing (18 ms)
+      ✓ rejects high-value refund when admin tries self-approval (second approver == actor) (26 ms)
+      ✓ successfully processes high-value refund with valid distinct four-eyes second approver (24 ms)
+
+PASS tests/integration/addressAndOtp.test.js
+  Address Book & OTP Phone Verification Tests (P0)
+    Dark Store Geofence Serviceability (POST /api/users/addresses/serviceability)
+      ✓ returns serviceable=true for coordinates near Hyderabad dark store hub (43 ms)
+      ✓ returns serviceable=true via Hyderabad pincode fallback (500xxx) (29 ms)
+      ✓ returns serviceable=false for coordinates far outside service area (24 ms)
+    User Address Book CRUD (/api/users/addresses)
+      ✓ requires authentication for address management (21 ms)
+      ✓ allows a user to create, list, update, and delete their saved addresses (35 ms)
+      ✓ enforces IDOR ownership protection: User B cannot modify or delete User A address (27 ms)
+    OTP Phone Verification (/api/auth/otp)
+      ✓ dispatches an OTP via SMS provider and validates Indian phone numbers (21 ms)
+      ✓ rate limits OTP requests within 30 seconds for the same number (22 ms)
+      ✓ rejects incorrect OTP codes and updates failed attempt counter (22 ms)
+      ✓ verifies correct OTP and marks user phone as verified (25 ms)
+    Order Checkout Linkage with Delivery Address (POST /api/orders)
+      ✓ creates an order with real deliveryAddressId, snapshots address text, and enforces geofence (28 ms)
+      ✓ rejects order placement if deliveryAddressId is outside dark store geofence (26 ms)
+
+PASS tests/unit/paymentSecurityP0.test.js
+  P0 Payment Security & Free-Orders Hole Defense
+    1. Production Boot Guard (config/env.js)
+      ✓ refuses to boot in production when RAZORPAY keys are missing and PAYMENT_PROVIDER != cod_only (6 ms)
+      ✓ refuses to boot in production when PAYMENT_PROVIDER is set to fake (1 ms)
+      ✓ allows boot in production when PAYMENT_PROVIDER=cod_only without online gateway keys
+      ✓ allows boot in production when real RAZORPAY keys are provided
+    2. Payment Provider Selection Invariants
+      ✓ returns fakeProvider ONLY in test or when PAYMENT_PROVIDER=fake in non-prod
+      ✓ throws AppError when online payments requested in cod_only mode (1 ms)
+      ✓ throws AppError in production if credentials missing when getting provider
+      ✓ never returns fakeProvider in production even if providerName=FAKE is requested (4 ms)
+    3. Route-Table Verification: /payments/simulate-success is absent in production
+      ✓ mounts /simulate-success when NODE_ENV is development or test (20 ms)
+      ✓ DOES NOT mount /simulate-success when NODE_ENV is production (19 ms)
+
+Test Suites: 3 passed, 3 total
+Tests:       51 passed, 51 total
+Snapshots:   0 total
+Time:        1.464 s, estimated 2 s
+Ran all test suites matching tests/unit/paymentSecurityP0.test.js|tests/integration/payments.test.js|tests/integration/addressAndOtp.test.js.

@@ -1,0 +1,40 @@
+================================================================================
+EVIDENCE FOR FIX F-052: Configurable Delivery Fee Engine with Transparent Breakdown
+================================================================================
+Date: 2026-10-19
+Target Rule: LOG-FE-01 / F-052
+Implementation: Pure delivery fee engine with distance tiers, dynamic surges, and threshold waivers
+
+Engine Features:
+  1. Base Delivery Tier: ₹25.00 base fee covering urban delivery up to 3.0 km.
+  2. Graduated Distance Surcharge: +₹10.00 / km beyond base distance (computed via Haversine distance from coordinates or explicit km).
+  3. Free Delivery Threshold: Automatic waiver of base and distance charges on cart totals >= ₹500.00.
+  4. Adverse Weather Surcharges: ₹15.00 (Rain), ₹30.00 (Storm), ₹10.00 (Heatwave).
+  5. Late-Night Operating Surge: ₹20.00 surcharge for orders placed between 23:00 and 06:00.
+  6. Heavy Order Handling: Surcharge on parcel weights exceeding 10.0 kg (+₹10.00 per additional 5 kg).
+  7. Full Transparency: Returns itemized code, human-readable labels, and signed integer paise amounts.
+
+================================================================================
+Test Execution Log:
+================================================================================
+PASS tests/unit/deliveryFeeEngine.test.js
+  Configurable Delivery Fee Engine (F-052, LOG-FE-01)
+    Standard Base & Distance Tiers
+      ✓ returns zero fee for empty cart (1 ms)
+      ✓ charges standard base fee (₹25) within 3.0 km for orders below ₹500
+      ✓ charges distance surcharge for deliveries beyond 3 km (+₹10 per km)
+      ✓ computes distance accurately from GPS coordinates using Haversine formula (1 ms)
+    Free Delivery Threshold Waiver
+      ✓ waives base fee and distance fee when cart exceeds ₹500 (50000 paise)
+    Surge Pricing Surcharges & Transparency
+      ✓ applies adverse weather surge transparently for rain and storm
+      ✓ applies late-night surcharge between 23:00 and 06:00 (1 ms)
+      ✓ applies heavy order surcharge for parcels weighing over 10 kg
+      ✓ retains transparent weather and heavy surges even when order qualifies for free delivery
+
+Test Suites: 1 passed, 1 total
+Tests:       9 passed, 9 total
+Snapshots:   0 total
+Time:        0.123 s
+Ran all test suites matching tests/unit/deliveryFeeEngine.test.js.
+All assertions verified against pure arithmetic and geo models.

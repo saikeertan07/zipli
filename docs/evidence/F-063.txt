@@ -1,0 +1,15 @@
+FEATURE ID: F-063
+DESCRIPTION: SCA Vulnerability Scanning & SBOM Artifact Generation Pipeline
+TIMESTAMP: 2026-10-24T20:01:00+05:30
+BRANCH: prod/ai-upgrade
+
+EVIDENCE:
+1. Automated Vulnerability Scanning (Zero High/Critical Vulnerabilities):
+   - Command: npm audit --audit-level=high
+   - Result: found 0 vulnerabilities (exit code 0)
+   - Enforced in .github/workflows/ci.yml without || true suppression.
+
+2. Software Bill of Materials (SBOM) Generation:
+   - Command: npm run sbom
+   - Target Artifact: docs/evidence/sbom-inventory.json
+   - Full dependency graph and package provenance persisted for audit readiness.

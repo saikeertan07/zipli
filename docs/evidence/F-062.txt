@@ -1,0 +1,8 @@
+================================================================================
+EVIDENCE FOR F-062: Strict Security Headers (CSP, HSTS, Frame, Permissions)
+Date: 2026-10-20T08:30:04Z
+Target Rule: F-062
+================================================================================
+
+Running HTTP security headers integration test:
+
