@@ -1,0 +1,8 @@
+================================================================================
+EVIDENCE FOR F-022: httpOnly Cookie Token Storage & CSRF Protection
+Date: 2026-10-20T08:23:35Z
+Target Rules: SEC-AUTH-04 & SEC-AUTH-12 / F-022
+================================================================================
+
+Running integration test suite: tests/integration/auth-cookies.test.js & tests/unit/csrf.test.js
+

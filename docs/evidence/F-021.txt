@@ -1,0 +1,36 @@
+PASS tests/unit/xss-fields.test.js
+  XSS Payload Neutralization Across All Text Fields (F-021, SEC-IO-02)
+    Core Escaping Engine
+      ✓ neutralizes executable tags for vector #1: <script>alert("XSS")</script> (1 ms)
+      ✓ neutralizes executable tags for vector #2: <img src="x" onerror="alert(1)
+      ✓ neutralizes executable tags for vector #3: "><svg onload=alert(document.c (1 ms)
+      ✓ neutralizes executable tags for vector #4: "><script src=//evil.com/xss.j
+      ✓ neutralizes executable tags for vector #5: <iframe src="javascript:alert(
+      ✓ neutralizes executable tags for vector #6: <body onload=alert(1)>
+      ✓ neutralizes executable tags for vector #7: <input autofocus onfocus=alert
+      ✓ neutralizes executable tags for vector #8: '"--><script>alert(1)</script> (1 ms)
+      ✓ neutralizes pseudo-protocol injection for vector #1: javascript:alert(document.doma
+      ✓ neutralizes pseudo-protocol injection for vector #2: JAVASCRIPT:alert(1)
+      ✓ neutralizes pseudo-protocol injection for vector #3: data:text/html,<script>alert(1
+      ✓ neutralizes pseudo-protocol injection for vector #4: vbscript:msgbox("XSS")
+      ✓ allows benign http and https URLs
+    Tagged Template Safe HTML Engine
+      ✓ automatically escapes interpolated variables in html tagged template
+      ✓ escapes arrays of malicious strings
+      ✓ honors rawHtml explicitly marked as safe (1 ms)
+    Text Field 1: User Name & Profile Fields
+      ✓ escapes malicious user name in account and header rendering
+    Text Field 2: Delivery Address & Order Notes
+      ✓ escapes malicious address and delivery instructions in checkout
+    Text Field 3: Product Catalog (Name, Badge, Description)
+      ✓ escapes malicious product catalog fields (1 ms)
+    Text Field 4: AI Assistant & Chat Stream
+      ✓ escapes malicious chat text, tool chips, and suggestion chips
+    Text Field 5: Notifications & Live Toasts
+      ✓ escapes malicious toast and notification message strings (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       21 passed, 21 total
+Snapshots:   0 total
+Time:        0.062 s, estimated 1 s
+Ran all test suites matching tests/unit/xss-fields.test.js.

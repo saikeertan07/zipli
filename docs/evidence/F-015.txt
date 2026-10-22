@@ -1,0 +1,40 @@
+
+> zipli-backend@1.0.0 test
+> jest --runInBand --forceExit tests/unit/totp.test.js tests/integration/staff-mfa.test.js
+
+PASS tests/integration/staff-mfa.test.js
+  Staff MFA & Session Lifetimes (F-015, SEC-AUTH-02, SEC-AUTH-06)
+    TOTP MFA Setup & Activation (/api/auth/mfa)
+      ✓ initiates TOTP MFA setup and generates secret + otpauth URI (21 ms)
+      ✓ rejects MFA verification with invalid 6-digit code (8 ms)
+      ✓ successfully activates MFA with valid TOTP code (5 ms)
+    Login Flow with MFA (SEC-AUTH-02)
+      ✓ returns mfaRequired when staff with MFA logs in without code (8 ms)
+      ✓ rejects login when staff submits invalid MFA code (6 ms)
+      ✓ successfully authenticates staff when valid MFA code is provided (8 ms)
+    Session Lifetime & Enforcement (SEC-AUTH-06)
+      ✓ rejects requests with session exceeding absolute lifetime (12 hours) (2 ms)
+      ✓ blocks staff access if staff account has MFA enabled but token lacks mfa_verified (3 ms)
+
+PASS tests/unit/totp.test.js
+  Pure RFC 6238 TOTP Engine (/algo/totp.js)
+    Base32 Encoding & Decoding (RFC 4648)
+      ✓ encodes and decodes ascii strings accurately
+      ✓ handles padding and whitespace gracefully during decode
+      ✓ throws on invalid base32 characters (3 ms)
+    Secret Generation & OTPAuth URI
+      ✓ generates random Base32 secret of specified length
+      ✓ formats compliant otpauth URI for authenticator apps
+    TOTP Generation & Verification (RFC 6238)
+      ✓ generates a 6-digit numeric OTP code
+      ✓ verifies exact code match within current time window
+      ✓ tolerates clock drift within window = 1 (+-30 seconds)
+      ✓ rejects codes outside the drift window
+      ✓ rejects invalid or tampered codes
+
+Test Suites: 2 passed, 2 total
+Tests:       18 passed, 18 total
+Snapshots:   0 total
+Time:        0.24 s, estimated 1 s
+Ran all test suites matching tests/unit/totp.test.js|tests/integration/staff-mfa.test.js.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?

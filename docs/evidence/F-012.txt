@@ -1,0 +1,34 @@
+
+> zipli-backend@1.0.0 test
+> jest --runInBand --forceExit tests/integration/idor-bola.test.js
+
+PASS tests/integration/idor-bola.test.js
+  IDOR / BOLA & Privilege Escalation Security Suite (SEC-AZ-02, SEC-AZ-10)
+    Object-Level IDOR / BOLA Prevention on Orders (SEC-AZ-02)
+      ✓ Alice can read her own order detail (GET /api/v1/orders/:id) (4 ms)
+      ✓ Bob is denied access (404 Not Found) when attempting to read Alice order (IDOR) (2 ms)
+      ✓ Bob cannot cancel Alice order (POST /api/v1/orders/:id/cancel) (3 ms)
+    Cart & Stock Reservation Isolation Between Users (SEC-AZ-02)
+      ✓ Bob cart is completely isolated and does not expose Alice cart items (1 ms)
+      ✓ Bob adding to his cart does not affect Alice cart or stock reservations (4 ms)
+      ✓ Bob cannot see or release Alice active stock reservation (4 ms)
+    User Profile & Privacy Data Isolation (GDPR / DPDP & SEC-AZ-02)
+      ✓ Bob only receives his own profile and cannot access Alice profile data
+      ✓ Bob data export contains only Bob personal data and zero Alice records (2 ms)
+    Privilege Escalation Prevention Across All Roles (SEC-AZ-03 & SEC-AZ-10)
+      ✓ denies customer from accessing admin orders endpoint (GET /api/v1/admin/orders) (1 ms)
+      ✓ denies customer from accessing admin dashboard stats (GET /api/v1/admin/stats) (1 ms)
+      ✓ denies customer from modifying product catalog (POST /api/v1/admin/products) (1 ms)
+      ✓ denies customer from adjusting inventory stock (POST /api/v1/admin/inventory/adjust)
+      ✓ denies customer from overriding order statuses (PATCH /api/v1/admin/orders/:id/status) (1 ms)
+      ✓ denies customer from viewing security audit logs (GET /api/v1/security/audit-logs) (1 ms)
+      ✓ denies customer from verifying audit hash chain (GET /api/v1/security/audit-chain/verify) (1 ms)
+      ✓ denies customer from dispatching background jobs (POST /api/v1/admin/queues/dispatch) (1 ms)
+      ✓ grants admin user full access to admin endpoints (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       17 passed, 17 total
+Snapshots:   0 total
+Time:        0.234 s, estimated 1 s
+Ran all test suites matching tests/integration/idor-bola.test.js.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?

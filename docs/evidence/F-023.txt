@@ -1,0 +1,49 @@
+PASS tests/unit/sw-cache-policy.test.js
+  Service Worker Cache Hygiene & Privacy Policy (F-023, SEC-AUTH-04)
+    HTTP Method Isolation
+      ✓ allows GET requests
+      ✓ rejects state-changing methods (POST, PUT, DELETE, PATCH)
+    Authentication & Personal Data (PII) Protection
+      ✓ strictly forbids caching requests with an Authorization header
+      ✓ strictly forbids caching plain object request with authorization header
+    Sensitive Endpoint Blocklist
+      ✓ never caches sensitive route: /api/auth/login
+      ✓ never caches sensitive route: /api/auth/register
+      ✓ never caches sensitive route: /api/auth/refresh
+      ✓ never caches sensitive route: /api/auth/mfa/verify (1 ms)
+      ✓ never caches sensitive route: /api/cart
+      ✓ never caches sensitive route: /api/cart/items
+      ✓ never caches sensitive route: /api/cart/checkout/reserve
+      ✓ never caches sensitive route: /api/orders
+      ✓ never caches sensitive route: /api/orders/123
+      ✓ never caches sensitive route: /api/orders/track/123
+      ✓ never caches sensitive route: /api/users/me
+      ✓ never caches sensitive route: /api/users/profile
+      ✓ never caches sensitive route: /api/users/gdpr-export
+      ✓ never caches sensitive route: /api/admin/metrics
+      ✓ never caches sensitive route: /api/admin/orders
+      ✓ never caches sensitive route: /api/admin/audit-logs
+      ✓ never caches sensitive route: /api/security/audit-chain
+      ✓ never caches sensitive route: /api/payments/verify
+      ✓ never caches sensitive route: /api/payments/webhook
+      ✓ never caches sensitive route: /api/notifications
+      ✓ never caches sensitive route: /api/sse/order-stream
+    Allowlisted Public Catalog & Static Assets
+      ✓ permits caching public anonymous product catalog routes
+      ✓ permits caching public category routes
+      ✓ permits caching static frontend shell assets
+    Response Header Cache Hygiene
+      ✓ accepts clean 200 OK responses with public cache headers
+      ✓ rejects responses with non-200 status codes
+      ✓ rejects responses containing Cache-Control: no-store (1 ms)
+      ✓ rejects responses containing Cache-Control: private
+      ✓ rejects responses containing Set-Cookie headers
+    Cache Versioning & Activation Pruning
+      ✓ identifies and purges all obsolete cache versions on activation (1 ms)
+      ✓ handles empty or single-version cache arrays safely
+
+Test Suites: 1 passed, 1 total
+Tests:       35 passed, 35 total
+Snapshots:   0 total
+Time:        0.045 s, estimated 1 s
+Ran all test suites matching tests/unit/sw-cache-policy.test.js.

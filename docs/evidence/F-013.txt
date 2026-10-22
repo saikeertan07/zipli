@@ -1,0 +1,20 @@
+PASS tests/integration/db-rls.test.js
+  Database Row-Level Security (RLS) Isolation (F-013, SEC-AZ-05)
+    User-Scoped RLS Policies (orders & cart_items)
+      ✓ blocks User B from reading User A orders at the database layer (9 ms)
+      ✓ blocks User B from modifying or cancelling User A orders at the database layer (1 ms)
+      ✓ blocks cross-tenant INSERT spoofing at the DB layer via RLS CHECK constraint (3 ms)
+      ✓ enforces cart_items isolation at the database layer (2 ms)
+    Store-Scoped RLS Policies (dark store multi-tenancy)
+      ✓ isolates store orders between different dark stores (2 ms)
+    Admin and System Bypass
+      ✓ allows admin role to access all orders across tenants (1 ms)
+      ✓ allows system background workers to access all records (1 ms)
+    Session Context Cleanup and Pool Safety
+      ✓ ensures session variables do not leak across pooled connections (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+Time:        0.084 s, estimated 1 s
+Ran all test suites matching tests/integration/db-rls.test.js.

@@ -1,0 +1,27 @@
+
+> zipli-backend@1.0.0 test
+> jest --runInBand --forceExit tests/integration/auth.test.js
+
+PASS tests/integration/auth.test.js
+  Auth Integration Tests (API /api/auth)
+    POST /api/auth/register
+      ✓ successfully registers a new user with valid details and returns a JWT token (55 ms)
+      ✓ returns validation error (422) when email is invalid (23 ms)
+      ✓ returns validation error (422) when password does not meet complexity (no digits) (19 ms)
+      ✓ returns neutral message (200) on duplicate registration without leaking existence (20 ms)
+    POST /api/auth/login
+      ✓ successfully logs in with correct credentials and returns JWT token (20 ms)
+      ✓ returns 401 with generic message on wrong password (19 ms)
+      ✓ returns 401 with identical generic message on non-existent email (227 ms)
+      ✓ returns validation error (422) when password is empty (37 ms)
+    GET /api/auth/me
+      ✓ returns user profile when authenticated with valid Bearer token (26 ms)
+      ✓ returns 401 when Authorization header is missing (21 ms)
+      ✓ returns 401 when Authorization token is malformed (16 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       11 passed, 11 total
+Snapshots:   0 total
+Time:        0.646 s, estimated 1 s
+Ran all test suites matching tests/integration/auth.test.js.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
