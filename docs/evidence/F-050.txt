@@ -1,0 +1,15 @@
+================================================================================
+EVIDENCE FOR F-050: Integer Paise Money Model (Zero Floating-Point Drift)
+Date: 2026-10-20T08:27:33Z
+Target Rule: F-050
+================================================================================
+
+1. Database Schema Integer Columns (Paise):
+backend/migrations/0011_double_entry_ledger.sql:57:  debit_paise BIGINT NOT NULL DEFAULT 0 CHECK (debit_paise >= 0),
+backend/migrations/0011_double_entry_ledger.sql:58:  credit_paise BIGINT NOT NULL DEFAULT 0 CHECK (credit_paise >= 0),
+backend/migrations/0011_double_entry_ledger.sql:62:    (debit_paise > 0 AND credit_paise = 0) OR
+backend/migrations/0011_double_entry_ledger.sql:63:    (credit_paise > 0 AND debit_paise = 0)
+backend/migrations/0011_double_entry_ledger.sql:82:    COALESCE(SUM(debit_paise), 0),
+backend/migrations/0011_double_entry_ledger.sql:83:    COALESCE(SUM(credit_paise), 0),
+
+2. Running Money & Financial Invariant Tests:

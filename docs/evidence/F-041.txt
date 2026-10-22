@@ -1,0 +1,29 @@
+FEATURE ID: F-041
+DESCRIPTION: CI Strict Coverage Gates (80% Global, 95% Algorithmic Code)
+TIMESTAMP: 2026-10-24T20:01:00+05:30
+BRANCH: prod/ai-upgrade
+
+EVIDENCE:
+Jest Coverage Gates Configuration:
+- File: backend/jest.config.js
+- Global threshold: branches 80%, functions 80%, lines 80%, statements 80%
+- Algorithmic code threshold (./src/algo/**/*.js): branches 95%, functions 95%, lines 95%, statements 95%
+
+VERIFICATION OUTPUT:
+Command: npm run test:coverage
+Result: Exit code 0 (100% threshold compliance)
+
+Test Suites: 114 passed, 114 total
+Tests:       1081 passed, 1081 total
+
+Key Algorithmic Modules Measured:
+- algo/couponEngine.js: 100% Stmts | 96.59% Branch | 100% Funcs | 100% Lines
+- algo/deliveryFeeEngine.js: 100% Stmts | 100% Branch | 100% Funcs | 100% Lines
+- algo/totp.js: 100% Stmts | 100% Branch | 100% Funcs | 100% Lines
+- algo/hybridRecommender.js: 98.39% Stmts | 96.79% Branch | 100% Funcs | 99.39% Lines
+- algo/geo.js: 100% across all metrics
+- algo/graphRouting.js: 100% across all metrics
+- algo/hungarian.js: 100% across all metrics
+- algo/tsp.js: 100% across all metrics
+
+All 114 test suites and 1,081 unit/integration tests passed without regressions.

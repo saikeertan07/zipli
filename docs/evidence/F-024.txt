@@ -1,0 +1,27 @@
+(node:88241) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS tests/unit/api-client.test.js
+  Frontend ApiClient Unit Tests (F-024)
+    ✓ constructs with dynamic API_BASE matching current host (1 ms)
+    ✓ performs GET request with auto-generated X-Request-Id header (1 ms)
+    ✓ automatically attaches Bearer authorization header from storage
+    ✓ serializes JSON payload on POST, PUT, and DELETE
+    ✓ retries on 500 server error with exponential backoff (302 ms)
+    ✓ throws structured error on non-retryable 4xx client errors (3 ms)
+
+PASS tests/unit/store.test.js
+  Frontend Reactive Store Unit Tests (F-024)
+    ✓ initializes with default state values (3 ms)
+    ✓ updates state and notifies subscribers on setState (1 ms)
+    ✓ sets and removes user sessions with localStorage synchronization
+    ✓ toggles cart and mutually closes assistant drawer
+    ✓ updates theme and sets data-theme attribute on documentElement
+    ✓ appends assistant messages reactively (1 ms)
+    ✓ unpacks nested cart payloads correctly in setCart
+    ✓ handles offline status changes
+
+Test Suites: 2 passed, 2 total
+Tests:       14 passed, 14 total
+Snapshots:   0 total
+Time:        0.408 s, estimated 1 s
+Ran all test suites matching tests/unit/store.test.js|tests/unit/api-client.test.js.

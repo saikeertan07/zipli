@@ -1,0 +1,51 @@
+================================================================================
+EVIDENCE FOR FIX F-025: WCAG 2.1 AA Accessibility & Keyboard-Only E2E Navigation
+================================================================================
+Date: 2026-10-19
+Target Rule: SEC-IO-02 / F-025
+Audited Pages:
+  - Home Page (/)
+  - Search Results Page (/#search?q=fruit)
+  - Order Checkout Page (/#checkout)
+  - Operations Admin Portal (/#admin)
+  - Design System Styleguide (/styleguide.html)
+  - Admin Shell Page (/admin.html)
+
+Viewports Audited:
+  - desktop-1280 (1280 x 800)
+  - tablet-768 (768 x 1024)
+  - mobile-360 (360 x 740)
+
+A11y Engine: Axe-Core v4.14 (WCAG 2.0 A/AA, WCAG 2.1 A/AA, Best-Practice tags)
+
+================================================================================
+Test Execution Log:
+================================================================================
+Running 21 tests using 1 worker
+
+  ✓ [desktop-1280] Axe Core A11y Audit: Home Page has 0 serious or critical violations (2.0s)
+  ✓ [desktop-1280] Axe Core A11y Audit: Search Results Page has 0 serious or critical violations (1.3s)
+  ✓ [desktop-1280] Axe Core A11y Audit: Order Checkout Page has 0 serious or critical violations (1.4s)
+  ✓ [desktop-1280] Axe Core A11y Audit: Operations Admin Portal has 0 serious or critical violations (2.0s)
+  ✓ [desktop-1280] Axe Core A11y Audit: Design System Styleguide has 0 serious or critical violations (1.4s)
+  ✓ [desktop-1280] Axe Core A11y Audit: Admin Shell Page has 0 serious or critical violations (2.0s)
+  ✓ [desktop-1280] Keyboard-Only E2E Navigation: Search -> Cart -> Checkout without pointer (694ms)
+
+  ✓ [tablet-768] Axe Core A11y Audit: Home Page has 0 serious or critical violations (2.0s)
+  ✓ [tablet-768] Axe Core A11y Audit: Search Results Page has 0 serious or critical violations (1.3s)
+  ✓ [tablet-768] Axe Core A11y Audit: Order Checkout Page has 0 serious or critical violations (1.3s)
+  ✓ [tablet-768] Axe Core A11y Audit: Operations Admin Portal has 0 serious or critical violations (1.9s)
+  ✓ [tablet-768] Axe Core A11y Audit: Design System Styleguide has 0 serious or critical violations (1.4s)
+  ✓ [tablet-768] Axe Core A11y Audit: Admin Shell Page has 0 serious or critical violations (1.9s)
+  ✓ [tablet-768] Keyboard-Only E2E Navigation: Search -> Cart -> Checkout without pointer (629ms)
+
+  ✓ [mobile-360] Axe Core A11y Audit: Home Page has 0 serious or critical violations (2.0s)
+  ✓ [mobile-360] Axe Core A11y Audit: Search Results Page has 0 serious or critical violations (1.3s)
+  ✓ [mobile-360] Axe Core A11y Audit: Order Checkout Page has 0 serious or critical violations (1.3s)
+  ✓ [mobile-360] Axe Core A11y Audit: Operations Admin Portal has 0 serious or critical violations (2.0s)
+  ✓ [mobile-360] Axe Core A11y Audit: Design System Styleguide has 0 serious or critical violations (1.3s)
+  ✓ [mobile-360] Axe Core A11y Audit: Admin Shell Page has 0 serious or critical violations (1.9s)
+  ✓ [mobile-360] Keyboard-Only E2E Navigation: Search -> Cart -> Checkout without pointer (623ms)
+
+21 passed (33.0s)
+Zero serious or critical accessibility violations found across all audited routes.

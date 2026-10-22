@@ -1,0 +1,73 @@
+FEATURE ID: F-032
+DESCRIPTION: Real-Hardware Algorithmic Benchmarks & Reproducibility Audit
+EXECUTION TIMESTAMP: 2026-10-20T14:41:00+05:30
+PLATFORM: Apple M5 (10 cores, 16 GB RAM), macOS Darwin 27.0.1, Node.js v24.21.0
+
+VERIFIED BENCHMARKS EXECUTED:
+1. Search Benchmark (100k items):
+   - Command: node bench/searchBenchmark.js
+   - Output log: docs/benchmarks/searchBenchmark.txt
+   - Index build: 16.87s
+   - Heap delta: 425.6 MB
+   - Inverted BM25 p50: 1.204 ms (2.42x vs sequential scan baseline 2.910 ms)
+   - Trie Autocomplete p50: 0.001 ms
+   - BK-Tree Fuzzy Typo p50: 6.605 ms
+
+2. Two-Tier Cache Benchmark (100k ops, 5k keys, 10% capacity):
+   - Command: node bench/cacheBenchmark.js
+   - Output log: docs/benchmarks/cacheBenchmark.txt
+   - LRU Zipfian: 75.25% hit ratio, 12,670,658 ops/s
+   - LFU Zipfian: 79.98% hit ratio, 7,119,485 ops/s
+   - Single-Flight Lock: 100 concurrent requests collapsed to 1 db fetch (31.87 ms total duration)
+
+3. Geolocation & Dispatch Benchmark:
+   - Command: node bench/geoBenchmark.js
+   - Output log: docs/benchmarks/geoBenchmark.txt
+   - Haversine: 10,724,820 ops/sec
+   - Bearing: 13,496,187 ops/sec
+   - Hungarian Batch Dispatch: 27,643 batches/sec
+
+4. Delivery Intelligence & Graph Routing (625 nodes):
+   - Command: node bench/graphBenchmark.js
+   - Output log: docs/benchmarks/graphBenchmark.txt
+   - Dijkstra: 0.083 ms/route (303.1 nodes)
+   - A* Heuristic: 0.045 ms/route (86.1 nodes, 71.6% reduction)
+   - Hungarian vs Greedy: 22.11% lower distance (20x20), 19.37% lower (50x50)
+   - TSP 2-Opt: 0.030 ms (0.43% optimality gap vs Held-Karp exact 0.508 ms)
+   - Clarke-Wright VRP: 56.6% distance reduction in 0.523 ms
+   - Segment Tree: 8,187,661 ops/sec
+
+5. Inventory Intelligence & Dynamic Pricing:
+   - Command: node bench/inventoryBenchmark.js
+   - Output log: docs/benchmarks/inventoryBenchmark.txt
+   - Holt-Winters Forecasting: sMAPE 3.82% (14.25% improvement vs SES 18.07%)
+   - Safety Stock & ROP: Stockouts 53 -> 1 (98.1% reduction, 99.2% SLA)
+   - FEFO Markdown Spoilage: 34.3% -> 4.5% (86.9% reduction, +Rs. 44,545 revenue)
+   - Basket Knapsack: 477,334 req/sec (2.09 us latency, Rs. 0.92 avg overshoot)
+
+6. Trust, Security & Cryptographic Auditing:
+   - Command: node bench/securityBenchmark.js
+   - Output log: docs/benchmarks/securityBenchmark.txt
+   - Fraud Scorer: 686,457 orders/sec (100% precision/recall on planted data)
+   - Bloom Filter: 1,542,662 lookups/sec (0.988% empirical FPR)
+   - GCRA Rate Limiter: 9,624,716 req/sec
+   - Audit Hash Chain: 1,373,029 records/sec verification, pinpointed tampered row
+
+7. Recommendation Engine Offline Evaluation (50k orders):
+   - Command: node bench/evalRecs.js
+   - Output log: docs/benchmarks/evalRecs.txt
+   - Evaluation report: backend/EVALUATION.md
+   - Hybrid Recommender: MAP 0.2290, NDCG@10 0.3617, Hit-Rate 76.24%
+
+8. High-Concurrency HTTP API Load Benchmark (50 concurrency, 4k ops):
+   - Command: NODE_ENV=test node bench/httpLoadBenchmark.js
+   - Output log: docs/benchmarks/httpLoadBenchmark.txt
+   - Suggest Autocomplete: 316 req/s, p50 3.15 ms, p95 4.75 ms, p99 47.13 ms
+   - BM25 In-Memory Search: 13,543 req/s, p50 3.50 ms, p95 5.06 ms, p99 5.74 ms
+   - Basket Optimizer Knapsack: 9,253 req/s, p50 4.83 ms, p95 7.03 ms, p99 26.30 ms
+   - Hybrid Recommendations: 8,141 req/s, p50 5.41 ms, p95 7.26 ms, p99 19.98 ms
+
+ALL UNVERIFIED CLAIMS ELIMINATED:
+- Removed "1,200x" claim from BENCHMARKS.md. Real measured speedup vs sequential scan is 2.42x at p50 and 3.39x at p95.
+- Removed "exactly-once ... zero message loss" claim from docs/RESUME_KIT.md. Replaced with accurate transactional outbox with at-least-once delivery + idempotent consumers.
+- All numbers backed by raw console logs in docs/benchmarks/.

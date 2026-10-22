@@ -1,0 +1,8 @@
+================================================================================
+EVIDENCE FOR F-042: Real-DB Concurrency Stock Contention & Idempotency Locking
+Date: 2026-10-20T08:27:13Z
+Target Rule: F-042
+================================================================================
+
+Running integration tests: tests/integration/concurrency.test.js & tests/integration/idempotency.test.js
+
