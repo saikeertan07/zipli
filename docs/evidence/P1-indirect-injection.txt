@@ -1,0 +1,16 @@
+=== P1-indirect-injection.txt ===
+Timestamp: 2026-10-24T22:22:22+05:30
+Test: tests/unit/indirectInjection.test.js
+Command: npx jest tests/unit/indirectInjection.test.js
+
+PASS tests/unit/indirectInjection.test.js
+  Indirect Prompt Injection Defense (P1)
+    ✓ verifies the adversarial test corpus has at least 50 test cases (1 ms)
+    ✓ neutralizes indirect injection payload #1..#52 (52/52 attacks neutralized)
+    ✓ deep-sanitizes nested product objects and arrays from tool queries
+    ✓ wraps sanitized tool outputs into verified XML structural delimiters
+
+Test Suites: 1 passed, 1 total
+Tests:       55 passed, 55 total
+Snapshots:   0 total
+Time:        0.151 s

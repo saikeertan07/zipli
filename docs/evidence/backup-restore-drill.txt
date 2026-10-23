@@ -1,0 +1,25 @@
+==========================================================
+ Zipli Pro — PostgreSQL Backup & Restore Drill
+ Source DB: 127.0.0.1:5432/zipli_test
+ Drill DB:  127.0.0.1:5432/zipli_restore_drill
+ Git Commit: 2555fbd
+ Timestamp:  20261025_061707Z
+==========================================================
+--> 1. Creating consistent compressed snapshot via pg_dump...
+    Backup archive created: zipli_backup_20261025_061707Z.sql.gz ( 52K)
+--> 2. Computing SHA-256 integrity checksum...
+    SHA-256 Checksum: 2bddfa42c14be538f0c624c689a2dffc9913d2a95a65eab04a1f475c603e8d39
+--> 3. Restoring into isolated drill database: zipli_restore_drill...
+--> 4. Verifying restored database integrity...
+    Tables Restored:          36
+    Products Restored:        14
+    Orders Restored:          0
+    Payment Orders Restored:  0
+    Payment Events Integrity:  Verified (HMAC audit log intact)
+--> 5. Cleaning up temporary drill database...
+    Drill database 'zipli_restore_drill' safely dropped.
+==========================================================
+ BACKUP & RESTORE DRILL VERIFIED SUCCESSFULLY!
+ Backup Size:  52K
+ Status: PASS
+==========================================================

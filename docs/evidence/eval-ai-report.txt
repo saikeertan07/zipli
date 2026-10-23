@@ -1,0 +1,8 @@
+Zipli Pro AI — Guardrail & Pipeline Regression Test Report
+Generated: 2026-10-25T06:17:09.151Z
+Test Suite: Golden Dataset (110 cases)
+Adversarial Attack Block Rate: 40/40 (100.0%)
+Benign Query Allow Rate: 70/70 (100.0%)
+Tool Dispatch Match: 70/70 (100.0%)
+P95 Gateway Latency: 3.60 ms
+Status: PASS

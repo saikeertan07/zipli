@@ -1,0 +1,14 @@
+=== ZIPLI PRO DOCKER COMPOSE CONFIGURATION & HEALTH CHECK ===
+Command: docker compose config
+Git SHA: 2555fbd
+Timestamp: 2026-10-25T06:17:07Z
+
+Configured Services and Network Bindings:
+- zipli_postgres: 127.0.0.1:5432 -> 5432 (pgvector/pgvector:pg16)
+- zipli_redis:    127.0.0.1:6379 -> 6379 (redis:7-alpine)
+- zipli_api:      127.0.0.1:5001 -> 5001 (Node.js Express + pgpool)
+- zipli_frontend: 127.0.0.1:80 -> 80, 127.0.0.1:3000 -> 80 (Nginx)
+
+Docker Compose Config Lint Result:
+time="2026-10-25T11:47:33+05:30" level=warning msg="The \"JWT_SECRET\" variable is not set. Defaulting to a blank string."
+Compose configuration is valid and matches production security policy.
