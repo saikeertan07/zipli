@@ -97,7 +97,7 @@ export function renderCartDrawer(cartState, activeReservation = null, basketSugg
                         alt="${item.name || item.productName}"
                         width="52"
                         height="52"
-                        style="border-radius:var(--radius-sm); object-fit:cover; background:var(--neutral-100);"
+                        style="border-radius:var(--radius-sm); object-fit:contain; background:var(--neutral-100); padding:2px;"
                         data-fallback-src="${generateProductSvgFallback(item.name || item.productName, item.emoji, item.cat)}"
                       />
                       <div style="flex:1; min-width:0;">
