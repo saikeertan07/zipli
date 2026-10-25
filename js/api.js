@@ -113,8 +113,8 @@ export class ApiClient {
         }
       }
 
-      // Retry on 5xx errors with exponential backoff
-      if (response.status >= 500 && retries > 0) {
+      // Retry on transient 5xx gateway errors with exponential backoff (ignore 501 Not Implemented)
+      if ([500, 502, 503, 504].includes(response.status) && retries > 0) {
         await new Promise((r) => setTimeout(r, 300 * (3 - retries)));
         return this.request(endpoint, options, retries - 1);
       }
@@ -140,8 +140,8 @@ export class ApiClient {
       if (err.name === 'AbortError') {
         throw err;
       }
-      // Transient network failure retry
-      if (retries > 0 && (!err.status || err.status >= 500)) {
+      // Transient network failure retry (only for genuine gateway drops: 500, 502, 503, 504)
+      if (retries > 0 && (!err.status || [500, 502, 503, 504].includes(err.status))) {
         await new Promise((r) => setTimeout(r, 400 * (3 - retries)));
         return this.request(endpoint, options, retries - 1);
       }
