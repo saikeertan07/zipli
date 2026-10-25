@@ -106,8 +106,7 @@ export function renderProductCard(product, cartQty = 0) {
           src="${imageUrl}"
           alt="${product.name}"
           loading="lazy"
-          width="180"
-          height="180"
+          style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain;"
           data-fallback-src="${fallbackSvg}"
         />
       </a>

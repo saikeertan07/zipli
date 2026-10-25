@@ -95,9 +95,7 @@ export function renderCartDrawer(cartState, activeReservation = null, basketSugg
                       <img
                         src="${resolveProductImage({ id: item.productId, img: item.imageUrl || item.image_url || item.img, name: item.name || item.productName, emoji: item.emoji, cat: item.cat })}"
                         alt="${item.name || item.productName}"
-                        width="52"
-                        height="52"
-                        style="border-radius:var(--radius-sm); object-fit:contain; background:var(--neutral-100); padding:2px;"
+                        style="border-radius:var(--radius-sm); max-width:52px; max-height:52px; width:auto; height:auto; object-fit:contain; background:#ffffff; border:1px solid var(--border-subtle); padding:2px; display:block; margin:auto;"
                         data-fallback-src="${generateProductSvgFallback(item.name || item.productName, item.emoji, item.cat)}"
                       />
                       <div style="flex:1; min-width:0;">

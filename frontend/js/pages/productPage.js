@@ -57,9 +57,7 @@ export function renderProductPage({ product, bundle = null, substitutes = [] }) 
           <img
             src="${imageUrl}"
             alt="${product.name}"
-            style="width:90%; height:90%; object-fit:contain;"
-            width="400"
-            height="400"
+            style="max-width:90%; max-height:90%; width:auto; height:auto; object-fit:contain; margin:auto; display:block;"
             data-fallback-src="${fallbackSvg}"
           />
           ${discount > 5
