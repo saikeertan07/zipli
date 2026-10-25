@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Stackable Toast Notifications
+ * ZIPLI — Stackable Toast Notifications
  *
  * Implements popover="manual" with progressive enhancement,
  * stack management, accessible live region, and auto-dismissal.

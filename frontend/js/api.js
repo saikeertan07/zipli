@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Resilient API Client
+ * ZIPLI — Resilient API Client
  *
  * Implements:
  * 1. Exponential backoff retry on 5xx and transient network dropouts.

@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Search Results Page
+ * ZIPLI — Search Results Page
  *
  * Implements:
  * 1. Faceted filters (categories, price ranges, in-stock toggle).

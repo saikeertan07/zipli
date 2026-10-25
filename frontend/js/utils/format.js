@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Formatting Utilities
+ * ZIPLI — Formatting Utilities
  *
  * Tabular currency, time countdowns, units, and dates.
  */

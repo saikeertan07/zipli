@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Storage Wrapper with Fallbacks
+ * ZIPLI — Storage Wrapper with Fallbacks
  */
 
 const memoryStore = new Map();

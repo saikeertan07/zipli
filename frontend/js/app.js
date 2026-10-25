@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Main Application Entry Point
+ * ZIPLI — Main Application Entry Point
  * Phase 11 Premium Frontend (Vanilla ES Modules, No Build Step)
  *
  * Implements:
@@ -71,7 +71,7 @@ let holdCountdownTimer = null;
  * Initializes the entire Zipli application.
  */
 async function bootstrap() {
-  console.log('⚡ Initializing Zipli Pro Frontend...');
+  console.log('⚡ Initializing Zipli Frontend...');
 
   // 1. Register Service Worker
   if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
@@ -244,7 +244,7 @@ function setupAppShell() {
     consentEl.innerHTML = `
       <aside class="consent-banner" id="consentBanner" style="position:fixed; bottom:0; left:0; right:0; background:var(--surface-card); border-top:2px solid var(--color-brand); padding:16px 24px; box-shadow:var(--shadow-lg); z-index:900; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;" role="region" aria-label="Privacy and Cookie Consent">
         <div style="font-size:var(--text-xs); line-height:1.5; max-width:750px;">
-          🍪 <strong>Privacy & Cookie Notice (DPDP Compliance):</strong> Zipli Pro uses essential cookies and local storage to preserve your cart, authenticate delivery sessions, and manage 10-minute dark store reservations. Read our <a href="#privacy" style="color:var(--color-brand); font-weight:700; text-decoration:underline;">Privacy Policy [Needs Counsel Review]</a>.
+          🍪 <strong>Privacy & Cookie Notice (DPDP Compliance):</strong> Zipli uses essential cookies and local storage to preserve your cart, authenticate delivery sessions, and manage 10-minute dark store reservations. Read our <a href="#privacy" style="color:var(--color-brand); font-weight:700; text-decoration:underline;">Privacy Policy [Needs Counsel Review]</a>.
         </div>
         <div style="display:flex; gap:10px;">
           <button class="btn btn-primary btn-sm" data-action="accept-consent">Accept All</button>
@@ -453,7 +453,7 @@ function setupRoutes() {
         </p>
         <div class="card" style="padding:28px; line-height:1.7; font-size:var(--text-sm);">
           <h3 style="margin-top:0;">1. Data Fiduciary Identity</h3>
-          <p>Zipli Pro operates as a Data Fiduciary under the Digital Personal Data Protection Act, 2023 (DPDP Act). We process shopper personal data strictly to fulfill 10-minute grocery deliveries, optimize routing, and maintain transaction logs.</p>
+          <p>Zipli operates as a Data Fiduciary under the Digital Personal Data Protection Act, 2023 (DPDP Act). We process shopper personal data strictly to fulfill 10-minute grocery deliveries, optimize routing, and maintain transaction logs.</p>
           <h3>2. Lawful Grounds for Processing</h3>
           <p>We process your phone number, delivery address, and payment identifiers on the lawful basis of specified purpose and express consent given at order checkout.</p>
           <h3>3. Right to Data Access, Portability & Erasure</h3>
@@ -480,7 +480,7 @@ function setupRoutes() {
         </p>
         <div class="card" style="padding:28px; line-height:1.7; font-size:var(--text-sm);">
           <h3 style="margin-top:0;">1. 10-Minute Delivery Commitment</h3>
-          <p>Zipli Pro strives to deliver fresh grocery orders within 10-15 minutes using dark store proximity and A* graph dispatching. Delivery times may vary during extreme weather or traffic anomalies.</p>
+          <p>Zipli strives to deliver fresh grocery orders within 10-15 minutes using dark store proximity and A* graph dispatching. Delivery times may vary during extreme weather or traffic anomalies.</p>
           <h3>2. Payments & Pricing Integrity</h3>
           <p>All transactions are denominated in Indian Rupees (INR) and computed in exact integer paise. Payments are processed via authorized payment aggregators (Razorpay / UPI).</p>
           <h3>3. AI Grocery Assistant</h3>
@@ -1377,7 +1377,7 @@ async function executePlaceOrder() {
           key: pData.keyId,
           amount: pData.amountPaise,
           currency: pData.currency || 'INR',
-          name: 'Zipli Pro Express',
+          name: 'Zipli Express',
           description: `Order #${orderId} (10-Minute Grocery Delivery)`,
           order_id: pData.providerOrderId,
           prefill: {

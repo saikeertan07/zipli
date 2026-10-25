@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — High-Fidelity Static Fallback Catalog
+ * ZIPLI — High-Fidelity Static Fallback Catalog
  * Ensures the storefront is immediately interactive, rich, and functional
  * when running on static hosting (GitHub Pages) or during backend cold-starts.
  */

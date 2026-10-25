@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Pure SVG & Canvas Charting Engine
+ * ZIPLI — Pure SVG & Canvas Charting Engine
  *
  * Zero external libraries (no Chart.js, D3, or CanvasJS).
  * Hand-drawn SVG & Canvas visualizations for:

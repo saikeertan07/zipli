@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Product Details Page
+ * ZIPLI — Product Details Page
  *
  * Implements:
  * 1. Gallery layout with high-res product photo.

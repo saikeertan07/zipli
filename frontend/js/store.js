@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Reactive Pub/Sub Store
+ * ZIPLI — Reactive Pub/Sub Store
  *
  * Ultra-lightweight state manager with reactive subscribers.
  */
@@ -35,7 +35,7 @@ const initialState = {
   assistantMessages: [
     {
       role: 'assistant',
-      text: 'Hi! I am Zipli Pro AI. Looking for fresh groceries or meal recipe ingredients? Ask me anything!',
+      text: 'Hi! I am Zipli AI. Looking for fresh groceries or meal recipe ingredients? Ask me anything!',
       chips: ['Plan Italian Pasta dinner', 'Find high-protein snacks', 'Fresh fruits under ₹100'],
       timestamp: Date.now(),
     },

@@ -3,7 +3,7 @@
 **Document Identifier**: `TR-ZIPLI-PRO-2026-OCT`  
 **Classification**: Formal Engineering Architecture & Compliance Audit Review  
 **Target Audience**: Principal Engineers, Engineering Leadership, Compliance Auditors, SREs  
-**System Name**: Zipli Pro — High-Performance Quick-Commerce Engine  
+**System Name**: Zipli — High-Performance Quick-Commerce Engine  
 **Version**: 2.2.0 (Production Core)  
 **Date of Issuance**: October 25, 2026  
 **Lead Architect**: Principal Staff Software Engineer  
@@ -24,7 +24,7 @@
 
 ### 1.2 Executive Summary
 
-**Zipli Pro** is an autonomous, high-throughput quick-commerce grocery fulfilment platform engineered to guarantee end-to-end order processing, stock allocation, and dispatch matching within a strict **10-to-15-minute delivery SLA**. Operating on a dark-store fulfillment paradigm, the platform decouples heavy machine-learning clusters in favor of **25+ in-memory Data Structures & Algorithms (DSA)** written in idiomatic Node.js. This design achieves microsecond-level algorithmic execution, high search throughput (13,917 req/sec), and resilient concurrency control without distributed queue bloat.
+**Zipli** is an autonomous, high-throughput quick-commerce grocery fulfilment platform engineered to guarantee end-to-end order processing, stock allocation, and dispatch matching within a strict **10-to-15-minute delivery SLA**. Operating on a dark-store fulfillment paradigm, the platform decouples heavy machine-learning clusters in favor of **25+ in-memory Data Structures & Algorithms (DSA)** written in idiomatic Node.js. This design achieves microsecond-level algorithmic execution, high search throughput (13,917 req/sec), and resilient concurrency control without distributed queue bloat.
 
 The transactional backbone utilizes **PostgreSQL 16** with strict integer-only monetary storage (`BIGINT` paise), row-level locks (`SELECT ... FOR UPDATE`), and an immutable double-entry balanced accounting ledger. Vector similarity retrieval is natively handled via `pgvector` HNSW indexes. Real-time updates are streamed via Server-Sent Events (SSE) decoupled through an asynchronous Transactional Outbox pattern.
 
@@ -38,7 +38,7 @@ The platform has been validated against **1,369 automated tests across 138 Jest 
 
 ```
 +---------------------------------------------------------------------------------------+
-|                                    ZIPLI PRO STACK                                    |
+|                                    ZIPLI STACK                                        |
 +---------------------+-----------------------------------------------------------------+
 | Layer               | Technology Specification                                        |
 +---------------------+-----------------------------------------------------------------+
@@ -58,7 +58,7 @@ The platform has been validated against **1,369 automated tests across 138 Jest 
 
 ### 2.2 Architectural Topology
 
-Zipli Pro employs a **Modular Monolith** pattern with strict asynchronous outbox decoupling. The architecture isolates domain services internally while preserving atomic database transactions:
+Zipli employs a **Modular Monolith** pattern with strict asynchronous outbox decoupling. The architecture isolates domain services internally while preserving atomic database transactions:
 
 ```
                             [ Web & Mobile PWA Clients ]

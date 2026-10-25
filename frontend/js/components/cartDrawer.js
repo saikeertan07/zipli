@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Cart Drawer Component
+ * ZIPLI — Cart Drawer Component
  *
  * Implements:
  * 1. Slide-out cart drawer with delivery guarantee badge.

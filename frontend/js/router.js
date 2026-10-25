@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Client-Side Hash Router
+ * ZIPLI — Client-Side Hash Router
  *
  * Hash router with route parameters, query string parsing,
  * auth & role guards, and View Transitions API support.

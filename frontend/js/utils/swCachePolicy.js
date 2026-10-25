@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Service Worker Cache Hygiene & Privacy Engine (F-023, SEC-AUTH-04)
+ * ZIPLI — Service Worker Cache Hygiene & Privacy Engine (F-023, SEC-AUTH-04)
  *
  * Enforces strict cache isolation ensuring that:
  * 1. Authenticated API responses with personal data (PII) are NEVER cached.

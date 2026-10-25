@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Product Card Component
+ * ZIPLI — Product Card Component
  *
  * Implements:
  * 1. Image with explicit width/height & lazy-loading to prevent CLS.

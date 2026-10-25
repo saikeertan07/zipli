@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Live Order Tracking Page
+ * ZIPLI — Live Order Tracking Page
  *
  * Implements:
  * 1. Live Canvas route map showing dark store, customer, and animated rider marker.

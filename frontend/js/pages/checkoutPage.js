@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Checkout Page
+ * ZIPLI — Checkout Page
  *
  * Implements:
  * 1. Saved real address book selection + Add new address.

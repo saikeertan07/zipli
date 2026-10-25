@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — DOM Utilities & Safe HTML Template Tag
+ * ZIPLI — DOM Utilities & Safe HTML Template Tag
  *
  * Implements:
  * 1. `html` tagged template with automatic escaping to guarantee zero XSS.

@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Service Worker (Offline First & PWA Shell)
+ * ZIPLI — Service Worker (Offline First & PWA Shell)
  *
  * Implements:
  * 1. Pre-caching static app shell (HTML, CSS, JS modules).

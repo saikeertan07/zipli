@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Client-Side Server-Sent Events (SSE) Manager
+ * ZIPLI — Client-Side Server-Sent Events (SSE) Manager
  *
  * Connects to /api/events with reconnect logic and dispatches real-time events.
  */

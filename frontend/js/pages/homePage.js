@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Home Page
+ * ZIPLI — Home Page
  *
  * Implements:
  * 1. Hero offers banner with responsive layout.

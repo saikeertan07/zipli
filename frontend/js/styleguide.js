@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Styleguide Interactive Script
+ * ZIPLI — Styleguide Interactive Script
  * Phase 11 Premium Frontend
  *
  * External ES Module complying with strict Helmet Content Security Policy (no inline scripts).

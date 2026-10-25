@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Native Accessible Modal Dialog
+ * ZIPLI — Native Accessible Modal Dialog
  *
  * Implements HTML5 <dialog closedby="any"> with light-dismiss fallback
  * per modern-web-guidance specifications.

@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Account & Privacy Page
+ * ZIPLI — Account & Privacy Page
  *
  * Implements:
  * 1. User profile and past order history.

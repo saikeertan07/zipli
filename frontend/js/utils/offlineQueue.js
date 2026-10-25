@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Offline Cart Mutation Queue
+ * ZIPLI — Offline Cart Mutation Queue
  *
  * Queues cart operations while offline and syncs them automatically
  * when connectivity is restored.

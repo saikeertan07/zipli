@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — AI Assistant Drawer & Floating Widget
+ * ZIPLI — AI Assistant Drawer & Floating Widget
  *
  * Implements:
  * 1. Floating trigger button with AI badge.

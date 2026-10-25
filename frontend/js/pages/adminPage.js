@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Admin Dashboard Page
+ * ZIPLI — Admin Dashboard Page
  *
  * Implements:
  * 1. Role-gated administration portal.

@@ -10,7 +10,7 @@ const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Zipli Pro — Technical Architecture & System Operations Report</title>
+  <title>Zipli — Technical Architecture & System Operations Report</title>
   <style>
     @page {
       size: A4 portrait;
@@ -345,7 +345,7 @@ const html = `<!DOCTYPE html>
     <div class="cover-container">
       <div>
         <div class="cover-top-badge">Formal Systems Architecture & Audit Review</div>
-        <div class="cover-main-title">ZIPLI PRO QUICK-COMMERCE</div>
+        <div class="cover-main-title">ZIPLI QUICK-COMMERCE</div>
         <div class="cover-sub-title">Technical Architecture & System Operations Report</div>
         <div class="cover-abstract">
           A definitive, production-grade technical evaluation of an autonomous 10-to-15-minute quick-commerce fulfillment platform. Examines custom in-memory data structures & algorithms (DSA), ACID PostgreSQL 16 concurrency controls (<code>SELECT ... FOR UPDATE</code>), balanced double-entry accounting ledgers, and zero-trust security fabrics.
@@ -354,7 +354,7 @@ const html = `<!DOCTYPE html>
         <div class="meta-box">
           <div class="meta-row">
             <span class="meta-lbl">Document Reference</span>
-            <span class="meta-val">TR-ZIPLI-PRO-2026-OCT</span>
+            <span class="meta-val">TR-ZIPLI-2026-OCT</span>
           </div>
           <div class="meta-row">
             <span class="meta-lbl">Mainline Git Commit</span>
@@ -396,7 +396,7 @@ const html = `<!DOCTYPE html>
       </div>
 
       <div style="border-top: 1px solid #e2e8f0; padding-top: 8px; display: flex; justify-content: space-between; font-size: 7.2pt; color: #64748b;">
-        <span>Zipli Pro Systems Architecture Group — Confidential</span>
+        <span>Zipli Systems Architecture Group — Confidential</span>
         <span>Repository: github.com/saikeertan07/zipli</span>
       </div>
     </div>
@@ -408,7 +408,7 @@ const html = `<!DOCTYPE html>
   <div class="sheet">
     <h2>1. Executive Summary & Core Architectural Paradigms</h2>
     <p>
-      <strong>Zipli Pro</strong> represents an architectural reimagining of quick-commerce grocery fulfillment. While first-generation systems suffer from bloated microservice meshes, distributed state synchronization failures, and heavy machine-learning infrastructure costs, Zipli Pro executes its 10-to-15-minute delivery SLA using an in-memory execution pipeline powered by <strong>25+ pure Data Structures & Algorithms (DSA)</strong> inside a modular Node.js monolith.
+      <strong>Zipli</strong> represents an architectural reimagining of quick-commerce grocery fulfillment. While first-generation systems suffer from bloated microservice meshes, distributed state synchronization failures, and heavy machine-learning infrastructure costs, Zipli executes its 10-to-15-minute delivery SLA using an in-memory execution pipeline powered by <strong>25+ pure Data Structures & Algorithms (DSA)</strong> inside a modular Node.js monolith.
     </p>
 
     <h3>1.1 The Five Engineering Pillars</h3>
@@ -478,7 +478,7 @@ const html = `<!DOCTYPE html>
 
     <div class="callout callout-blue">
       <div class="callout-title">Architectural Positioning Statement</div>
-      Zipli Pro proves that quick-commerce applications can achieve world-class algorithmic performance, sub-millisecond latencies, and audit-grade consistency within a tightly engineered modular monolith, sidestepping the operational fragility of microservice sprawl.
+      Zipli proves that quick-commerce applications can achieve world-class algorithmic performance, sub-millisecond latencies, and audit-grade consistency within a tightly engineered modular monolith, sidestepping the operational fragility of microservice sprawl.
     </div>
   </div>
 
@@ -539,7 +539,7 @@ const html = `<!DOCTYPE html>
         <line x1="435" y1="45" x2="460" y2="45" stroke="#64748b" stroke-width="1.2"/>
         <line x1="435" y1="105" x2="460" y2="105" stroke="#64748b" stroke-width="1.2"/>
       </svg>
-      <div class="diagram-caption">Figure 2.1: Zipli Pro Production Topology & Subsystem Boundaries</div>
+      <div class="diagram-caption">Figure 2.1: Zipli Production Topology & Subsystem Boundaries</div>
     </div>
 
     <h3>2.2 Step-by-Step Data Traversal Pipeline</h3>
@@ -656,7 +656,7 @@ $$ LANGUAGE plpgsql;</code></pre>
 
     <h3>4.1 Dynamic 10-Minute Stock Reservation Architecture</h3>
     <p>
-      Zipli Pro eliminates flash-sale overselling via atomic stock reservations backed by PostgreSQL row locks:
+      Zipli eliminates flash-sale overselling via atomic stock reservations backed by PostgreSQL row locks:
     </p>
     <ol>
       <li><strong>Explicit Lock Acquisition</strong>: When a customer enters checkout, <code>POST /api/v1/stock/hold</code> locks the row:
@@ -1029,7 +1029,7 @@ async function run() {
     format: 'A4',
     printBackground: true,
     displayHeaderFooter: true,
-    headerTemplate: `<div style="font-family: -apple-system, sans-serif; font-size: 7pt; color: #94a3b8; width: 100%; padding: 0 14mm; display: flex; justify-content: space-between; border-bottom: 0.5px solid #e2e8f0; padding-bottom: 3px;"><span>ZIPLI PRO — TECHNICAL ARCHITECTURE REPORT</span><span style="color: #0c831f; font-weight: 700;">OCTOBER 2026</span></div>`,
+    headerTemplate: `<div style="font-family: -apple-system, sans-serif; font-size: 7pt; color: #94a3b8; width: 100%; padding: 0 14mm; display: flex; justify-content: space-between; border-bottom: 0.5px solid #e2e8f0; padding-bottom: 3px;"><span>ZIPLI — TECHNICAL ARCHITECTURE REPORT</span><span style="color: #0c831f; font-weight: 700;">OCTOBER 2026</span></div>`,
     footerTemplate: `<div style="font-family: -apple-system, sans-serif; font-size: 7pt; color: #94a3b8; width: 100%; padding: 0 14mm; display: flex; justify-content: space-between; border-top: 0.5px solid #e2e8f0; padding-top: 3px;"><span>CONFIDENTIAL & PROPRIETARY — SYSTEMS ARCHITECTURE</span><span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span></div>`,
     margin: {
       top: '18mm',

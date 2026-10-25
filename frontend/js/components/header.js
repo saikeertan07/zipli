@@ -1,5 +1,5 @@
 /**
- * ZIPLI PRO — Header & Navigation Component
+ * ZIPLI — Header & Navigation Component
  *
  * Implements:
  * 1. Sticky navigation with brand logo.
