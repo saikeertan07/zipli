@@ -59,3 +59,10 @@
 - **AI Golden Dataset Eval**: 110 / 110 prompts passed (100% attack block rate, 100% benign allow rate, 100% tool match accuracy, avg 0.8ms latency).
 - **Playwright E2E Suite**: 36 / 36 tests passed (Accessibility, Keyboard Navigation, Shopper Flow, Admin Kanban, CSP).
 - **Multi-Algorithm Benchmarks**: Real measured results on Apple M5; search throughput: 14,429 req/s, Trie autocomplete p50: 0.001 ms, cache throughput: 12.8M ops/s.
+
+---
+
+## Production Release & Asset Verification (October 25, 2026)
+- **Deployment Target**: GitHub Pages (`https://saikeertan07.github.io/zipli/`)
+- **Asset Rendering**: High-fidelity product photography with proportional aspect ratio preservation (`object-fit: contain`), zero cropping, and instant dynamic base URL resolution across all 74 catalog items.
+- **Timestamp**: 2026-10-25T15:42:00+05:30
