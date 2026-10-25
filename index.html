@@ -17,6 +17,19 @@
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/style.css">
+
+  <script>
+    // Self-healing cache cleanup: prune stale SW caches
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        names.forEach(function(name) {
+          if (name !== 'zipli-pro-v6') {
+            caches.delete(name);
+          }
+        });
+      });
+    }
+  </script>
 </head>
 <body>
   <!-- Offline Alert Banner -->
@@ -49,6 +62,6 @@
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <!-- Main ES Module Application Entrypoint -->
-  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/app.js?v=2.1.0"></script>
 </body>
 </html>

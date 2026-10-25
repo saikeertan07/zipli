@@ -12,7 +12,7 @@
 
 import { html } from '../utils/dom.js';
 import { formatCurrency, formatCountdown } from '../utils/format.js';
-import { generateProductSvgFallback } from './productCard.js';
+import { generateProductSvgFallback, resolveProductImage } from './productCard.js';
 
 const FREE_DELIVERY_THRESHOLD = 199;
 
@@ -93,7 +93,7 @@ export function renderCartDrawer(cartState, activeReservation = null, basketSugg
                   (item) => html`
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid var(--border-subtle);">
                       <img
-                        src="${(item.imageUrl || item.image_url || item.img || (item.productId ? `images/products/${item.productId}.jpg` : 'images/placeholder.jpg')).replace(/^\//, '')}"
+                        src="${resolveProductImage({ id: item.productId, img: item.imageUrl || item.image_url || item.img, name: item.name || item.productName, emoji: item.emoji, cat: item.cat })}"
                         alt="${item.name || item.productName}"
                         width="52"
                         height="52"

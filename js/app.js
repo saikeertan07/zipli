@@ -75,7 +75,8 @@ async function bootstrap() {
 
   // 1. Register Service Worker
   if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-    navigator.serviceWorker.register('./sw.js').then(() => {
+    navigator.serviceWorker.register('./sw.js').then((registration) => {
+      if (registration) registration.update();
       console.log('✓ Service Worker active (offline caching enabled)');
     }).catch((err) => {
       console.warn('SW registration bypassed:', err.message);

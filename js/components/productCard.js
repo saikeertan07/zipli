@@ -48,16 +48,32 @@ export function generateProductSvgFallback(name, emoji, cat) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
+export function getBaseAssetUrl() {
+  if (typeof window !== 'undefined' && window.location) {
+    const origin = window.location.origin;
+    const pathname = window.location.pathname;
+    if (pathname.includes('/zipli')) {
+      return `${origin}/zipli/`;
+    }
+    const dir = pathname.substring(0, pathname.lastIndexOf('/') + 1);
+    return `${origin}${dir || '/'}`;
+  }
+  return '';
+}
+
 export function resolveProductImage(product) {
+  if (!product) return '';
   const url = product.img || product.image_url;
   if (url && (url.startsWith('http') || url.startsWith('data:'))) {
     return url;
   }
-  if (url && (url.startsWith('/images/products/') || url.startsWith('images/products/')) && !url.includes('placeholder')) {
-    return url.replace(/^\//, '');
+  const base = getBaseAssetUrl();
+  const cleanUrl = url ? url.replace(/^\//, '') : '';
+  if (cleanUrl && cleanUrl.startsWith('images/products/') && !cleanUrl.includes('placeholder')) {
+    return base ? `${base}${cleanUrl}` : cleanUrl;
   }
   if (product.id) {
-    return `images/products/${product.id}.jpg`;
+    return base ? `${base}images/products/${product.id}.jpg` : `images/products/${product.id}.jpg`;
   }
   return generateProductSvgFallback(product.name, product.emoji, product.cat || product.category_id);
 }

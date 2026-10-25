@@ -844,3 +844,10 @@ export const FALLBACK_PRODUCTS = [
     "badge": null
   }
 ];
+
+// Ensure each product carries its explicit product image path
+FALLBACK_PRODUCTS.forEach((p) => {
+  if (!p.img && p.id) {
+    p.img = `images/products/${p.id}.jpg`;
+  }
+});
