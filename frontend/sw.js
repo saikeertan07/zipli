@@ -10,7 +10,7 @@
 
 importScripts('./js/utils/swCachePolicy.js');
 
-const CACHE_NAME = 'zipli-pro-v3';
+const CACHE_NAME = 'zipli-pro-v4';
 
 const STATIC_ASSETS = [
   './',
@@ -24,6 +24,7 @@ const STATIC_ASSETS = [
   './js/api.js',
   './js/store.js',
   './js/router.js',
+  './js/data/fallbackCatalog.js',
   './js/utils/dom.js',
   './js/utils/format.js',
   './js/utils/storage.js',
