@@ -45,12 +45,12 @@ const RECIPE_KNOWLEDGE_BASE = {
     { term: 'cardamom', qty: 1, unit: 'pack' },
     { term: 'sugar', qty: 1, unit: 'kg' },
   ],
-  'chai': [
+  chai: [
     { term: 'tea', qty: 1, unit: 'pack' },
     { term: 'milk', qty: 1, unit: 'litre' },
     { term: 'sugar', qty: 1, unit: 'kg' },
   ],
-  'biryani': [
+  biryani: [
     { term: 'basmati rice', qty: 1, unit: 'kg' },
     { term: 'onion', qty: 1, unit: 'kg' },
     { term: 'curd', qty: 1, unit: 'pack' },
@@ -168,7 +168,10 @@ class AssistiveAIService {
           missingIngredients.push(target.term);
         }
       } catch (err) {
-        logger.warn('Failed ingredient inventory lookup', { term: target.term, error: err.message });
+        logger.warn('Failed ingredient inventory lookup', {
+          term: target.term,
+          error: err.message,
+        });
         missingIngredients.push(target.term);
       }
     }
@@ -315,7 +318,10 @@ class AssistiveAIService {
         );
         history = histRes.rows;
       } catch (err) {
-        logger.warn('Failed to fetch user order history for smart reorders', { userId, error: err.message });
+        logger.warn('Failed to fetch user order history for smart reorders', {
+          userId,
+          error: err.message,
+        });
       }
     }
 
@@ -413,9 +419,7 @@ class AssistiveAIService {
       return { inventory: [], allInStock: false };
     }
 
-    const cleanIds = productIds
-      .map((id) => parseInt(id, 10))
-      .filter((id) => !isNaN(id) && id > 0);
+    const cleanIds = productIds.map((id) => parseInt(id, 10)).filter((id) => !isNaN(id) && id > 0);
 
     if (cleanIds.length === 0) {
       return { inventory: [], allInStock: false };

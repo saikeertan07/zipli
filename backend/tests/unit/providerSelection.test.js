@@ -7,7 +7,12 @@
  * 4. /health/readiness reports ai: disabled when AI_ENABLED=false.
  */
 
-const { getLLMProvider, getAIHealthStatus, FakeLLMProvider, OfflineFallbackProvider } = require('../../src/ai/providers');
+const {
+  getLLMProvider,
+  getAIHealthStatus,
+  FakeLLMProvider,
+  OfflineFallbackProvider,
+} = require('../../src/ai/providers');
 const { getReadiness } = require('../../src/controllers/health.controller');
 
 describe('Production AI Provider Safety Rules (P0)', () => {

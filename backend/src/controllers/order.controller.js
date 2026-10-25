@@ -19,10 +19,10 @@ const createOrder = asyncHandler(async (req, res) => {
   let finalDeliveryAddressId = null;
 
   if (addressId) {
-    const addrRes = await query(
-      `SELECT * FROM user_addresses WHERE id = $1 AND user_id = $2`,
-      [Number(addressId), req.user.id]
-    );
+    const addrRes = await query(`SELECT * FROM user_addresses WHERE id = $1 AND user_id = $2`, [
+      Number(addressId),
+      req.user.id,
+    ]);
     if (addrRes.rows.length === 0) {
       throw new AppError('Delivery address not found or unauthorized', 404);
     }
@@ -33,7 +33,10 @@ const createOrder = asyncHandler(async (req, res) => {
       pincode: addr.pincode,
     });
     if (!serviceCheck.serviceable) {
-      throw new AppError(serviceCheck.reason || 'Address is outside our 10-minute delivery zone', 400);
+      throw new AppError(
+        serviceCheck.reason || 'Address is outside our 10-minute delivery zone',
+        400
+      );
     }
     finalDeliveryAddressId = addr.id;
     finalDeliveryAddress = `${addr.recipient_name}, ${addr.address_line1}${addr.address_line2 ? ', ' + addr.address_line2 : ''}${addr.landmark ? ', ' + addr.landmark : ''}, ${addr.city} - ${addr.pincode} (Ph: ${addr.phone})`;

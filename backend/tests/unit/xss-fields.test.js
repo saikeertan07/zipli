@@ -60,9 +60,7 @@ describe('XSS Payload Neutralization Across All Text Fields (F-021, SEC-IO-02)',
       const template = html`<div class="user-content">${malicious}</div>`;
       const rendered = template.toString();
 
-      expect(rendered).toContain(
-        '&lt;img src=&quot;x&quot; onerror=&quot;alert(1)&quot;&gt;'
-      );
+      expect(rendered).toContain('&lt;img src=&quot;x&quot; onerror=&quot;alert(1)&quot;&gt;');
       expect(rendered).not.toContain('<img');
     });
 

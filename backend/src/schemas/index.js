@@ -171,25 +171,27 @@ const adminCreateProductSchema = z
   })
   .strict();
 
-const adminUpdateProductSchema = z
-  .object({
-    name: z.string().trim().min(1).optional(),
-    qty_label: z.string().trim().min(1).optional(),
-    price: z.number().min(0).optional(),
-    mrp: z.number().min(0).optional(),
-    emoji: z.string().optional(),
-    category_id: z.string().trim().min(1).optional(),
-    badge: z.string().optional().nullable(),
-    image_url: z.string().optional().nullable(),
-    stock: z.number().int().min(0).optional(),
-    reorder_level: z.number().int().min(0).optional(),
-    is_active: z.boolean().optional(),
-  });
+const adminUpdateProductSchema = z.object({
+  name: z.string().trim().min(1).optional(),
+  qty_label: z.string().trim().min(1).optional(),
+  price: z.number().min(0).optional(),
+  mrp: z.number().min(0).optional(),
+  emoji: z.string().optional(),
+  category_id: z.string().trim().min(1).optional(),
+  badge: z.string().optional().nullable(),
+  image_url: z.string().optional().nullable(),
+  stock: z.number().int().min(0).optional(),
+  reorder_level: z.number().int().min(0).optional(),
+  is_active: z.boolean().optional(),
+});
 
 const adminAdjustStockSchema = z
   .object({
     productId: z.number().int(),
-    delta: z.number().int().refine((val) => val !== 0, 'Delta cannot be 0'),
+    delta: z
+      .number()
+      .int()
+      .refine((val) => val !== 0, 'Delta cannot be 0'),
     reason: z.string().max(255).optional(),
   })
   .strict();
@@ -360,7 +362,10 @@ const createAddressSchema = z
     addressLine2: z.string().trim().max(255).optional().nullable(),
     landmark: z.string().trim().max(255).optional().nullable(),
     city: z.string().trim().max(100).optional().default('Hyderabad'),
-    pincode: z.string().trim().regex(/^\d{6}$/, 'Pincode must be 6 digits'),
+    pincode: z
+      .string()
+      .trim()
+      .regex(/^\d{6}$/, 'Pincode must be 6 digits'),
     latitude: z.number().optional().nullable(),
     longitude: z.number().optional().nullable(),
     isDefault: z.boolean().optional().default(false),
@@ -376,7 +381,11 @@ const updateAddressSchema = z
     addressLine2: z.string().trim().max(255).optional().nullable(),
     landmark: z.string().trim().max(255).optional().nullable(),
     city: z.string().trim().max(100).optional(),
-    pincode: z.string().trim().regex(/^\d{6}$/).optional(),
+    pincode: z
+      .string()
+      .trim()
+      .regex(/^\d{6}$/)
+      .optional(),
     latitude: z.number().optional().nullable(),
     longitude: z.number().optional().nullable(),
     isDefault: z.boolean().optional(),
@@ -393,14 +402,23 @@ const checkServiceabilitySchema = z
 
 const sendOtpSchema = z
   .object({
-    phone: z.string().trim().regex(/^[6-9]\d{9}$/, 'Must be a valid 10-digit Indian mobile number'),
+    phone: z
+      .string()
+      .trim()
+      .regex(/^[6-9]\d{9}$/, 'Must be a valid 10-digit Indian mobile number'),
   })
   .strict();
 
 const verifyOtpSchema = z
   .object({
-    phone: z.string().trim().regex(/^[6-9]\d{9}$/, 'Must be a valid 10-digit Indian mobile number'),
-    otp: z.string().trim().regex(/^\d{6}$/, 'OTP must be 6 digits'),
+    phone: z
+      .string()
+      .trim()
+      .regex(/^[6-9]\d{9}$/, 'Must be a valid 10-digit Indian mobile number'),
+    otp: z
+      .string()
+      .trim()
+      .regex(/^\d{6}$/, 'OTP must be 6 digits'),
   })
   .strict();
 

@@ -30,12 +30,10 @@ describe('AI Grocery Assistant Unit Tests (P0 / P1 Hardened)', () => {
   });
 
   it('rejects client attempting to select AI provider (P0: provider is server config only)', async () => {
-    const res = await request(app)
-      .post('/api/assistant/chat')
-      .send({
-        message: 'Show me milk',
-        provider: 'fake', // Client trying to choose provider
-      });
+    const res = await request(app).post('/api/assistant/chat').send({
+      message: 'Show me milk',
+      provider: 'fake', // Client trying to choose provider
+    });
 
     expect(res.status).toBe(422);
     expect(res.body.status).toBe('error');
@@ -62,12 +60,10 @@ describe('AI Grocery Assistant Unit Tests (P0 / P1 Hardened)', () => {
       content: `Message ${i}`,
     }));
 
-    const res = await request(app)
-      .post('/api/assistant/chat')
-      .send({
-        message: 'Hello',
-        conversationHistory: excessiveTurns,
-      });
+    const res = await request(app).post('/api/assistant/chat').send({
+      message: 'Hello',
+      conversationHistory: excessiveTurns,
+    });
 
     expect(res.status).toBe(422);
     expect(res.body.status).toBe('error');
@@ -127,14 +123,12 @@ describe('AI Grocery Assistant Unit Tests (P0 / P1 Hardened)', () => {
   });
 
   it('records user eval feedback ratings in database table (P1)', async () => {
-    const res = await request(app)
-      .post('/api/assistant/feedback')
-      .send({
-        rating: 1,
-        messageId: 'msg_123',
-        conversationId: 'conv_test_123',
-        comment: 'Great fresh produce!',
-      });
+    const res = await request(app).post('/api/assistant/feedback').send({
+      rating: 1,
+      messageId: 'msg_123',
+      conversationId: 'conv_test_123',
+      comment: 'Great fresh produce!',
+    });
 
     expect(res.status).toBe(200);
     expect(res.body.status).toBe('success');

@@ -130,8 +130,11 @@ const assistantGuestGCRA = new GCRA({ limit: 10, periodMs: 60000, burst: 10 });
 const assistantLimiter = async (req, res, next) => {
   const isAuth = Boolean(
     (req && req.user && req.user.id) ||
-      (req && req.headers && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) ||
-      (req && req.cookies && req.cookies.accessToken)
+    (req &&
+      req.headers &&
+      req.headers.authorization &&
+      req.headers.authorization.startsWith('Bearer ')) ||
+    (req && req.cookies && req.cookies.accessToken)
   );
   const limiter = isAuth ? assistantUserGCRA : assistantGuestGCRA;
   const ip = extractClientIp(req);

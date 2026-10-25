@@ -140,7 +140,9 @@ function validateFourEyes(actor, context = {}) {
   const secondApproverId =
     context.secondApproverId ||
     context.second_approver_id ||
-    (context.req && context.req.body && (context.req.body.secondApproverId || context.req.body.second_approver_id));
+    (context.req &&
+      context.req.body &&
+      (context.req.body.secondApproverId || context.req.body.second_approver_id));
   if (!secondApproverId) {
     return false;
   }

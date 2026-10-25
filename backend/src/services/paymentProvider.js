@@ -90,7 +90,13 @@ class FakePaymentProvider extends PaymentProvider {
     return orderData;
   }
 
-  verifyWebhookSignature({ rawBody, signature, secret = null, timestamp = null, toleranceSeconds = 300 }) {
+  verifyWebhookSignature({
+    rawBody,
+    signature,
+    secret = null,
+    timestamp = null,
+    toleranceSeconds = 300,
+  }) {
     if (!signature || !rawBody) {
       return false;
     }
@@ -98,9 +104,15 @@ class FakePaymentProvider extends PaymentProvider {
     // Timestamp replay protection (± tolerance window)
     if (timestamp !== null && timestamp !== undefined) {
       const nowSeconds = Math.floor(Date.now() / 1000);
-      const eventSeconds = Math.floor(Number(timestamp) > 1e11 ? Number(timestamp) / 1000 : Number(timestamp));
+      const eventSeconds = Math.floor(
+        Number(timestamp) > 1e11 ? Number(timestamp) / 1000 : Number(timestamp)
+      );
       if (Math.abs(nowSeconds - eventSeconds) > toleranceSeconds) {
-        logger.warn('Webhook rejected due to timestamp drift', { nowSeconds, eventSeconds, toleranceSeconds });
+        logger.warn('Webhook rejected due to timestamp drift', {
+          nowSeconds,
+          eventSeconds,
+          toleranceSeconds,
+        });
         return false;
       }
     }
@@ -130,7 +142,12 @@ class FakePaymentProvider extends PaymentProvider {
       return this.payments.get(paymentId);
     }
     const pidStr = String(paymentId).toLowerCase();
-    if (pidStr.includes('failed') || pidStr.includes('unpaid') || pidStr.includes('expired') || pidStr.includes('stuck')) {
+    if (
+      pidStr.includes('failed') ||
+      pidStr.includes('unpaid') ||
+      pidStr.includes('expired') ||
+      pidStr.includes('stuck')
+    ) {
       return {
         id: paymentId,
         entity: 'payment',
@@ -214,14 +231,22 @@ class RazorpayPaymentProvider extends PaymentProvider {
     return response.json();
   }
 
-  verifyWebhookSignature({ rawBody, signature, secret = null, timestamp = null, toleranceSeconds = 300 }) {
+  verifyWebhookSignature({
+    rawBody,
+    signature,
+    secret = null,
+    timestamp = null,
+    toleranceSeconds = 300,
+  }) {
     if (!signature || !rawBody) {
       return false;
     }
 
     if (timestamp !== null && timestamp !== undefined) {
       const nowSeconds = Math.floor(Date.now() / 1000);
-      const eventSeconds = Math.floor(Number(timestamp) > 1e11 ? Number(timestamp) / 1000 : Number(timestamp));
+      const eventSeconds = Math.floor(
+        Number(timestamp) > 1e11 ? Number(timestamp) / 1000 : Number(timestamp)
+      );
       if (Math.abs(nowSeconds - eventSeconds) > toleranceSeconds) {
         logger.warn('Razorpay webhook timestamp out of tolerance', { nowSeconds, eventSeconds });
         return false;
@@ -298,14 +323,21 @@ function getPaymentProvider(providerName = null) {
   }
 
   // Fake provider ONLY when NODE_ENV=test or (PAYMENT_PROVIDER=fake AND NODE_ENV!=production)
-  if (isTest || (configuredProvider === 'fake' && !isProd) || (providerName === 'FAKE' && !isProd)) {
+  if (
+    isTest ||
+    (configuredProvider === 'fake' && !isProd) ||
+    (providerName === 'FAKE' && !isProd)
+  ) {
     return fakeProvider;
   }
 
   // In production, missing credentials is a critical configuration error
   if (isProd) {
     if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
-      throw new AppError('Payment gateway configuration error in production: missing credentials', 500);
+      throw new AppError(
+        'Payment gateway configuration error in production: missing credentials',
+        500
+      );
     }
   }
 

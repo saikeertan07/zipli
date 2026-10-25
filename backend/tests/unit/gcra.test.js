@@ -233,7 +233,11 @@ describe('gcra.js Generic Cell Rate Algorithm rate limiter', () => {
       const res = await bareLimiter.consumeAsync('bare_key');
       expect(res.allowed).toBe(true);
 
-      const noSetStore = { async get() { return undefined; } };
+      const noSetStore = {
+        async get() {
+          return undefined;
+        },
+      };
       const limiterNoSet = new GCRA({ store: noSetStore });
       const res2 = await limiterNoSet.consumeAsync('no_set');
       expect(res2.allowed).toBe(true);

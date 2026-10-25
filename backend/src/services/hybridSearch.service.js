@@ -54,7 +54,13 @@ class HybridSearchService {
    * @param {Array<number>} [params.queryEmbedding] - Optional dense vector embedding
    * @returns {Promise<{ items: Array<Object>, total: number, sourcesUsed: string[], tookMs: number }>}
    */
-  async search({ searchTerm, category = null, maxPrice = null, limit = 10, queryEmbedding = null }) {
+  async search({
+    searchTerm,
+    category = null,
+    maxPrice = null,
+    limit = 10,
+    queryEmbedding = null,
+  }) {
     const start = Date.now();
     const cleanTerm = (searchTerm || '').trim();
     if (!cleanTerm) {
@@ -180,10 +186,7 @@ class HybridSearchService {
              ${category ? 'AND category_id = $1' : ''}
              ${maxPrice ? (category ? 'AND price <= $2' : 'AND price <= $1') : ''}
            LIMIT 60`,
-          [
-            ...(category ? [category] : []),
-            ...(maxPrice ? [maxPrice] : []),
-          ]
+          [...(category ? [category] : []), ...(maxPrice ? [maxPrice] : [])]
         );
 
         if (candRes.rows.length > 0) {

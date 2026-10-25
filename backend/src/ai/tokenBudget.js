@@ -11,7 +11,8 @@ const IN_MEMORY_BUDGETS = new Map();
 
 class TokenBudgetManager {
   constructor(options = {}) {
-    this.defaultDailyLimit = options.dailyLimit || parseInt(process.env.AI_DAILY_TOKEN_BUDGET, 10) || 50000;
+    this.defaultDailyLimit =
+      options.dailyLimit || parseInt(process.env.AI_DAILY_TOKEN_BUDGET, 10) || 50000;
   }
 
   /**
@@ -45,7 +46,9 @@ class TokenBudgetManager {
         };
       }
     } catch (err) {
-      logger.warn('Redis token budget lookup failed, checking in-memory fallback', { error: err.message });
+      logger.warn('Redis token budget lookup failed, checking in-memory fallback', {
+        error: err.message,
+      });
     }
 
     const current = IN_MEMORY_BUDGETS.get(key) || 0;

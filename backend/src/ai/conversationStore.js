@@ -69,7 +69,9 @@ class ConversationStore {
         return id;
       }
     } catch (err) {
-      logger.warn('Failed to write conversation to Redis, using in-memory store', { error: err.message });
+      logger.warn('Failed to write conversation to Redis, using in-memory store', {
+        error: err.message,
+      });
     }
 
     // In-memory fallback

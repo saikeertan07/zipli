@@ -14,9 +14,7 @@ describe('Service Worker Cache Hygiene & Privacy Policy (F-023, SEC-AUTH-04)', (
 
     it('rejects state-changing methods (POST, PUT, DELETE, PATCH)', () => {
       ['POST', 'PUT', 'DELETE', 'PATCH'].forEach((method) => {
-        expect(
-          isRequestCacheable({ method, url: 'https://example.com/api/products' })
-        ).toBe(false);
+        expect(isRequestCacheable({ method, url: 'https://example.com/api/products' })).toBe(false);
       });
     });
   });
@@ -90,9 +88,9 @@ describe('Service Worker Cache Hygiene & Privacy Policy (F-023, SEC-AUTH-04)', (
       expect(isRequestCacheable({ method: 'GET', url: 'https://zipli.in/api/products/42' })).toBe(
         true
       );
-      expect(
-        isRequestCacheable({ method: 'GET', url: 'https://zipli.in/api/v1/products' })
-      ).toBe(true);
+      expect(isRequestCacheable({ method: 'GET', url: 'https://zipli.in/api/v1/products' })).toBe(
+        true
+      );
     });
 
     it('permits caching public category routes', () => {

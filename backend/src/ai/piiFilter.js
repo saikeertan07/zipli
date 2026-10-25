@@ -13,7 +13,8 @@ const PATTERNS = {
   PHONE: /(?:\+91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}\b/g,
   CARD: /\b(?:\d{4}[ -]?){3,4}\d{1,4}\b/g,
   PINCODE: /\b[1-9][0-9]{2}\s?[0-9]{3}\b/g,
-  ADDRESS_KEYWORD: /\b(?:flat(?:\s+no)?|apartment|apt|house(?:\s+no)?|street|road|layout|nagar|colony|sector|floor)\s*[:#]?[^\n,.]+/gi,
+  ADDRESS_KEYWORD:
+    /\b(?:flat(?:\s+no)?|apartment|apt|house(?:\s+no)?|street|road|layout|nagar|colony|sector|floor)\s*[:#]?[^\n,.]+/gi,
 };
 
 /**
@@ -34,8 +35,16 @@ function redactOutboundPII(text) {
     { type: 'email', regex: new RegExp(PATTERNS.EMAIL.source, 'gi'), token: '[EMAIL_REDACTED]' },
     { type: 'phone', regex: new RegExp(PATTERNS.PHONE.source, 'g'), token: '[PHONE_REDACTED]' },
     { type: 'card', regex: new RegExp(PATTERNS.CARD.source, 'g'), token: '[CARD_REDACTED]' },
-    { type: 'address', regex: new RegExp(PATTERNS.ADDRESS_KEYWORD.source, 'gi'), token: '[ADDRESS_REDACTED]' },
-    { type: 'pincode', regex: new RegExp(PATTERNS.PINCODE.source, 'g'), token: '[PINCODE_REDACTED]' },
+    {
+      type: 'address',
+      regex: new RegExp(PATTERNS.ADDRESS_KEYWORD.source, 'gi'),
+      token: '[ADDRESS_REDACTED]',
+    },
+    {
+      type: 'pincode',
+      regex: new RegExp(PATTERNS.PINCODE.source, 'g'),
+      token: '[PINCODE_REDACTED]',
+    },
   ];
 
   for (const { type, regex, token } of filters) {

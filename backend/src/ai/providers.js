@@ -66,7 +66,11 @@ class FakeLLMProvider extends LLMProvider {
     }
 
     // 1b. Tool Call: Store inventory status
-    if (lower.includes('inventory') || lower.includes('stock status') || lower.includes('check stock')) {
+    if (
+      lower.includes('inventory') ||
+      lower.includes('stock status') ||
+      lower.includes('check stock')
+    ) {
       return {
         text: 'Checking real-time inventory levels in your local dark store:',
         toolCalls: [
@@ -110,16 +114,16 @@ class FakeLLMProvider extends LLMProvider {
       const dish = lower.includes('biryani')
         ? 'Chicken Biryani'
         : lower.includes('pasta')
-        ? 'Pasta Arrabbiata'
-        : lower.includes('chai')
-        ? 'Masala Chai'
-        : lower.includes('palak paneer')
-        ? 'Palak Paneer'
-        : lower.includes('smoothie')
-        ? 'Breakfast Smoothie'
-        : lower.includes('dal tadka')
-        ? 'Dal Tadka'
-        : 'Vegetable Curry';
+          ? 'Pasta Arrabbiata'
+          : lower.includes('chai')
+            ? 'Masala Chai'
+            : lower.includes('palak paneer')
+              ? 'Palak Paneer'
+              : lower.includes('smoothie')
+                ? 'Breakfast Smoothie'
+                : lower.includes('dal tadka')
+                  ? 'Dal Tadka'
+                  : 'Vegetable Curry';
 
       return {
         text: `Here are the fresh ingredients required to make ${dish}:`,
@@ -154,7 +158,10 @@ class FakeLLMProvider extends LLMProvider {
 
     // 4. Tool Call: Catalog search
     const cleanTerm = lower
-      .replace(/find|show me|search|do you have|in stock|\?|please|i want|chahiye|1kg|500g|1 litre|2kg|pack of \d+|box/gi, '')
+      .replace(
+        /find|show me|search|do you have|in stock|\?|please|i want|chahiye|1kg|500g|1 litre|2kg|pack of \d+|box/gi,
+        ''
+      )
       .trim();
     const queryTerm = cleanTerm.length > 1 ? cleanTerm : 'groceries';
 
@@ -313,7 +320,8 @@ function getLLMProvider(requested = null) {
   if (reqStr.toUpperCase() === 'OFFLINE') return offlineFallbackProvider;
 
   const isTest = process.env.NODE_ENV === 'test';
-  const isExplicitFake = (process.env.AI_PROVIDER || '').toLowerCase() === 'fake' || reqStr.toUpperCase() === 'FAKE';
+  const isExplicitFake =
+    (process.env.AI_PROVIDER || '').toLowerCase() === 'fake' || reqStr.toUpperCase() === 'FAKE';
 
   if (isTest || isExplicitFake) {
     return fakeProvider;

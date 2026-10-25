@@ -129,7 +129,9 @@ describe('IDOR / BOLA & Privilege Escalation Security Suite (SEC-AZ-02, SEC-AZ-1
 
   describe('User Profile & Privacy Data Isolation (GDPR / DPDP & SEC-AZ-02)', () => {
     it('Bob only receives his own profile and cannot access Alice profile data', async () => {
-      const resB = await request(app).get('/api/v1/users/me').set('Authorization', `Bearer ${tokenB}`);
+      const resB = await request(app)
+        .get('/api/v1/users/me')
+        .set('Authorization', `Bearer ${tokenB}`);
       expect(resB.status).toBe(200);
       expect(resB.body.data.user.id).toBe(userB.id);
       expect(resB.body.data.user.email).toBe(userB.email);

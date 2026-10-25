@@ -58,13 +58,17 @@ app.use(
           "'self'",
           'https://checkout.razorpay.com',
           'https://cdn.razorpay.com',
-          ...(process.env.CSP_EXTRA_SCRIPT_SRC ? process.env.CSP_EXTRA_SCRIPT_SRC.split(',').map((s) => s.trim()) : []),
+          ...(process.env.CSP_EXTRA_SCRIPT_SRC
+            ? process.env.CSP_EXTRA_SCRIPT_SRC.split(',').map((s) => s.trim())
+            : []),
         ],
         frameSrc: [
           "'self'",
           'https://checkout.razorpay.com',
           'https://api.razorpay.com',
-          ...(process.env.CSP_EXTRA_FRAME_SRC ? process.env.CSP_EXTRA_FRAME_SRC.split(',').map((s) => s.trim()) : []),
+          ...(process.env.CSP_EXTRA_FRAME_SRC
+            ? process.env.CSP_EXTRA_FRAME_SRC.split(',').map((s) => s.trim())
+            : []),
         ],
         styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],

@@ -111,7 +111,11 @@ const {
 
 router.get('/queues', authorize(PERMISSIONS.QUEUES_MANAGE), getQueueStats);
 router.get('/queues/:queueName/jobs', authorize(PERMISSIONS.QUEUES_MANAGE), getQueueJobs);
-router.post('/queues/:queueName/retry/:jobId', authorize(PERMISSIONS.QUEUES_MANAGE), retryDeadLetterJob);
+router.post(
+  '/queues/:queueName/retry/:jobId',
+  authorize(PERMISSIONS.QUEUES_MANAGE),
+  retryDeadLetterJob
+);
 router.post(
   '/queues/dispatch',
   authorize(PERMISSIONS.QUEUES_MANAGE),

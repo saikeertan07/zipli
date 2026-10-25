@@ -319,7 +319,14 @@ and Recall@3 across Indian quick-commerce query archetypes.
 
   console.log(summary);
 
-  const evidencePath = path.join(__dirname, '..', '..', 'docs', 'evidence', 'hybrid-search-benchmark.txt');
+  const evidencePath = path.join(
+    __dirname,
+    '..',
+    '..',
+    'docs',
+    'evidence',
+    'hybrid-search-benchmark.txt'
+  );
   fs.writeFileSync(evidencePath, summary, 'utf8');
   console.log(`Saved benchmark evidence to: docs/evidence/hybrid-search-benchmark.txt\n`);
 

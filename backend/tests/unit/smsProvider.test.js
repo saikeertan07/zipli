@@ -14,7 +14,9 @@ describe('SMS Provider Unit Tests', () => {
   it('throws when calling abstract base methods directly', async () => {
     const base = new SMSProvider();
     await expect(base.sendOtp({})).rejects.toThrow('sendOtp() must be implemented');
-    await expect(base.sendNotification({})).rejects.toThrow('sendNotification() must be implemented');
+    await expect(base.sendNotification({})).rejects.toThrow(
+      'sendNotification() must be implemented'
+    );
   });
 
   it('handles fake SMS provider notifications, records, and clearing', async () => {
@@ -35,13 +37,13 @@ describe('SMS Provider Unit Tests', () => {
 
   it('handles Fast2SMS provider validation and missing API key error', async () => {
     const fast2sms = new Fast2SMSSMSProvider({ apiKey: '' });
-    await expect(
-      fast2sms.sendOtp({ phone: '9876543210', otp: '123456' })
-    ).rejects.toThrow('SMS_API_KEY is not configured');
+    await expect(fast2sms.sendOtp({ phone: '9876543210', otp: '123456' })).rejects.toThrow(
+      'SMS_API_KEY is not configured'
+    );
 
-    await expect(
-      fast2sms.sendNotification({ phone: '9876543210', message: 'Hi' })
-    ).rejects.toThrow('SMS_API_KEY is not configured');
+    await expect(fast2sms.sendNotification({ phone: '9876543210', message: 'Hi' })).rejects.toThrow(
+      'SMS_API_KEY is not configured'
+    );
   });
 
   it('returns fake provider in test environment via getSMSProvider', () => {

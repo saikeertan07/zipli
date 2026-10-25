@@ -85,7 +85,10 @@ describe('DPDP & GDPR Compliance API (/api/compliance)', () => {
       expect(res.body.status).toBe('success');
 
       // Verify user record in database is anonymized
-      const dbCheck = await query(`SELECT name, email, phone, is_anonymized FROM users WHERE id = $1`, [user.id]);
+      const dbCheck = await query(
+        `SELECT name, email, phone, is_anonymized FROM users WHERE id = $1`,
+        [user.id]
+      );
       expect(dbCheck.rows[0].is_anonymized).toBe(true);
       expect(dbCheck.rows[0].name).toContain('Deleted User');
       expect(dbCheck.rows[0].email).toContain('anonymized.zipli.internal');

@@ -48,7 +48,10 @@ class OTPService {
     const smsProvider = getSMSProvider();
     await smsProvider.sendOtp({ phone, otp });
 
-    logger.info('OTP generated and dispatched', { phone: phone.slice(-4), verificationId: rows[0].id });
+    logger.info('OTP generated and dispatched', {
+      phone: phone.slice(-4),
+      verificationId: rows[0].id,
+    });
 
     return {
       success: true,
@@ -87,25 +90,23 @@ class OTPService {
 
     const expectedHash = hashOtp(phone, otp);
     if (verification.otp_hash !== expectedHash) {
-      await query(
-        `UPDATE phone_verifications SET attempts = attempts + 1 WHERE id = $1`,
-        [verification.id]
-      );
+      await query(`UPDATE phone_verifications SET attempts = attempts + 1 WHERE id = $1`, [
+        verification.id,
+      ]);
       throw new AppError('Invalid OTP. Please check and try again.', 400);
     }
 
     // Mark verification completed
-    await query(
-      `UPDATE phone_verifications SET verified_at = NOW() WHERE id = $1`,
-      [verification.id]
-    );
+    await query(`UPDATE phone_verifications SET verified_at = NOW() WHERE id = $1`, [
+      verification.id,
+    ]);
 
     // If a logged-in user is verifying their phone, update user profile
     if (userId) {
-      await query(
-        `UPDATE users SET is_phone_verified = true, phone = $1 WHERE id = $2`,
-        [phone, userId]
-      );
+      await query(`UPDATE users SET is_phone_verified = true, phone = $1 WHERE id = $2`, [
+        phone,
+        userId,
+      ]);
     }
 
     logger.info('OTP successfully verified', { phone: phone.slice(-4), userId });

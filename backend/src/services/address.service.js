@@ -74,7 +74,10 @@ class AddressService {
           }
         }
       } catch (err) {
-        logger.warn('Failed distance calculation for store', { storeId: store.id, error: err.message });
+        logger.warn('Failed distance calculation for store', {
+          storeId: store.id,
+          error: err.message,
+        });
       }
     }
 
@@ -173,10 +176,9 @@ class AddressService {
    * Updates an existing address with ownership check.
    */
   async updateAddress(userId, addressId, updates) {
-    const existingRes = await query(
-      `SELECT id, user_id FROM user_addresses WHERE id = $1`,
-      [Number(addressId)]
-    );
+    const existingRes = await query(`SELECT id, user_id FROM user_addresses WHERE id = $1`, [
+      Number(addressId),
+    ]);
 
     if (existingRes.rows.length === 0) {
       throw new AppError('Address not found', 404);

@@ -26,7 +26,12 @@ router.post('/dismiss', requireAuth, authorize(PERMISSIONS.ORDERS_CREATE), dismi
 
 // Simulate payment webhook capture (MOUNTED STRICTLY IN NON-PRODUCTION ENVIRONMENTS - P0)
 if (process.env.NODE_ENV !== 'production') {
-  router.post('/simulate-success', requireAuth, authorize(PERMISSIONS.ORDERS_CREATE), simulatePaymentSuccess);
+  router.post(
+    '/simulate-success',
+    requireAuth,
+    authorize(PERMISSIONS.ORDERS_CREATE),
+    simulatePaymentSuccess
+  );
 }
 
 // Gateway webhook ingestion (public, authenticated via HMAC signature)

@@ -48,12 +48,19 @@ const getStoreInventoryStatusSchema = z.object({
 const AI_TOOLS = [
   {
     name: 'searchCatalog',
-    description: 'Searches quick-commerce grocery products by keyword, category, price, and availability.',
+    description:
+      'Searches quick-commerce grocery products by keyword, category, price, and availability.',
     parameters: {
       type: 'object',
       properties: {
-        query: { type: 'string', description: 'Product search term (e.g. "toned milk", "brown bread", "paneer")' },
-        category: { type: 'string', description: 'Product category ID (e.g. "dairy", "bakery", "produce")' },
+        query: {
+          type: 'string',
+          description: 'Product search term (e.g. "toned milk", "brown bread", "paneer")',
+        },
+        category: {
+          type: 'string',
+          description: 'Product category ID (e.g. "dairy", "bakery", "produce")',
+        },
         maxPrice: { type: 'number', description: 'Maximum price ceiling in INR' },
         limit: { type: 'integer', description: 'Maximum number of items to return (1-20)' },
       },
@@ -63,11 +70,15 @@ const AI_TOOLS = [
   },
   {
     name: 'getRecipeIngredients',
-    description: 'Retrieves standard grocery ingredients and quantities needed to cook a specific meal or dish.',
+    description:
+      'Retrieves standard grocery ingredients and quantities needed to cook a specific meal or dish.',
     parameters: {
       type: 'object',
       properties: {
-        dishName: { type: 'string', description: 'Name of the dish or meal (e.g. "Dal Tadka", "Pasta Alfredo")' },
+        dishName: {
+          type: 'string',
+          description: 'Name of the dish or meal (e.g. "Dal Tadka", "Pasta Alfredo")',
+        },
         servings: { type: 'integer', description: 'Number of people/servings (1-12)' },
         dietaryRestrictions: {
           type: 'array',

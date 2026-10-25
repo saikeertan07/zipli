@@ -9,7 +9,9 @@ describe('Anthropic Claude LLM Provider Unit Suite (P0/P1)', () => {
 
   test('base LLMProvider throws when generateChatResponse not overridden', async () => {
     const base = new LLMProvider();
-    await expect(base.generateChatResponse({})).rejects.toThrow('generateChatResponse() must be implemented');
+    await expect(base.generateChatResponse({})).rejects.toThrow(
+      'generateChatResponse() must be implemented'
+    );
   });
 
   test('throws AppError if apiKey is missing', async () => {

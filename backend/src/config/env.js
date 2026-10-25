@@ -152,10 +152,14 @@ function validateEnv(rawEnv) {
         errors.push('In production, RAZORPAY_KEY_ID is required unless PAYMENT_PROVIDER=cod_only.');
       }
       if (!razorpayKeySecret) {
-        errors.push('In production, RAZORPAY_KEY_SECRET is required unless PAYMENT_PROVIDER=cod_only.');
+        errors.push(
+          'In production, RAZORPAY_KEY_SECRET is required unless PAYMENT_PROVIDER=cod_only.'
+        );
       }
       if (!razorpayWebhookSecret) {
-        errors.push('In production, RAZORPAY_WEBHOOK_SECRET is required unless PAYMENT_PROVIDER=cod_only.');
+        errors.push(
+          'In production, RAZORPAY_WEBHOOK_SECRET is required unless PAYMENT_PROVIDER=cod_only.'
+        );
       }
     }
   }

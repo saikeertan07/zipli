@@ -103,7 +103,9 @@ describe('Property-Based Invariants with fast-check (F-043, FIN-PBT-01)', () => 
 
             // Invariant: Total surge = weather + lateNight + heavyOrder
             expect(feeResult.totalSurgePaise).toBe(
-              feeResult.weatherSurgePaise + feeResult.lateNightSurgePaise + feeResult.heavyOrderSurgePaise
+              feeResult.weatherSurgePaise +
+                feeResult.lateNightSurgePaise +
+                feeResult.heavyOrderSurgePaise
             );
 
             // Invariant: If item total >= ₹500, base and distance fee are completely waived

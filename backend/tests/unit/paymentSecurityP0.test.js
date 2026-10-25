@@ -103,7 +103,9 @@ describe('P0 Payment Security & Free-Orders Hole Defense', () => {
       process.env.PAYMENT_PROVIDER = 'razorpay';
       delete process.env.RAZORPAY_KEY_ID;
       delete process.env.RAZORPAY_KEY_SECRET;
-      expect(() => getPaymentProvider()).toThrow(/Payment gateway configuration error in production/);
+      expect(() => getPaymentProvider()).toThrow(
+        /Payment gateway configuration error in production/
+      );
     });
 
     it('never returns fakeProvider in production even if providerName=FAKE is requested', () => {

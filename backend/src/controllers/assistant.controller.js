@@ -85,12 +85,7 @@ const assistantChatStream = asyncHandler(async (req, res) => {
 
 // POST /api/assistant/feedback (Persisted in ai_feedback table with server-derived metadata - P1)
 const assistantFeedback = asyncHandler(async (req, res) => {
-  const {
-    rating,
-    messageId = null,
-    conversationId = null,
-    comment = null,
-  } = req.body;
+  const { rating, messageId = null, conversationId = null, comment = null } = req.body;
   const userId = req.user ? req.user.id : null;
 
   let provider = null;
@@ -117,13 +112,28 @@ const assistantFeedback = asyncHandler(async (req, res) => {
     await query(
       `INSERT INTO ai_feedback (conversation_id, message_id, user_id, rating, tool_names, provider, latency_ms, tokens_used, comment)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-      [resolvedConversationId, messageId, userId, rating, toolNames, provider, latencyMs, tokensUsed, comment]
+      [
+        resolvedConversationId,
+        messageId,
+        userId,
+        rating,
+        toolNames,
+        provider,
+        latencyMs,
+        tokensUsed,
+        comment,
+      ]
     );
   } catch (err) {
     logger.warn('Failed to insert AI feedback into database', { error: err.message });
   }
 
-  logger.info('AI Assistant feedback recorded', { rating, messageId, conversationId: resolvedConversationId, userId });
+  logger.info('AI Assistant feedback recorded', {
+    rating,
+    messageId,
+    conversationId: resolvedConversationId,
+    userId,
+  });
   res.json({
     status: 'success',
     data: { recorded: true, rating, messageId, conversationId: resolvedConversationId },

@@ -59,12 +59,10 @@ describe('Assistive AI Integration Tests (F-030, F-031)', () => {
 
   describe('POST /api/assistant/recipe-to-cart', () => {
     it('converts a recipe query into matched inventory items and a proposed cart action', async () => {
-      const res = await request(app)
-        .post('/api/assistant/recipe-to-cart')
-        .send({
-          dish: 'palak paneer',
-          servings: 4,
-        });
+      const res = await request(app).post('/api/assistant/recipe-to-cart').send({
+        dish: 'palak paneer',
+        servings: 4,
+      });
 
       expect(res.status).toBe(200);
       expect(res.body.status).toBe('success');
@@ -74,7 +72,9 @@ describe('Assistive AI Integration Tests (F-030, F-031)', () => {
 
       // Check matched items contain palak / paneer
       const names = res.body.data.matchedItems.map((m) => m.name);
-      expect(names.some((n) => n.includes('Palak') || n.includes('Paneer') || n.includes('Butter'))).toBe(true);
+      expect(
+        names.some((n) => n.includes('Palak') || n.includes('Paneer') || n.includes('Butter'))
+      ).toBe(true);
 
       // Verify cart proposal
       expect(res.body.data.cartProposal.actionType).toBe('ADD_RECIPE_TO_CART');
@@ -83,11 +83,9 @@ describe('Assistive AI Integration Tests (F-030, F-031)', () => {
     });
 
     it('rejects invalid inputs with Zod validation error', async () => {
-      const res = await request(app)
-        .post('/api/assistant/recipe-to-cart')
-        .send({
-          dish: '', // too short
-        });
+      const res = await request(app).post('/api/assistant/recipe-to-cart').send({
+        dish: '', // too short
+      });
 
       expect(res.status).toBe(422);
     });

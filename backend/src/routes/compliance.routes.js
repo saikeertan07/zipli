@@ -28,14 +28,24 @@ router.post(
   '/consent',
   authorize(PERMISSIONS.USERS_READ_OWN),
   asyncHandler(async (req, res) => {
-    const { analyticsConsent = true, marketingConsent = false, communicationConsent = true } = req.body;
+    const {
+      analyticsConsent = true,
+      marketingConsent = false,
+      communicationConsent = true,
+    } = req.body;
     const ip = req.ip || '127.0.0.1';
 
     const { rows } = await query(
       `INSERT INTO user_consents (user_id, analytics_consent, marketing_consent, communication_consent, version, ip_address, consented_at, updated_at)
        VALUES ($1, $2, $3, $4, 'dpdp_v1_2026', $5, NOW(), NOW())
        RETURNING id, user_id, analytics_consent, marketing_consent, communication_consent, version, ip_address, consented_at`,
-      [req.user.id, Boolean(analyticsConsent), Boolean(marketingConsent), Boolean(communicationConsent), ip]
+      [
+        req.user.id,
+        Boolean(analyticsConsent),
+        Boolean(marketingConsent),
+        Boolean(communicationConsent),
+        ip,
+      ]
     );
 
     const consent = rows[0];

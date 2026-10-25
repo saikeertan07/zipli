@@ -153,7 +153,9 @@ describe('Double-Entry Balanced General Ledger (F-051, FIN-LE-01)', () => {
 
         // Attempting to UPDATE line
         await expect(
-          pool.query('UPDATE ledger_lines SET debit_paise = debit_paise + 100 WHERE id = $1', [lineId])
+          pool.query('UPDATE ledger_lines SET debit_paise = debit_paise + 100 WHERE id = $1', [
+            lineId,
+          ])
         ).rejects.toThrow(/immutable/i);
 
         // Attempting to DELETE line
@@ -163,7 +165,10 @@ describe('Double-Entry Balanced General Ledger (F-051, FIN-LE-01)', () => {
 
         // Attempting to UPDATE entry header
         await expect(
-          pool.query('UPDATE ledger_journal_entries SET description = $1 WHERE id = $2', ['Hacked', entryId])
+          pool.query('UPDATE ledger_journal_entries SET description = $1 WHERE id = $2', [
+            'Hacked',
+            entryId,
+          ])
         ).rejects.toThrow(/immutable/i);
 
         // Attempting to DELETE entry header

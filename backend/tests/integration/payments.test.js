@@ -31,9 +31,7 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
     });
 
     it('returns 401 when request is unauthenticated', async () => {
-      const res = await request(app)
-        .post('/api/payments/create-order')
-        .send({ orderId: 1 });
+      const res = await request(app).post('/api/payments/create-order').send({ orderId: 1 });
 
       expect(res.status).toBe(401);
     });
@@ -79,10 +77,7 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
       expect(res.body.data.amountPaise).toBe(Number(order.grand_total) * 100);
 
       // Verify DB record
-      const dbRes = await query(
-        `SELECT * FROM payment_orders WHERE order_id = $1`,
-        [order.id]
-      );
+      const dbRes = await query(`SELECT * FROM payment_orders WHERE order_id = $1`, [order.id]);
       expect(dbRes.rows.length).toBe(1);
       expect(dbRes.rows[0].status).toBe('CREATED');
     });
@@ -115,7 +110,10 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
       const payload = { event: 'payment.captured', event_id: 'evt_123' };
       const res = await request(app)
         .post('/api/payments/webhook')
-        .set('x-razorpay-signature', '0000000000000000000000000000000000000000000000000000000000000000')
+        .set(
+          'x-razorpay-signature',
+          '0000000000000000000000000000000000000000000000000000000000000000'
+        )
         .send(payload);
 
       expect(res.status).toBe(400);
@@ -230,11 +228,15 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
       expect(orderCheck.rows[0].status).toBe('confirmed');
 
       // Verify payment_orders updated to PAID
-      const pOrderCheck = await query(`SELECT status FROM payment_orders WHERE order_id = $1`, [order.id]);
+      const pOrderCheck = await query(`SELECT status FROM payment_orders WHERE order_id = $1`, [
+        order.id,
+      ]);
       expect(pOrderCheck.rows[0].status).toBe('PAID');
 
       // Verify payment_events record
-      const eventCheck = await query(`SELECT status FROM payment_events WHERE event_id = $1`, [eventId]);
+      const eventCheck = await query(`SELECT status FROM payment_events WHERE event_id = $1`, [
+        eventId,
+      ]);
       expect(eventCheck.rows.length).toBe(1);
       expect(eventCheck.rows[0].status).toBe('PROCESSED');
 
@@ -308,12 +310,16 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
         );
         const product = prodRes.rows[0];
 
-        const { order } = await makeOrderFor(user.id, [{ productId: product.id, quantity: 2 }], { status: 'placed' });
+        const { order } = await makeOrderFor(user.id, [{ productId: product.id, quantity: 2 }], {
+          status: 'placed',
+        });
         // Simulate order placement deduction
         await query('UPDATE products SET stock = stock - 2 WHERE id = $1', [product.id]);
 
         // Stock decreased to 8 when order placed
-        const stockAfterOrder = await query('SELECT stock FROM products WHERE id = $1', [product.id]);
+        const stockAfterOrder = await query('SELECT stock FROM products WHERE id = $1', [
+          product.id,
+        ]);
         expect(stockAfterOrder.rows[0].stock).toBe(8);
 
         // Create payment order
@@ -337,7 +343,9 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
         expect(orderCheck.rows[0].status).toBe('cancelled');
 
         // Verify stock restored back to 10
-        const stockAfterDismiss = await query('SELECT stock FROM products WHERE id = $1', [product.id]);
+        const stockAfterDismiss = await query('SELECT stock FROM products WHERE id = $1', [
+          product.id,
+        ]);
         expect(stockAfterDismiss.rows[0].stock).toBe(10);
 
         // Verify inventory_movements record
@@ -349,7 +357,9 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
         expect(movCheck.rows[0].delta).toBe(2);
 
         // Verify payment_orders status is DISMISSED
-        const pOrderCheck = await query('SELECT status FROM payment_orders WHERE order_id = $1', [order.id]);
+        const pOrderCheck = await query('SELECT status FROM payment_orders WHERE order_id = $1', [
+          order.id,
+        ]);
         expect(pOrderCheck.rows[0].status).toBe('DISMISSED');
       });
 
@@ -503,7 +513,9 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
       expect(orderCheck.rows[0].status).toBe('cancelled');
 
       // Verify tamper event logged
-      const eventCheck = await query(`SELECT status FROM payment_events WHERE event_id = $1`, [eventId]);
+      const eventCheck = await query(`SELECT status FROM payment_events WHERE event_id = $1`, [
+        eventId,
+      ]);
       expect(eventCheck.rows[0].status).toBe('TAMPER_DETECTED');
     });
 
@@ -555,7 +567,9 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
       expect(orderCheck.rows[0].status).toBe('cancelled');
 
       // Verify payment order status FAILED
-      const pOrderCheck = await query(`SELECT status FROM payment_orders WHERE order_id = $1`, [order.id]);
+      const pOrderCheck = await query(`SELECT status FROM payment_orders WHERE order_id = $1`, [
+        order.id,
+      ]);
       expect(pOrderCheck.rows[0].status).toBe('FAILED');
     });
 
@@ -602,7 +616,9 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
       expect(orderCheck.rows[0].status).toBe('confirmed');
 
       // payment_orders row was created and marked PAID
-      const pOrderCheck = await query(`SELECT status FROM payment_orders WHERE order_id = $1`, [order.id]);
+      const pOrderCheck = await query(`SELECT status FROM payment_orders WHERE order_id = $1`, [
+        order.id,
+      ]);
       expect(pOrderCheck.rows.length).toBe(1);
       expect(pOrderCheck.rows[0].status).toBe('PAID');
     });
@@ -656,7 +672,9 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
       expect(orderCheck.rows[0].status).toBe('confirmed');
 
       // Payment event marked as IGNORED
-      const eventCheck = await query(`SELECT status FROM payment_events WHERE event_id = $1`, [eventId]);
+      const eventCheck = await query(`SELECT status FROM payment_events WHERE event_id = $1`, [
+        eventId,
+      ]);
       expect(eventCheck.rows[0].status).toBe('IGNORED');
     });
 
@@ -670,12 +688,16 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
         );
         const product = prodRes.rows[0];
 
-        const { order } = await makeOrderFor(user.id, [{ productId: product.id, quantity: 5 }], { status: 'placed' });
+        const { order } = await makeOrderFor(user.id, [{ productId: product.id, quantity: 5 }], {
+          status: 'placed',
+        });
         // Simulate order placement deduction
         await query('UPDATE products SET stock = stock - 5 WHERE id = $1', [product.id]);
 
         // Stock decreased to 15
-        const stockAfterOrder = await query('SELECT stock FROM products WHERE id = $1', [product.id]);
+        const stockAfterOrder = await query('SELECT stock FROM products WHERE id = $1', [
+          product.id,
+        ]);
         expect(stockAfterOrder.rows[0].stock).toBe(15);
 
         // Record payment order
@@ -687,7 +709,9 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
         );
 
         // Make order created_at 30 minutes ago
-        await query(`UPDATE orders SET created_at = NOW() - INTERVAL '30 minutes' WHERE id = $1`, [order.id]);
+        await query(`UPDATE orders SET created_at = NOW() - INTERVAL '30 minutes' WHERE id = $1`, [
+          order.id,
+        ]);
 
         const { reconcileStuckPayments } = require('../../src/services/paymentReconcile.service');
         const summary = await reconcileStuckPayments({ stuckThresholdMinutes: 15 });
@@ -700,11 +724,15 @@ describe('Payment & Gateway Integration Tests (/api/payments)', () => {
         expect(orderCheck.rows[0].status).toBe('cancelled');
 
         // Verify product restocked back to 20
-        const stockAfterReconcile = await query('SELECT stock FROM products WHERE id = $1', [product.id]);
+        const stockAfterReconcile = await query('SELECT stock FROM products WHERE id = $1', [
+          product.id,
+        ]);
         expect(stockAfterReconcile.rows[0].stock).toBe(20);
 
         // Verify payment order status EXPIRED
-        const pOrderCheck = await query('SELECT status FROM payment_orders WHERE order_id = $1', [order.id]);
+        const pOrderCheck = await query('SELECT status FROM payment_orders WHERE order_id = $1', [
+          order.id,
+        ]);
         expect(pOrderCheck.rows[0].status).toBe('EXPIRED');
       });
     });

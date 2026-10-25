@@ -27,8 +27,8 @@ describe('Pure Reciprocal Rank Fusion (rrf.js)', () => {
       name: 'dense_vector',
       items: [
         { id: 102, name: 'Nandini GoodLife Milk' }, // Rank 1 in vector, Rank 2 in BM25
-        { id: 104, name: 'Epigamia Greek Yogurt' },  // Rank 2 in vector only
-        { id: 101, name: 'Amul Toned Milk' },        // Rank 3 in vector, Rank 1 in BM25
+        { id: 104, name: 'Epigamia Greek Yogurt' }, // Rank 2 in vector only
+        { id: 101, name: 'Amul Toned Milk' }, // Rank 3 in vector, Rank 1 in BM25
       ],
     };
 

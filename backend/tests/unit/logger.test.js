@@ -92,16 +92,19 @@ describe('Structured JSON Logger', () => {
     };
 
     try {
-      logger.info('User action: contact customer@example.com on +919876543210 with Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.secret', {
-        password: 'SuperSecretPassword123!',
-        token: 'eySecretJwtToken',
-        email: 'user.private@domain.com',
-        phone: '+919876543210',
-        metadata: {
-          nestedToken: 'token123',
-          normalData: 'public_value',
-        },
-      });
+      logger.info(
+        'User action: contact customer@example.com on +919876543210 with Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.secret',
+        {
+          password: 'SuperSecretPassword123!',
+          token: 'eySecretJwtToken',
+          email: 'user.private@domain.com',
+          phone: '+919876543210',
+          metadata: {
+            nestedToken: 'token123',
+            normalData: 'public_value',
+          },
+        }
+      );
     } finally {
       process.stdout.write = originalWrite;
     }

@@ -37,14 +37,17 @@ describe('Automated Route Table Security Audit (F-011, SEC-AZ-01, SEC-AZ-04)', (
               path: routePath,
               middlewares: allMiddlewares,
               hasAuth: allMiddlewares.some(
-                (m) => m._isAuth || m.name === 'requireAuth' || m.name === 'requireRole' || m.name === 'authorize'
+                (m) =>
+                  m._isAuth ||
+                  m.name === 'requireAuth' ||
+                  m.name === 'requireRole' ||
+                  m.name === 'authorize'
               ),
               hasAuthorize: allMiddlewares.some(
-                (m) => m._isAuthorize || m._isRole || m.name === 'authorize' || m.name === 'requireRole'
+                (m) =>
+                  m._isAuthorize || m._isRole || m.name === 'authorize' || m.name === 'requireRole'
               ),
-              hasZod: allMiddlewares.some(
-                (m) => m._isZodValidator || m.name === 'validateZod'
-              ),
+              hasZod: allMiddlewares.some((m) => m._isZodValidator || m.name === 'validateZod'),
             });
           });
         } else if (layer.name === 'router' && layer.handle && layer.handle.stack) {
@@ -157,9 +160,7 @@ describe('Automated Route Table Security Audit (F-011, SEC-AZ-01, SEC-AZ-04)', (
   });
 
   it('fails if any unexpected private route exists outside the allowlist without authorization', () => {
-    const unauthenticatedPrivateRoutes = allRoutes.filter(
-      (r) => !isPublic(r.path) && !r.hasAuth
-    );
+    const unauthenticatedPrivateRoutes = allRoutes.filter((r) => !isPublic(r.path) && !r.hasAuth);
     expect(unauthenticatedPrivateRoutes).toHaveLength(0);
   });
 });

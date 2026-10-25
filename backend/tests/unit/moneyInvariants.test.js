@@ -30,11 +30,7 @@ describe('Integer Paise Money Model & Floating Point Immunity (F-050)', () => {
     // 3 items with fractional discount splits: Rs. 100, Rs. 100, Rs. 100 with Rs. 10 total discount
     // In floats: 10 / 3 = 3.3333333333333335 (leaks 1 paisa)
     // In integer paise: 1000 paise total discount across 3 lines of 10000 paise each
-    const items = [
-      { lineTotalPaise: 10000 },
-      { lineTotalPaise: 10000 },
-      { lineTotalPaise: 10000 },
-    ];
+    const items = [{ lineTotalPaise: 10000 }, { lineTotalPaise: 10000 }, { lineTotalPaise: 10000 }];
     const discountPaise = 1000;
 
     const allocated = allocateOrderDiscount(items, discountPaise);
@@ -68,10 +64,22 @@ describe('Integer Paise Money Model & Floating Point Immunity (F-050)', () => {
 
     assert(Number.isInteger(feeBreakdown.baseFeePaise), 'baseFeePaise must be an integer');
     assert(Number.isInteger(feeBreakdown.distanceFeePaise), 'distanceFeePaise must be an integer');
-    assert(Number.isInteger(feeBreakdown.weatherSurgePaise), 'weatherSurgePaise must be an integer');
-    assert(Number.isInteger(feeBreakdown.lateNightSurgePaise), 'lateNightSurgePaise must be an integer');
-    assert(Number.isInteger(feeBreakdown.heavyOrderSurgePaise), 'heavyOrderSurgePaise must be an integer');
-    assert(Number.isInteger(feeBreakdown.finalDeliveryFeePaise), 'finalDeliveryFeePaise must be an integer');
+    assert(
+      Number.isInteger(feeBreakdown.weatherSurgePaise),
+      'weatherSurgePaise must be an integer'
+    );
+    assert(
+      Number.isInteger(feeBreakdown.lateNightSurgePaise),
+      'lateNightSurgePaise must be an integer'
+    );
+    assert(
+      Number.isInteger(feeBreakdown.heavyOrderSurgePaise),
+      'heavyOrderSurgePaise must be an integer'
+    );
+    assert(
+      Number.isInteger(feeBreakdown.finalDeliveryFeePaise),
+      'finalDeliveryFeePaise must be an integer'
+    );
 
     const expectedGross =
       feeBreakdown.baseFeePaise +

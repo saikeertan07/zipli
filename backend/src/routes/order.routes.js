@@ -37,6 +37,12 @@ router.post(
 
 router.get('/', authorize(PERMISSIONS.ORDERS_READ_OWN), listOrders);
 
-router.get('/:id', authorize(PERMISSIONS.ORDERS_READ_OWN), [param('id').isInt().toInt()], validate, getOrder);
+router.get(
+  '/:id',
+  authorize(PERMISSIONS.ORDERS_READ_OWN),
+  [param('id').isInt().toInt()],
+  validate,
+  getOrder
+);
 
 module.exports = router;

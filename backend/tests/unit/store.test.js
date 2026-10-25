@@ -114,10 +114,7 @@ describe('Frontend Reactive Store Unit Tests (F-024)', () => {
 
     testStore.setTheme('dark');
     expect(testStore.getState().theme).toBe('dark');
-    expect(global.document.documentElement.setAttribute).toHaveBeenCalledWith(
-      'data-theme',
-      'dark'
-    );
+    expect(global.document.documentElement.setAttribute).toHaveBeenCalledWith('data-theme', 'dark');
     expect(JSON.parse(global.localStorage.getItem('zipli_theme'))).toBe('dark');
   });
 

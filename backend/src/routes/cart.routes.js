@@ -27,12 +27,7 @@ router.use(requireAuth);
 
 router.get('/', authorize(PERMISSIONS.CART_READ_OWN), getCart);
 
-router.post(
-  '/',
-  authorize(PERMISSIONS.CART_WRITE_OWN),
-  validateZod(addToCartSchema),
-  addToCart
-);
+router.post('/', authorize(PERMISSIONS.CART_WRITE_OWN), validateZod(addToCartSchema), addToCart);
 
 router.patch(
   '/:productId',

@@ -47,7 +47,8 @@ const createPaymentOrder = asyncHandler(async (req, res) => {
     throw new AppError(`Cannot create payment for order in status "${order.status}"`, 400);
   }
 
-  const amountPaise = Number(order.grand_total_paise) || Math.round(Number(order.grand_total) * 100);
+  const amountPaise =
+    Number(order.grand_total_paise) || Math.round(Number(order.grand_total) * 100);
 
   const provider = getPaymentProvider();
   const providerOrder = await provider.createOrder({
@@ -138,8 +139,16 @@ const handlePaymentWebhook = asyncHandler(async (req, res) => {
     await client.query('BEGIN');
 
     // Extract payment and order details
-    const paymentEntity = (payload.payload && payload.payload.payment && payload.payload.payment.entity) || payload.payment || {};
-    const providerOrderId = paymentEntity.order_id || (payload.payload && payload.payload.order && payload.payload.order.entity && payload.payload.order.entity.id);
+    const paymentEntity =
+      (payload.payload && payload.payload.payment && payload.payload.payment.entity) ||
+      payload.payment ||
+      {};
+    const providerOrderId =
+      paymentEntity.order_id ||
+      (payload.payload &&
+        payload.payload.order &&
+        payload.payload.order.entity &&
+        payload.payload.order.entity.id);
     const paymentAmount = Number(paymentEntity.amount) || 0;
     const paymentId = paymentEntity.id || `pay_${Date.now()}`;
     const paymentMethod = (paymentEntity.method || 'GATEWAY').toUpperCase();
@@ -168,7 +177,15 @@ const handlePaymentWebhook = asyncHandler(async (req, res) => {
       await client.query(
         `INSERT INTO payment_events (provider, event_id, event_type, provider_order_id, payment_id, amount_paise, status, raw_payload)
          VALUES ($1, $2, $3, $4, $5, $6, 'IGNORED', $7)`,
-        [provider.name, eventId, eventType, providerOrderId || null, paymentId, paymentAmount, JSON.stringify(payload)]
+        [
+          provider.name,
+          eventId,
+          eventType,
+          providerOrderId || null,
+          paymentId,
+          paymentAmount,
+          JSON.stringify(payload),
+        ]
       );
       await client.query('COMMIT');
       return res.status(200).json({ status: 'ignored', message: 'No matching order found' });
@@ -190,7 +207,8 @@ const handlePaymentWebhook = asyncHandler(async (req, res) => {
     }
 
     const order = orderRes.rows[0];
-    const expectedPaise = Number(order.grand_total_paise) || Math.round(Number(order.grand_total) * 100);
+    const expectedPaise =
+      Number(order.grand_total_paise) || Math.round(Number(order.grand_total) * 100);
 
     // 3. Server-Side Amount Verification (F-053)
     if (eventType === 'payment.captured' || eventType === 'order.paid') {
@@ -205,13 +223,18 @@ const handlePaymentWebhook = asyncHandler(async (req, res) => {
         await client.query(
           `INSERT INTO payment_events (provider, event_id, event_type, provider_order_id, payment_id, amount_paise, status, raw_payload)
            VALUES ($1, $2, $3, $4, $5, $6, 'TAMPER_DETECTED', $7)`,
-          [provider.name, eventId, eventType, providerOrderId, paymentId, paymentAmount, JSON.stringify(payload)]
+          [
+            provider.name,
+            eventId,
+            eventType,
+            providerOrderId,
+            paymentId,
+            paymentAmount,
+            JSON.stringify(payload),
+          ]
         );
 
-        await client.query(
-          `UPDATE orders SET status = 'cancelled' WHERE id = $1`,
-          [order.id]
-        );
+        await client.query(`UPDATE orders SET status = 'cancelled' WHERE id = $1`, [order.id]);
 
         await client.query(
           `INSERT INTO order_status_history (order_id, from_status, to_status, note)
@@ -258,7 +281,15 @@ const handlePaymentWebhook = asyncHandler(async (req, res) => {
         await client.query(
           `INSERT INTO payment_events (provider, event_id, event_type, provider_order_id, payment_id, amount_paise, status, raw_payload)
            VALUES ($1, $2, $3, $4, $5, $6, 'CAPTURED_AFTER_CANCELLED', $7)`,
-          [provider.name, eventId, eventType, providerOrderId, paymentId, paymentAmount, JSON.stringify(payload)]
+          [
+            provider.name,
+            eventId,
+            eventType,
+            providerOrderId,
+            paymentId,
+            paymentAmount,
+            JSON.stringify(payload),
+          ]
         );
         await client.query('COMMIT');
 
@@ -269,7 +300,9 @@ const handlePaymentWebhook = asyncHandler(async (req, res) => {
             reason: 'CAPTURED_AFTER_ORDER_CANCELLED_AUTO_REFUND',
           });
         } catch (rfErr) {
-          logger.error('Auto-refund failed for captured payment on cancelled order', { error: rfErr.message });
+          logger.error('Auto-refund failed for captured payment on cancelled order', {
+            error: rfErr.message,
+          });
         }
 
         return res.status(200).json({
@@ -282,17 +315,20 @@ const handlePaymentWebhook = asyncHandler(async (req, res) => {
       if (order.status === 'placed') {
         transition(order.status, 'confirmed');
 
-        await client.query(
-          `UPDATE orders SET status = 'confirmed' WHERE id = $1`,
-          [order.id]
-        );
+        await client.query(`UPDATE orders SET status = 'confirmed' WHERE id = $1`, [order.id]);
 
         // Ensure payment_orders mapping exists / updated (captured-before-created safe)
         await client.query(
           `INSERT INTO payment_orders (order_id, provider, provider_order_id, amount_paise, currency, status)
            VALUES ($1, $2, $3, $4, $5, 'PAID')
            ON CONFLICT (provider_order_id) DO UPDATE SET status = 'PAID', updated_at = NOW()`,
-          [order.id, provider.name, providerOrderId || `order_${order.id}`, expectedPaise, paymentEntity.currency || 'INR']
+          [
+            order.id,
+            provider.name,
+            providerOrderId || `order_${order.id}`,
+            expectedPaise,
+            paymentEntity.currency || 'INR',
+          ]
         );
 
         // Record status history
@@ -303,9 +339,11 @@ const handlePaymentWebhook = asyncHandler(async (req, res) => {
         );
 
         // Post balanced journal entry to double-entry ledger (F-051)
-        const deliveryFeePaise = Number(order.delivery_fee_paise) || Math.round(Number(order.delivery_fee || 0) * 100);
+        const deliveryFeePaise =
+          Number(order.delivery_fee_paise) || Math.round(Number(order.delivery_fee || 0) * 100);
         const gstPaise = Number(order.taxes_paise) || Math.round(Number(order.taxes || 0) * 100);
-        const discountPaise = Number(order.discount_paise) || Math.round(Number(order.discount_amount || 0) * 100);
+        const discountPaise =
+          Number(order.discount_paise) || Math.round(Number(order.discount_amount || 0) * 100);
         // Ensure itemsPaise balances: itemsPaise = expectedPaise + discountPaise - deliveryFeePaise - gstPaise
         const itemsPaise = Math.max(0, expectedPaise + discountPaise - deliveryFeePaise - gstPaise);
         const commissionPaise = Math.round(itemsPaise * 0.15); // Standard 15% platform commission
@@ -336,15 +374,26 @@ const handlePaymentWebhook = asyncHandler(async (req, res) => {
     } else if (eventType === 'payment.failed') {
       // Late failure after success protection
       if (order.status === 'confirmed') {
-        logger.warn('Late payment.failed received for already confirmed order; keeping order confirmed', {
-          orderId: order.id,
-          paymentId,
-          eventId,
-        });
+        logger.warn(
+          'Late payment.failed received for already confirmed order; keeping order confirmed',
+          {
+            orderId: order.id,
+            paymentId,
+            eventId,
+          }
+        );
         await client.query(
           `INSERT INTO payment_events (provider, event_id, event_type, provider_order_id, payment_id, amount_paise, status, raw_payload)
            VALUES ($1, $2, $3, $4, $5, $6, 'IGNORED', $7)`,
-          [provider.name, eventId, eventType, providerOrderId, paymentId, paymentAmount, JSON.stringify(payload)]
+          [
+            provider.name,
+            eventId,
+            eventType,
+            providerOrderId,
+            paymentId,
+            paymentAmount,
+            JSON.stringify(payload),
+          ]
         );
         await client.query('COMMIT');
         return res.status(200).json({
@@ -356,10 +405,7 @@ const handlePaymentWebhook = asyncHandler(async (req, res) => {
 
       // Payment failure handling: release stock reservation and cancel
       if (order.status === 'placed') {
-        await client.query(
-          `UPDATE orders SET status = 'cancelled' WHERE id = $1`,
-          [order.id]
-        );
+        await client.query(`UPDATE orders SET status = 'cancelled' WHERE id = $1`, [order.id]);
 
         await client.query(
           `UPDATE payment_orders SET status = 'FAILED', updated_at = NOW() WHERE order_id = $1`,
@@ -373,10 +419,10 @@ const handlePaymentWebhook = asyncHandler(async (req, res) => {
         );
 
         for (const item of itemsRes.rows) {
-          await client.query(
-            `UPDATE products SET stock = stock + $1 WHERE id = $2`,
-            [item.quantity, item.product_id]
-          );
+          await client.query(`UPDATE products SET stock = stock + $1 WHERE id = $2`, [
+            item.quantity,
+            item.product_id,
+          ]);
           await client.query(
             `INSERT INTO inventory_movements (product_id, delta, reason, ref_order_id)
              VALUES ($1, $2, 'payment_failure_restore', $3)`,
@@ -399,7 +445,15 @@ const handlePaymentWebhook = asyncHandler(async (req, res) => {
     await client.query(
       `INSERT INTO payment_events (provider, event_id, event_type, provider_order_id, payment_id, amount_paise, status, raw_payload)
        VALUES ($1, $2, $3, $4, $5, $6, 'PROCESSED', $7)`,
-      [provider.name, eventId, eventType, providerOrderId, paymentId, paymentAmount, JSON.stringify(payload)]
+      [
+        provider.name,
+        eventId,
+        eventType,
+        providerOrderId,
+        paymentId,
+        paymentAmount,
+        JSON.stringify(payload),
+      ]
     );
 
     await client.query('COMMIT');
@@ -461,7 +515,8 @@ const refundPayment = asyncHandler(async (req, res) => {
       [order.id]
     );
 
-    const paymentId = paymentRes.rows.length > 0 ? paymentRes.rows[0].payment_id : `pay_mock_${order.id}`;
+    const paymentId =
+      paymentRes.rows.length > 0 ? paymentRes.rows[0].payment_id : `pay_mock_${order.id}`;
 
     const provider = getPaymentProvider();
     const refund = await provider.createRefund({
@@ -492,7 +547,12 @@ const refundPayment = asyncHandler(async (req, res) => {
     await client.query(
       `INSERT INTO order_status_history (order_id, from_status, to_status, actor_id, note)
        VALUES ($1, $2, $2, $3, $4)`,
-      [order.id, order.status, req.user.id, `Refund of ₹${(refundPaise / 100).toFixed(2)} processed: ${reason}`]
+      [
+        order.id,
+        order.status,
+        req.user.id,
+        `Refund of ₹${(refundPaise / 100).toFixed(2)} processed: ${reason}`,
+      ]
     );
 
     await client.query('COMMIT');
@@ -573,10 +633,10 @@ const dismissPaymentOrder = asyncHandler(async (req, res) => {
 
     for (const item of itemsRes.rows) {
       if (item.product_id) {
-        await client.query(
-          `UPDATE products SET stock = stock + $1 WHERE id = $2`,
-          [item.quantity, item.product_id]
-        );
+        await client.query(`UPDATE products SET stock = stock + $1 WHERE id = $2`, [
+          item.quantity,
+          item.product_id,
+        ]);
         await client.query(
           `INSERT INTO inventory_movements (product_id, delta, reason, ref_order_id)
            VALUES ($1, $2, 'payment_dismissed_restock', $3)`,

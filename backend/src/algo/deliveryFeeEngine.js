@@ -166,7 +166,10 @@ function calculateDeliveryFee(params = {}, options = {}) {
   }
 
   const finalDeliveryFeePaise = Math.max(0, grossDeliveryFeePaise - freeDeliveryDiscountPaise);
-  const amountToFreeDeliveryPaise = Math.max(0, config.FREE_DELIVERY_THRESHOLD_PAISE - itemTotalPaise);
+  const amountToFreeDeliveryPaise = Math.max(
+    0,
+    config.FREE_DELIVERY_THRESHOLD_PAISE - itemTotalPaise
+  );
 
   return {
     baseFeePaise,

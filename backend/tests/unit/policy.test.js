@@ -47,7 +47,9 @@ describe('Central Authorization Policy Engine (SEC-AZ-01, SEC-AZ-02, SEC-AZ-03)'
       expect(can(admin, PERMISSIONS.PAYOUTS_WRITE)).toBe(false);
 
       // Self-approval attempt: DENIED
-      expect(can(admin, PERMISSIONS.CONFIG_WRITE, null, { secondApproverId: admin.id })).toBe(false);
+      expect(can(admin, PERMISSIONS.CONFIG_WRITE, null, { secondApproverId: admin.id })).toBe(
+        false
+      );
       expect(can(admin, PERMISSIONS.FEES_WRITE, null, { secondApproverId: 1 })).toBe(false);
 
       // Distinct second approver: ALLOWED
@@ -101,8 +103,18 @@ describe('Central Authorization Policy Engine (SEC-AZ-01, SEC-AZ-02, SEC-AZ-03)'
     });
 
     it('allows approving refunds above threshold (> INR 1000) when four-eyes second approver is provided', () => {
-      expect(can(support, PERMISSIONS.ORDERS_REFUND_APPROVE, null, { amount: 1500, secondApproverId: 99 })).toBe(true);
-      expect(can(support, PERMISSIONS.ORDERS_REFUND_APPROVE, null, { amount: 1500, secondApproverId: support.id })).toBe(false);
+      expect(
+        can(support, PERMISSIONS.ORDERS_REFUND_APPROVE, null, {
+          amount: 1500,
+          secondApproverId: 99,
+        })
+      ).toBe(true);
+      expect(
+        can(support, PERMISSIONS.ORDERS_REFUND_APPROVE, null, {
+          amount: 1500,
+          secondApproverId: support.id,
+        })
+      ).toBe(false);
     });
 
     it('denies inventory changes, pricing changes, or security audit', () => {
@@ -125,13 +137,25 @@ describe('Central Authorization Policy Engine (SEC-AZ-01, SEC-AZ-02, SEC-AZ-03)'
     it('allows refunds within threshold and requires four-eyes above threshold', () => {
       expect(can(finance, PERMISSIONS.ORDERS_REFUND_APPROVE, null, { amount: 500 })).toBe(true);
       expect(can(finance, PERMISSIONS.ORDERS_REFUND_APPROVE, null, { amount: 2500 })).toBe(false);
-      expect(can(finance, PERMISSIONS.ORDERS_REFUND_APPROVE, null, { amount: 2500, secondApproverId: 99 })).toBe(true);
-      expect(can(finance, PERMISSIONS.ORDERS_REFUND_APPROVE, null, { amount: 2500, secondApproverId: finance.id })).toBe(false);
+      expect(
+        can(finance, PERMISSIONS.ORDERS_REFUND_APPROVE, null, {
+          amount: 2500,
+          secondApproverId: 99,
+        })
+      ).toBe(true);
+      expect(
+        can(finance, PERMISSIONS.ORDERS_REFUND_APPROVE, null, {
+          amount: 2500,
+          secondApproverId: finance.id,
+        })
+      ).toBe(false);
     });
 
     it('requires four-eyes for payouts:write and blocks self-approval', () => {
       expect(can(finance, PERMISSIONS.PAYOUTS_WRITE)).toBe(false);
-      expect(can(finance, PERMISSIONS.PAYOUTS_WRITE, null, { secondApproverId: finance.id })).toBe(false);
+      expect(can(finance, PERMISSIONS.PAYOUTS_WRITE, null, { secondApproverId: finance.id })).toBe(
+        false
+      );
       expect(can(finance, PERMISSIONS.PAYOUTS_WRITE, null, { secondApproverId: 99 })).toBe(true);
     });
 

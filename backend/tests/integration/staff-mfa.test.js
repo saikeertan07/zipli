@@ -40,9 +40,7 @@ describe('Staff MFA & Session Lifetimes (F-015, SEC-AUTH-02, SEC-AUTH-06)', () =
 
     it('rejects MFA verification with invalid 6-digit code', async () => {
       // 1. Setup MFA
-      await request(app)
-        .post('/api/auth/mfa/setup')
-        .set('Authorization', `Bearer ${staffToken}`);
+      await request(app).post('/api/auth/mfa/setup').set('Authorization', `Bearer ${staffToken}`);
 
       // 2. Submit invalid code
       const res = await request(app)

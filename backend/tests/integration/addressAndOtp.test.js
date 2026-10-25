@@ -21,13 +21,11 @@ describe('Address Book & OTP Phone Verification Tests (P0)', () => {
   describe('Dark Store Geofence Serviceability (POST /api/users/addresses/serviceability)', () => {
     it('returns serviceable=true for coordinates near Hyderabad dark store hub', async () => {
       // Banjara Hills / Hitec City area (17.43, 78.38)
-      const res = await request(app)
-        .post('/api/users/addresses/serviceability')
-        .send({
-          latitude: 17.438,
-          longitude: 78.385,
-          pincode: '500081',
-        });
+      const res = await request(app).post('/api/users/addresses/serviceability').send({
+        latitude: 17.438,
+        longitude: 78.385,
+        pincode: '500081',
+      });
 
       expect(res.status).toBe(200);
       expect(res.body.status).toBe('success');
@@ -36,11 +34,9 @@ describe('Address Book & OTP Phone Verification Tests (P0)', () => {
     });
 
     it('returns serviceable=true via Hyderabad pincode fallback (500xxx)', async () => {
-      const res = await request(app)
-        .post('/api/users/addresses/serviceability')
-        .send({
-          pincode: '500034',
-        });
+      const res = await request(app).post('/api/users/addresses/serviceability').send({
+        pincode: '500034',
+      });
 
       expect(res.status).toBe(200);
       expect(res.body.status).toBe('success');
@@ -48,13 +44,11 @@ describe('Address Book & OTP Phone Verification Tests (P0)', () => {
     });
 
     it('returns serviceable=false for coordinates far outside service area', async () => {
-      const res = await request(app)
-        .post('/api/users/addresses/serviceability')
-        .send({
-          latitude: 28.6139,
-          longitude: 77.209,
-          pincode: '110001',
-        });
+      const res = await request(app).post('/api/users/addresses/serviceability').send({
+        latitude: 28.6139,
+        longitude: 77.209,
+        pincode: '110001',
+      });
 
       expect(res.status).toBe(200);
       expect(res.body.data.serviceable).toBe(false);
@@ -175,9 +169,7 @@ describe('Address Book & OTP Phone Verification Tests (P0)', () => {
 
   describe('OTP Phone Verification (/api/auth/otp)', () => {
     it('dispatches an OTP via SMS provider and validates Indian phone numbers', async () => {
-      const res = await request(app)
-        .post('/api/auth/otp/send')
-        .send({ phone: '9876543210' });
+      const res = await request(app).post('/api/auth/otp/send').send({ phone: '9876543210' });
 
       expect(res.status).toBe(200);
       expect(res.body.status).toBe('success');
@@ -189,9 +181,7 @@ describe('Address Book & OTP Phone Verification Tests (P0)', () => {
     });
 
     it('rate limits OTP requests within 30 seconds for the same number', async () => {
-      await request(app)
-        .post('/api/auth/otp/send')
-        .send({ phone: '9876543211' });
+      await request(app).post('/api/auth/otp/send').send({ phone: '9876543211' });
 
       const throttleRes = await request(app)
         .post('/api/auth/otp/send')
@@ -202,9 +192,7 @@ describe('Address Book & OTP Phone Verification Tests (P0)', () => {
     });
 
     it('rejects incorrect OTP codes and updates failed attempt counter', async () => {
-      await request(app)
-        .post('/api/auth/otp/send')
-        .send({ phone: '9876543212' });
+      await request(app).post('/api/auth/otp/send').send({ phone: '9876543212' });
 
       const failRes = await request(app)
         .post('/api/auth/otp/verify')
@@ -234,7 +222,9 @@ describe('Address Book & OTP Phone Verification Tests (P0)', () => {
       expect(verifyRes.body.data.message).toContain('verified');
 
       // Confirm DB was updated
-      const userRes = await query('SELECT is_phone_verified, phone FROM users WHERE id = $1', [user.id]);
+      const userRes = await query('SELECT is_phone_verified, phone FROM users WHERE id = $1', [
+        user.id,
+      ]);
       expect(userRes.rows[0].is_phone_verified).toBe(true);
       expect(userRes.rows[0].phone).toBe('9876543213');
     });

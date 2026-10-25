@@ -21,7 +21,9 @@ async function backfillEmbeddings() {
   const hasEmbeddingColumn = colCheck.rows.length > 0;
   console.log(`  Database embedding column exists: ${hasEmbeddingColumn}`);
 
-  const productsRes = await query('SELECT id, name, category_id, badge FROM products WHERE is_active = true');
+  const productsRes = await query(
+    'SELECT id, name, category_id, badge FROM products WHERE is_active = true'
+  );
   const products = productsRes.rows;
   console.log(`  Total active products to embed: ${products.length}`);
 
@@ -32,10 +34,10 @@ async function backfillEmbeddings() {
 
     if (hasEmbeddingColumn) {
       try {
-        await query(
-          'UPDATE products SET embedding = $1::vector WHERE id = $2',
-          [`[${vector.join(',')}]`, p.id]
-        );
+        await query('UPDATE products SET embedding = $1::vector WHERE id = $2', [
+          `[${vector.join(',')}]`,
+          p.id,
+        ]);
         updatedCount++;
       } catch (err) {
         // If pgvector not supported by data type, log and continue

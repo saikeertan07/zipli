@@ -73,7 +73,10 @@ class DeterministicEmbeddingProvider extends EmbeddingProvider {
    * Expands text with synonyms and transliterated Hinglish terms.
    */
   _expandSemanticTokens(text) {
-    const tokens = (text || '').toLowerCase().split(/[\s,._-]+/).filter(Boolean);
+    const tokens = (text || '')
+      .toLowerCase()
+      .split(/[\s,._-]+/)
+      .filter(Boolean);
     const expanded = [...tokens];
 
     for (const t of tokens) {
@@ -99,7 +102,7 @@ class DeterministicEmbeddingProvider extends EmbeddingProvider {
       // Whole token hash
       const hash1 = crypto.createHash('sha256').update(token).digest();
       const idx1 = hash1.readUInt16BE(0) % this.dim;
-      const sign1 = (hash1.readUInt8(2) % 2 === 0 ? 1 : -1);
+      const sign1 = hash1.readUInt8(2) % 2 === 0 ? 1 : -1;
       vector[idx1] += sign1 * 1.5;
 
       // Character 3-grams for typo resilience
@@ -107,7 +110,7 @@ class DeterministicEmbeddingProvider extends EmbeddingProvider {
         const trigram = token.slice(i, i + 3);
         const hash2 = crypto.createHash('md5').update(trigram).digest();
         const idx2 = hash2.readUInt16BE(0) % this.dim;
-        const sign2 = (hash2.readUInt8(2) % 2 === 0 ? 1 : -1);
+        const sign2 = hash2.readUInt8(2) % 2 === 0 ? 1 : -1;
         vector[idx2] += sign2 * 0.5;
       }
     }
@@ -171,7 +174,9 @@ class RemoteEmbeddingProvider extends EmbeddingProvider {
       const data = await res.json();
       return data.data[0].embedding;
     } catch (err) {
-      logger.warn('Remote embedding failed, falling back to deterministic local', { error: err.message });
+      logger.warn('Remote embedding failed, falling back to deterministic local', {
+        error: err.message,
+      });
       return this.fallback.embedText(text);
     }
   }
@@ -192,7 +197,9 @@ function getEmbeddingProvider() {
 
     const isRemote =
       (providerConfig === 'remote' || isProd) && Boolean(process.env.EMBEDDING_API_KEY);
-    providerInstance = isRemote ? new RemoteEmbeddingProvider() : new DeterministicEmbeddingProvider();
+    providerInstance = isRemote
+      ? new RemoteEmbeddingProvider()
+      : new DeterministicEmbeddingProvider();
   }
   return providerInstance;
 }

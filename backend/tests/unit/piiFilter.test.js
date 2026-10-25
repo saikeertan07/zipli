@@ -59,8 +59,20 @@ describe('PII Redaction Filter (P1)', () => {
   });
 
   test('handles null, undefined, and non-string inputs safely', () => {
-    expect(redactOutboundPII(null)).toEqual({ sanitizedText: '', hasPII: false, redactedTypes: [] });
-    expect(redactOutboundPII(undefined)).toEqual({ sanitizedText: '', hasPII: false, redactedTypes: [] });
-    expect(redactOutboundPII(12345)).toEqual({ sanitizedText: '', hasPII: false, redactedTypes: [] });
+    expect(redactOutboundPII(null)).toEqual({
+      sanitizedText: '',
+      hasPII: false,
+      redactedTypes: [],
+    });
+    expect(redactOutboundPII(undefined)).toEqual({
+      sanitizedText: '',
+      hasPII: false,
+      redactedTypes: [],
+    });
+    expect(redactOutboundPII(12345)).toEqual({
+      sanitizedText: '',
+      hasPII: false,
+      redactedTypes: [],
+    });
   });
 });

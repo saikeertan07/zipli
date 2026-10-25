@@ -28,7 +28,10 @@ describe('Assistive AI Service Comprehensive Unit Suite (P1)', () => {
 
   describe('recipeToCart heuristic and fallback branches', () => {
     test('handles unmapped dish with heuristic stopword extraction', async () => {
-      const res = await assistiveAIService.recipeToCart('how to cook special tomato mushroom stew', { servings: 4 });
+      const res = await assistiveAIService.recipeToCart(
+        'how to cook special tomato mushroom stew',
+        { servings: 4 }
+      );
       expect(res).toBeDefined();
       expect(res.dish).toContain('tomato');
       expect(res.servings).toBe(4);

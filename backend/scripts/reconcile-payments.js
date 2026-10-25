@@ -12,7 +12,9 @@ async function main() {
   const threshold = parseInt(process.env.RECONCILE_THRESHOLD_MINUTES, 10) || 15;
   try {
     const result = await reconcileStuckPayments({ stuckThresholdMinutes: threshold });
-    console.log(`✅ Reconciliation finished: Checked ${result.checked}, Confirmed ${result.confirmed}, Cancelled ${result.cancelled}`);
+    console.log(
+      `✅ Reconciliation finished: Checked ${result.checked}, Confirmed ${result.confirmed}, Cancelled ${result.cancelled}`
+    );
     await pool.end();
     process.exit(0);
   } catch (err) {

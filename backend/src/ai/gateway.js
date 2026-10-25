@@ -69,7 +69,9 @@ class AIGateway {
         };
       } else if (toolName === 'getRecipeIngredients') {
         chip = `🍲 Recipe Planner: ${args.dishName}`;
-        const recipeResult = await assistiveAIService.recipeToCart(args.dishName, { servings: args.servings });
+        const recipeResult = await assistiveAIService.recipeToCart(args.dishName, {
+          servings: args.servings,
+        });
         products = recipeResult.matchedItems.map((m) => ({
           id: m.productId,
           name: m.name,
@@ -113,7 +115,10 @@ class AIGateway {
         };
       } else if (toolName === 'getStoreInventoryStatus') {
         chip = '📦 Dark Store Stock Check';
-        const invResult = await assistiveAIService.getStoreInventoryStatus(args.productIds, args.storeId);
+        const invResult = await assistiveAIService.getStoreInventoryStatus(
+          args.productIds,
+          args.storeId
+        );
         rawOutput = invResult;
         products = invResult.inventory.map((i) => ({
           id: i.productId,
@@ -182,8 +187,14 @@ class AIGateway {
     const budgetId = userId ? `user:${userId}` : `ip:${clientIp}`;
     const budgetCheck = await tokenBudgetManager.checkBudget(budgetId, 150);
     if (!budgetCheck.allowed) {
-      logger.warn('AI query rejected: daily token budget exceeded', { budgetId, limit: budgetCheck.limit });
-      throw new AppError('Daily AI query allowance reached for today. Resets at midnight UTC.', 429);
+      logger.warn('AI query rejected: daily token budget exceeded', {
+        budgetId,
+        limit: budgetCheck.limit,
+      });
+      throw new AppError(
+        'Daily AI query allowance reached for today. Resets at midnight UTC.',
+        429
+      );
     }
 
     // 2. Input Guardrails (Direct Injection Defense)
@@ -217,7 +228,11 @@ class AIGateway {
     if (resolvedConvId) {
       turns = await conversationStore.getHistory(resolvedConvId);
     }
-    if (turns.length === 0 && Array.isArray(conversationHistory) && conversationHistory.length > 0) {
+    if (
+      turns.length === 0 &&
+      Array.isArray(conversationHistory) &&
+      conversationHistory.length > 0
+    ) {
       turns = conversationHistory.slice(-10);
     }
     if (!resolvedConvId) {

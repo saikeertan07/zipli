@@ -18,9 +18,9 @@ describe('PricingService Branch Coverage', () => {
   it('throws 404 when product is not found in calculateDynamicProductPrice', async () => {
     db.query.mockResolvedValueOnce({ rows: [] });
 
-    await expect(
-      pricingService.calculateDynamicProductPrice(999999)
-    ).rejects.toThrow('Product not found');
+    await expect(pricingService.calculateDynamicProductPrice(999999)).rejects.toThrow(
+      'Product not found'
+    );
   });
 
   it('handles product with no batches in calculateDynamicProductPrice', async () => {

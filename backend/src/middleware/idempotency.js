@@ -100,7 +100,13 @@ function idempotencyMiddleware(options = {}) {
           // Check if Redis lock was released
           const currentLock = await redis.get(redisLockKey);
           if (!currentLock) {
-            const retryAcquire = await redis.set(redisLockKey, lockToken, 'EX', lockTtlSeconds, 'NX');
+            const retryAcquire = await redis.set(
+              redisLockKey,
+              lockToken,
+              'EX',
+              lockTtlSeconds,
+              'NX'
+            );
             if (retryAcquire === 'OK') {
               acquired = true;
               break;

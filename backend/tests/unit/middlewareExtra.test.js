@@ -69,9 +69,7 @@ describe('Middleware Unit Tests (dbContext, validate, authorize)', () => {
     );
 
     it('passes and returns 200 when validation succeeds', async () => {
-      const res = await request(app)
-        .post('/test-validate')
-        .send({ email: 'valid@example.com' });
+      const res = await request(app).post('/test-validate').send({ email: 'valid@example.com' });
       expect(res.status).toBe(200);
       expect(res.body.ok).toBe(true);
     });

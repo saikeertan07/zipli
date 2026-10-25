@@ -19,8 +19,12 @@ describe('PaymentProvider Unit Tests', () => {
 
     it('throws when calling un-implemented methods', async () => {
       await expect(provider.createOrder({})).rejects.toThrow('createOrder() must be implemented');
-      expect(() => provider.verifyWebhookSignature({})).toThrow('verifyWebhookSignature() must be implemented');
-      await expect(provider.fetchPayment('pay_1')).rejects.toThrow('fetchPayment() must be implemented');
+      expect(() => provider.verifyWebhookSignature({})).toThrow(
+        'verifyWebhookSignature() must be implemented'
+      );
+      await expect(provider.fetchPayment('pay_1')).rejects.toThrow(
+        'fetchPayment() must be implemented'
+      );
       await expect(provider.createRefund({})).rejects.toThrow('createRefund() must be implemented');
     });
   });
@@ -29,7 +33,11 @@ describe('PaymentProvider Unit Tests', () => {
     const fake = new FakePaymentProvider({ secret: 'test_fake_secret' });
 
     it('creates and records orders', async () => {
-      const order = await fake.createOrder({ orderId: 42, amountPaise: 5000, notes: { tag: 'unit' } });
+      const order = await fake.createOrder({
+        orderId: 42,
+        amountPaise: 5000,
+        notes: { tag: 'unit' },
+      });
       expect(order.id).toMatch(/^order_fake_42_/);
       expect(order.amount).toBe(5000);
       expect(order.notes.tag).toBe('unit');
@@ -52,15 +60,38 @@ describe('PaymentProvider Unit Tests', () => {
 
       // Valid signature
       expect(fake.verifyWebhookSignature({ rawBody: payload, signature: validSig })).toBe(true);
-      expect(fake.verifyWebhookSignature({ rawBody: Buffer.from(payload), signature: validSig })).toBe(true);
+      expect(
+        fake.verifyWebhookSignature({ rawBody: Buffer.from(payload), signature: validSig })
+      ).toBe(true);
 
       // Timestamp within tolerance (seconds and milliseconds)
       const nowSec = Math.floor(Date.now() / 1000);
-      expect(fake.verifyWebhookSignature({ rawBody: payload, signature: validSig, timestamp: nowSec, toleranceSeconds: 300 })).toBe(true);
-      expect(fake.verifyWebhookSignature({ rawBody: payload, signature: validSig, timestamp: Date.now(), toleranceSeconds: 300 })).toBe(true);
+      expect(
+        fake.verifyWebhookSignature({
+          rawBody: payload,
+          signature: validSig,
+          timestamp: nowSec,
+          toleranceSeconds: 300,
+        })
+      ).toBe(true);
+      expect(
+        fake.verifyWebhookSignature({
+          rawBody: payload,
+          signature: validSig,
+          timestamp: Date.now(),
+          toleranceSeconds: 300,
+        })
+      ).toBe(true);
 
       // Timestamp outside tolerance window
-      expect(fake.verifyWebhookSignature({ rawBody: payload, signature: validSig, timestamp: nowSec - 600, toleranceSeconds: 300 })).toBe(false);
+      expect(
+        fake.verifyWebhookSignature({
+          rawBody: payload,
+          signature: validSig,
+          timestamp: nowSec - 600,
+          toleranceSeconds: 300,
+        })
+      ).toBe(false);
     });
 
     it('fetches simulated and stored payments', async () => {
@@ -74,7 +105,11 @@ describe('PaymentProvider Unit Tests', () => {
     });
 
     it('creates refunds', async () => {
-      const ref = await fake.createRefund({ paymentId: 'pay_123', amountPaise: 2500, reason: 'RETURN' });
+      const ref = await fake.createRefund({
+        paymentId: 'pay_123',
+        amountPaise: 2500,
+        reason: 'RETURN',
+      });
       expect(ref.id).toMatch(/^rfnd_fake_/);
       expect(ref.amount).toBe(2500);
       expect(ref.status).toBe('processed');
@@ -98,16 +133,29 @@ describe('PaymentProvider Unit Tests', () => {
 
       // Missing secret
       const rzpNoSecret = new RazorpayPaymentProvider({ webhookSecret: null });
-      expect(rzpNoSecret.verifyWebhookSignature({ rawBody: payload, signature: validSig })).toBe(false);
+      expect(rzpNoSecret.verifyWebhookSignature({ rawBody: payload, signature: validSig })).toBe(
+        false
+      );
 
       // Valid signature
       expect(rzp.verifyWebhookSignature({ rawBody: payload, signature: validSig })).toBe(true);
-      expect(rzp.verifyWebhookSignature({ rawBody: Buffer.from(payload), signature: validSig })).toBe(true);
+      expect(
+        rzp.verifyWebhookSignature({ rawBody: Buffer.from(payload), signature: validSig })
+      ).toBe(true);
 
       // Timestamp checks
       const nowSec = Math.floor(Date.now() / 1000);
-      expect(rzp.verifyWebhookSignature({ rawBody: payload, signature: validSig, timestamp: nowSec })).toBe(true);
-      expect(rzp.verifyWebhookSignature({ rawBody: payload, signature: validSig, timestamp: nowSec - 500, toleranceSeconds: 300 })).toBe(false);
+      expect(
+        rzp.verifyWebhookSignature({ rawBody: payload, signature: validSig, timestamp: nowSec })
+      ).toBe(true);
+      expect(
+        rzp.verifyWebhookSignature({
+          rawBody: payload,
+          signature: validSig,
+          timestamp: nowSec - 500,
+          toleranceSeconds: 300,
+        })
+      ).toBe(false);
 
       // Mismatched signature
       const badSig = validSig.slice(0, -1) + (validSig.endsWith('0') ? '1' : '0');
@@ -162,7 +210,9 @@ describe('PaymentProvider Unit Tests', () => {
         });
         await expect(rzp.createOrder({ orderId: 99, amountPaise: 5000 })).rejects.toThrow(AppError);
         await expect(rzp.fetchPayment('pay_bad')).rejects.toThrow(AppError);
-        await expect(rzp.createRefund({ paymentId: 'pay_bad', amountPaise: 500 })).rejects.toThrow(AppError);
+        await expect(rzp.createRefund({ paymentId: 'pay_bad', amountPaise: 500 })).rejects.toThrow(
+          AppError
+        );
       } finally {
         global.fetch = originalFetch;
       }

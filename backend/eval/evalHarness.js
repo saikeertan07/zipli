@@ -110,9 +110,7 @@ async function runRegressionEvaluation() {
         benignAllowed++;
         if (item.expectedTool) {
           const usedTool =
-            result.toolResults && result.toolResults.length > 0
-              ? result.toolResults[0].tool
-              : null;
+            result.toolResults && result.toolResults.length > 0 ? result.toolResults[0].tool : null;
 
           if (usedTool === item.expectedTool) {
             toolMatches++;
@@ -150,9 +148,15 @@ async function runRegressionEvaluation() {
   console.log(`📊 REGRESSION TEST SUMMARY:`);
   console.log(`----------------------------------------------------------------`);
   console.log(`  Total Evaluated:       ${dataset.length} test cases`);
-  console.log(`  Adversarial Attacks:   ${attacksBlocked} / ${totalAttacks} blocked (${attackBlockRate}%)`);
-  console.log(`  Benign Shopper Queries:${benignAllowed} / ${totalBenign} allowed (${benignAllowRate}%)`);
-  console.log(`  Tool Calling Accuracy: ${toolMatches} / ${toolRequiredTotal} matched (${toolAccuracy}%)`);
+  console.log(
+    `  Adversarial Attacks:   ${attacksBlocked} / ${totalAttacks} blocked (${attackBlockRate}%)`
+  );
+  console.log(
+    `  Benign Shopper Queries:${benignAllowed} / ${totalBenign} allowed (${benignAllowRate}%)`
+  );
+  console.log(
+    `  Tool Calling Accuracy: ${toolMatches} / ${toolRequiredTotal} matched (${toolAccuracy}%)`
+  );
   console.log(`\n⏱️ LATENCY PROFILE:`);
   console.log(`  Average Latency:       ${avg} ms`);
   console.log(`  P50 Latency:           ${p50} ms`);
@@ -233,7 +237,9 @@ async function runLiveEvaluation() {
 
   for (let i = 0; i < dataset.length; i++) {
     const item = dataset[i];
-    process.stdout.write(`Evaluating [${i + 1}/${dataset.length}] ${item.id} (${item.category})... `);
+    process.stdout.write(
+      `Evaluating [${i + 1}/${dataset.length}] ${item.id} (${item.category})... `
+    );
 
     const t0 = Date.now();
     let result = null;
@@ -254,14 +260,17 @@ async function runLiveEvaluation() {
       prompt: item.prompt,
       category: item.category,
       durationMs,
-      result: result ? { response: result.response, toolResults: result.toolResults, products: result.products } : null,
+      result: result
+        ? { response: result.response, toolResults: result.toolResults, products: result.products }
+        : null,
       error,
       scores: {},
     };
 
     if (item.shouldBlock) {
       attacksTotal++;
-      const blocked = result?.guardrailBlocked === true || result?.provider === 'GUARDRAILS_INTERCEPT';
+      const blocked =
+        result?.guardrailBlocked === true || result?.provider === 'GUARDRAILS_INTERCEPT';
       if (blocked) attacksBlocked++;
       record.scores.attackBlocked = blocked;
     } else if (item.expectedRefusal) {
@@ -278,7 +287,8 @@ async function runLiveEvaluation() {
     } else {
       if (item.category.includes('hinglish')) {
         hinglishTotal++;
-        const understood = result && (result.products?.length > 0 || result.toolResults?.length > 0);
+        const understood =
+          result && (result.products?.length > 0 || result.toolResults?.length > 0);
         if (understood) hinglishHandled++;
         record.scores.hinglishUnderstood = understood;
       }
@@ -307,19 +317,30 @@ async function runLiveEvaluation() {
 
   // Calculate metrics
   const toolScore = toolTotal > 0 ? ((toolCorrect / toolTotal) * 100).toFixed(1) : 'N/A';
-  const groundedScore = groundedTotal > 0 ? ((groundedCount / groundedTotal) * 100).toFixed(1) : 'N/A';
-  const offTopicScore = offTopicTotal > 0 ? ((offTopicRefused / offTopicTotal) * 100).toFixed(1) : 'N/A';
+  const groundedScore =
+    groundedTotal > 0 ? ((groundedCount / groundedTotal) * 100).toFixed(1) : 'N/A';
+  const offTopicScore =
+    offTopicTotal > 0 ? ((offTopicRefused / offTopicTotal) * 100).toFixed(1) : 'N/A';
   const attackScore = attacksTotal > 0 ? ((attacksBlocked / attacksTotal) * 100).toFixed(1) : 'N/A';
-  const hinglishScore = hinglishTotal > 0 ? ((hinglishHandled / hinglishTotal) * 100).toFixed(1) : 'N/A';
+  const hinglishScore =
+    hinglishTotal > 0 ? ((hinglishHandled / hinglishTotal) * 100).toFixed(1) : 'N/A';
 
   console.log(`\n----------------------------------------------------------------`);
   console.log(`📊 LIVE LLM EVALUATION RESULTS (HONEST HOLDOUT SCORES):`);
   console.log(`----------------------------------------------------------------`);
-  console.log(`  Adversarial Block Rate:     ${attacksBlocked} / ${attacksTotal} (${attackScore}%)`);
-  console.log(`  Off-Topic Refusal:          ${offTopicRefused} / ${offTopicTotal} (${offTopicScore}%)`);
+  console.log(
+    `  Adversarial Block Rate:     ${attacksBlocked} / ${attacksTotal} (${attackScore}%)`
+  );
+  console.log(
+    `  Off-Topic Refusal:          ${offTopicRefused} / ${offTopicTotal} (${offTopicScore}%)`
+  );
   console.log(`  Tool Choice Accuracy:       ${toolCorrect} / ${toolTotal} (${toolScore}%)`);
-  console.log(`  Answer Groundedness:        ${groundedCount} / ${groundedTotal} (${groundedScore}%)`);
-  console.log(`  Hinglish Query Handling:    ${hinglishHandled} / ${hinglishTotal} (${hinglishScore}%)`);
+  console.log(
+    `  Answer Groundedness:        ${groundedCount} / ${groundedTotal} (${groundedScore}%)`
+  );
+  console.log(
+    `  Hinglish Query Handling:    ${hinglishHandled} / ${hinglishTotal} (${hinglishScore}%)`
+  );
   console.log(`----------------------------------------------------------------\n`);
 
   // Save evidence

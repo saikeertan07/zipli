@@ -68,7 +68,9 @@ describe('LedgerService Branch Coverage & Boundary Validation', () => {
           return Promise.resolve({ rows: [{ id: 'mock-journal-entry-uuid', entry_number: 101 }] });
         }
         if (sql.includes('INSERT INTO ledger_lines')) {
-          return Promise.resolve({ rows: [{ id: 'mock-line-uuid', account_code: params ? params[1] : 'unknown' }] });
+          return Promise.resolve({
+            rows: [{ id: 'mock-line-uuid', account_code: params ? params[1] : 'unknown' }],
+          });
         }
         return Promise.resolve({ rows: [] });
       }),

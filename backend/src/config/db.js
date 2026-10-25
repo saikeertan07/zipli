@@ -124,13 +124,16 @@ async function setClientContext(client, ctx, isLocal = true) {
   const isAdmin = context.isAdmin ? 'true' : 'false';
   const isSystem = context.isSystem ? 'true' : 'false';
 
-  await client.query(`
+  await client.query(
+    `
     SELECT
       set_config('app.current_user', $1, $5),
       set_config('app.current_store', $2, $5),
       set_config('app.is_admin', $3, $5),
       set_config('app.is_system', $4, $5);
-  `, [userId, storeId, isAdmin, isSystem, isLocal]);
+  `,
+    [userId, storeId, isAdmin, isSystem, isLocal]
+  );
 }
 
 /**
@@ -180,4 +183,3 @@ module.exports = {
   setClientContext,
   withDbContext,
 };
-

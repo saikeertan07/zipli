@@ -119,14 +119,18 @@ describe('Pure RFC 6238 TOTP Engine (/algo/totp.js)', () => {
       expect(verifyTOTP('abcdef', testSecret, { timestamp: fixedTime })).toBe(false);
       expect(verifyTOTP(null, testSecret)).toBe(false);
       expect(verifyTOTP('', testSecret)).toBe(false);
-      expect(verifyTOTP('123456', 'INVALID_BASE32_CHARACTERS_!!!', { timestamp: fixedTime })).toBe(false);
+      expect(verifyTOTP('123456', 'INVALID_BASE32_CHARACTERS_!!!', { timestamp: fixedTime })).toBe(
+        false
+      );
       expect(verifyTOTP('123456', null)).toBe(false);
     });
 
     it('supports custom digits, step, and algorithm', () => {
       const customCode = generateTOTP(testSecret, { digits: 8, step: 60, algorithm: 'sha256' });
       expect(customCode.length).toBe(8);
-      expect(verifyTOTP(customCode, testSecret, { digits: 8, step: 60, algorithm: 'sha256' })).toBe(true);
+      expect(verifyTOTP(customCode, testSecret, { digits: 8, step: 60, algorithm: 'sha256' })).toBe(
+        true
+      );
     });
   });
 });

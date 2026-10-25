@@ -15,9 +15,9 @@ describe('AI Gateway Edge Conditions & Fail-safes (P0)', () => {
     process.env.AI_ENABLED = 'false';
 
     try {
-      await expect(
-        gateway.processChat({ message: 'Need groceries' })
-      ).rejects.toThrow('AI Grocery Assistant is temporarily disabled');
+      await expect(gateway.processChat({ message: 'Need groceries' })).rejects.toThrow(
+        'AI Grocery Assistant is temporarily disabled'
+      );
     } finally {
       process.env.AI_ENABLED = original;
     }
@@ -27,9 +27,9 @@ describe('AI Gateway Edge Conditions & Fail-safes (P0)', () => {
     const userId = 887766;
     await tokenBudgetManager.recordUsage(`user:${userId}`, 60000);
 
-    await expect(
-      gateway.processChat({ message: 'Need milk', userId })
-    ).rejects.toThrow('Daily AI query allowance reached');
+    await expect(gateway.processChat({ message: 'Need milk', userId })).rejects.toThrow(
+      'Daily AI query allowance reached'
+    );
   });
 
   test('bypasses Anthropic when circuit breaker is OPEN', async () => {

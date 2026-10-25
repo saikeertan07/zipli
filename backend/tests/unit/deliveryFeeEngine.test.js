@@ -36,7 +36,7 @@ describe('Configurable Delivery Fee Engine (F-052, LOG-FE-01)', () => {
     it('computes distance accurately from GPS coordinates using Haversine formula', () => {
       // Hyderabad store (Charminar area) to customer ~4.2 km
       const storeCoord = { lat: 17.3616, lng: 78.4747 };
-      const deliveryCoord = { lat: 17.3989, lng: 78.4900 };
+      const deliveryCoord = { lat: 17.3989, lng: 78.49 };
 
       const result = calculateDeliveryFee({
         itemTotalPaise: 30000,

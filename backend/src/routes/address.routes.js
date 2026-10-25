@@ -24,11 +24,7 @@ const {
 const router = Router();
 
 // Public / pre-auth serviceability check
-router.post(
-  '/serviceability',
-  validateZod(checkServiceabilitySchema),
-  checkServiceability
-);
+router.post('/serviceability', validateZod(checkServiceabilitySchema), checkServiceability);
 
 // Authenticated user address management
 router.use(requireAuth);

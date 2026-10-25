@@ -280,11 +280,7 @@ describe('Pure Coupon & Pricing Engine (/algo/couponEngine.js)', () => {
     });
 
     it('distributes remainders deterministically across line items', () => {
-      const items = [
-        { lineTotalPaise: 1000 },
-        { lineTotalPaise: 1000 },
-        { lineTotalPaise: 1000 },
-      ];
+      const items = [{ lineTotalPaise: 1000 }, { lineTotalPaise: 1000 }, { lineTotalPaise: 1000 }];
       const res = allocateOrderDiscount(items, 100);
       expect(res.reduce((s, x) => s + x, 0)).toBe(100);
       expect(res).toEqual([34, 33, 33]);
