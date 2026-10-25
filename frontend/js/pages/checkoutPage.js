@@ -27,11 +27,14 @@ export function renderCheckoutPage({
 
   if (!user) {
     return html`
-      <div class="empty-state" style="padding:80px 20px;">
+      <div class="empty-state" style="padding:80px 20px; max-width:500px; margin:0 auto; text-align:center;">
         <div class="empty-state-icon">🔒</div>
-        <div class="empty-state-title">Login required to checkout</div>
-        <div class="empty-state-desc">Please log in to your Zipli account to access saved addresses and place orders.</div>
-        <button class="btn btn-primary" data-action="open-auth-modal">Login / Sign Up</button>
+        <div class="empty-state-title" style="font-size:20px; font-weight:800; margin-bottom:8px;">Login to Complete Checkout</div>
+        <div class="empty-state-desc" style="color:var(--text-secondary); margin-bottom:24px;">Log in to access your saved address book, capacity-aware delivery slots, and place your order.</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <button class="btn btn-primary btn-full btn-lg" data-action="quick-demo-login">⚡ 1-Click Instant Demo Login</button>
+          <button class="btn btn-outline btn-full" data-action="open-auth-modal">Sign In with Email / Password</button>
+        </div>
       </div>
     `;
   }

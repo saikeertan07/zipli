@@ -599,6 +599,32 @@ function setupEventDelegation() {
         break;
       }
 
+      case 'quick-demo-login': {
+        const demoUser = {
+          id: 1,
+          name: 'Sai Keertan',
+          email: 'customer@zipli.com',
+          phone: '9876543210',
+          is_phone_verified: true,
+          role: 'customer',
+        };
+        const demoToken = 'zipli_demo_jwt_' + Date.now();
+        store.setUser(demoUser, demoToken);
+        authModal.close();
+        toast.success(`Welcome back, ${demoUser.name}!`);
+        if (window.location.hash === '#checkout') {
+          const mainEl = document.getElementById('mainOutlet');
+          if (mainEl) {
+            mainEl.innerHTML = renderCheckoutPage({
+              reservation: store.getState().activeReservation || { remainingSeconds: 600 },
+              isSubmitting: false,
+            });
+            startHoldCountdown();
+          }
+        }
+        break;
+      }
+
       case 'set-category': {
         const catId = target.getAttribute('data-cat-id');
         const catSlug = target.getAttribute('data-cat-slug');
@@ -639,6 +665,8 @@ function setupEventDelegation() {
 
       case 'proceed-to-checkout': {
         store.toggleCart(false);
+        const banner = document.getElementById('consentBanner');
+        if (banner) banner.remove();
         // Reserve stock hold before checkout
         await holdStockForCheckout();
         router.navigate('#checkout');
@@ -1774,6 +1802,15 @@ function openAuthModalDialog() {
   authModal.setContent(
     'Welcome to Zipli',
     html`
+      <button type="button" class="btn btn-secondary btn-full" data-action="quick-demo-login" style="margin-bottom:14px; font-weight:700;">
+        ⚡ 1-Click Instant Demo Login
+      </button>
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px; color:var(--text-muted); font-size:11px;">
+        <hr style="flex:1; border:none; border-top:1px solid var(--border-subtle);"/>
+        <span>OR CONTINUE WITH CREDENTIALS</span>
+        <hr style="flex:1; border:none; border-top:1px solid var(--border-subtle);"/>
+      </div>
+
       <div style="display:flex; gap:12px; margin-bottom:16px; border-bottom:1px solid var(--border-subtle);">
         <button class="btn btn-ghost btn-sm" id="tabLoginBtn" style="border-bottom:2px solid var(--color-brand); font-weight:700;">Login</button>
         <button class="btn btn-ghost btn-sm" id="tabRegisterBtn">Sign Up</button>
