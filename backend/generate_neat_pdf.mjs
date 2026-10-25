@@ -387,11 +387,11 @@ const html = `<!DOCTYPE html>
           <div style="font-size: 8.5pt; font-weight: 800; color: #0f172a; margin-bottom: 6px; text-transform: uppercase;">Executive Navigation Matrix</div>
           <div class="toc-row"><span>1. Executive Summary & Core Architectural Paradigms</span><span style="font-weight:700;">Page 2</span></div>
           <div class="toc-row"><span>2. System Architecture & Data Topology (with Runtime Diagram)</span><span style="font-weight:700;">Page 3</span></div>
-          <div class="toc-row"><span>3. Database Schema, Invariants & Double-Entry Accounting</span><span style="font-weight:700;">Page 4</span></div>
-          <div class="toc-row"><span>4. Dynamic Stock Holds, Caching & Single-Flight Stampede Defense</span><span style="font-weight:700;">Page 5</span></div>
-          <div class="toc-row"><span>5. Inbound API Specifications & Razorpay Webhook Security</span><span style="font-weight:700;">Page 6</span></div>
-          <div class="toc-row"><span>6. Zero-Trust Security, Staff MFA & Cryptographic Hash Chain</span><span style="font-weight:700;">Page 7</span></div>
-          <div class="toc-row"><span>7. Production Operations, CI/CD Pipeline & Verified Status Matrix</span><span style="font-weight:700;">Page 8</span></div>
+          <div class="toc-row"><span>3. Database Schema & Persistence (Relational Invariants & Ledgers)</span><span style="font-weight:700;">Page 4</span></div>
+          <div class="toc-row"><span>3. Database Schema & Persistence (Concurrency Holds & Caching)</span><span style="font-weight:700;">Page 5</span></div>
+          <div class="toc-row"><span>4. API Specifications & Integration Fabrics (Contracts & Webhooks)</span><span style="font-weight:700;">Page 6</span></div>
+          <div class="toc-row"><span>5. Zero-Trust Security & Compliance Posture (MFA & Audit Chain)</span><span style="font-weight:700;">Page 7</span></div>
+          <div class="toc-row"><span>6. Operations, CI/CD Pipelines & 7. Verified Status Matrix</span><span style="font-weight:700;">Page 8</span></div>
         </div>
       </div>
 
@@ -556,7 +556,7 @@ const html = `<!DOCTYPE html>
        PAGE 4: DATABASE SCHEMA & DOUBLE-ENTRY ACCOUNTING
        ===================================================================== -->
   <div class="sheet">
-    <h2>3. Database Schema & Double-Entry Accounting</h2>
+    <h2>3. Database Schema & Persistence Layer (Part I: Relational Architecture)</h2>
 
     <h3>3.1 Relational Architecture & Migration Pipeline</h3>
     <p>
@@ -652,7 +652,7 @@ $$ LANGUAGE plpgsql;</code></pre>
        PAGE 5: CONCURRENCY HOLDS & CACHING SUB-SYSTEMS
        ===================================================================== -->
   <div class="sheet">
-    <h2>4. Concurrency Holds & Caching Subsystems</h2>
+    <h2>3. Database Schema & Persistence Layer (Part II: Holds & Caching)</h2>
 
     <h3>4.1 Dynamic 10-Minute Stock Reservation Architecture</h3>
     <p>
@@ -713,7 +713,7 @@ export class SingleFlight {
        PAGE 6: API CONTRACTS & WEBHOOK SECURITY
        ===================================================================== -->
   <div class="sheet">
-    <h2>5. Inbound APIs & Razorpay Webhook Security</h2>
+    <h2>4. API Specifications & Integration Fabrics</h2>
 
     <h3>5.1 Inbound RESTful API Contract Matrix</h3>
     <table>
@@ -818,7 +818,7 @@ export async function handlePaymentWebhook(req, res) {
        PAGE 7: ZERO-TRUST SECURITY & AUDIT TRAIL
        ===================================================================== -->
   <div class="sheet">
-    <h2>6. Zero-Trust Security, Staff MFA & Merkle Audit Trail</h2>
+    <h2>5. Zero-Trust Security & Compliance Posture</h2>
 
     <h3>6.1 Identity Validation & Session Boundaries</h3>
     <ul>
@@ -879,7 +879,26 @@ export async function handlePaymentWebhook(req, res) {
        PAGE 8: OPERATIONS, CI/CD & VERIFIED STATUS MATRIX
        ===================================================================== -->
   <div class="sheet">
-    <h2>7. Operations, CI/CD & Verified Status Matrix</h2>
+    <h2>6. Operations, CI/CD &bull; 7. Verified Status Matrix</h2>
+
+    <h3>6.1 Local Sandbox, CI/CD Pipelines & Observability</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 8px; font-size: 7pt;">
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 5px 7px;">
+        <div style="font-weight: 700; color: #0f172a; margin-bottom: 2px;">Local & Sandbox Provisioning</div>
+        <div>Prereqs: Node.js 20.18+, PG 16.3, Redis 7.2</div>
+        <div>Env: <code>.env.development</code>, migrate 17 steps</div>
+      </div>
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 5px 7px;">
+        <div style="font-weight: 700; color: #0f172a; margin-bottom: 2px;">Continuous Delivery Pipeline</div>
+        <div>GitHub Actions: Static Lint &rarr; Jest 138 Suites</div>
+        <div>51 Playwright E2E tests &rarr; Docker image build</div>
+      </div>
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 5px 7px;">
+        <div style="font-weight: 700; color: #0f172a; margin-bottom: 2px;">Observability & Health Checks</div>
+        <div>Health: <code>/healthz</code> (liveness), <code>/readyz</code> (deep check)</div>
+        <div>Telemetry: JSON logs with trace correlation</div>
+      </div>
+    </div>
 
     <h3>7.1 Verifiable Implementation Status Matrix</h3>
     <table>
@@ -992,17 +1011,17 @@ export async function handlePaymentWebhook(req, res) {
     </table>
 
     <h3>7.2 Measured Test Suite & Benchmark Baseline</h3>
-    <ul>
-      <li><strong>Automated Test Verification</strong>: <strong>138 / 138 test suites passed (100%)</strong>, <strong>1,369 / 1,369 tests passed</strong>.</li>
-      <li><strong>End-to-End Suite</strong>: <strong>51 / 51 Playwright tests passed</strong> across Chromium, Firefox, WebKit.</li>
-      <li><strong>In-Memory Autocomplete</strong>: <strong>0.001 ms</strong> p50 retrieval latency.</li>
-      <li><strong>BM25 Inverted Search</strong>: <strong>1.20 ms</strong> p50 latency (2.42x speedup vs. sequential database table scan).</li>
-      <li><strong>Two-Tier Cache Layer</strong>: <strong>12,403,870 ops/sec</strong> under sustained in-memory concurrency.</li>
-      <li><strong>Cryptographic Audit Chain</strong>: <strong>1,264,769 records/sec</strong> verification throughput.</li>
-    </ul>
+    <div style="font-size: 7pt; margin: 4px 0 6px; display: grid; grid-template-columns: 1fr 1fr; gap: 3px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 5px 8px;">
+      <div><strong>Automated Tests:</strong> 138 / 138 suites (1,369 tests, 100% pass)</div>
+      <div><strong>E2E Browser Tests:</strong> 51 / 51 Playwright tests passed</div>
+      <div><strong>Radix Autocomplete:</strong> 0.001 ms p50 latency</div>
+      <div><strong>BM25 Inverted Search:</strong> 1.20 ms p50 (2.42x vs. SQL)</div>
+      <div><strong>Two-Tier Cache Layer:</strong> 12,403,870 ops/sec throughput</div>
+      <div><strong>Audit Chain Verifier:</strong> 1,264,769 records/sec verified</div>
+    </div>
 
-    <div class="callout" style="margin-top: 10px;">
-      <div class="callout-title">✓ Formal Architecture Sign-Off</div>
+    <div class="callout" style="margin-top: 5px; padding: 5px 8px; font-size: 7.2pt;">
+      <div class="callout-title" style="margin-bottom: 2px;">✓ Formal Architecture Sign-Off</div>
       This technical architecture and operations specification represents verified implementation reality compiled on October 25, 2026. Certified for executive engineering and formal compliance review.
     </div>
   </div>

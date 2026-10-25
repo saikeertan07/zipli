@@ -1,6 +1,6 @@
 # TECHNICAL ARCHITECTURE & SYSTEM OPERATIONS REPORT
 
-**Document Identifier**: `TR-ZIPLI-PRO-2026-OCT`  
+**Document Identifier**: `TR-ZIPLI-2026-OCT`  
 **Classification**: Formal Engineering Architecture & Compliance Audit Review  
 **Target Audience**: Principal Engineers, Engineering Leadership, Compliance Auditors, SREs  
 **System Name**: Zipli — High-Performance Quick-Commerce Engine  
