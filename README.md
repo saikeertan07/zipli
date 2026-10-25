@@ -1,5 +1,7 @@
 # Zipli Pro — High-Performance Quick-Commerce Engine ⚡
 
+[![Live Demo](https://img.shields.io/badge/live%20demo-online-success)](https://saikeertan07.github.io/zipli/)
+[![Interactive Styleguide](https://img.shields.io/badge/styleguide-live-purple)](https://saikeertan07.github.io/zipli/styleguide.html)
 [![CI Pipeline](https://github.com/saikeertan07/zipli/actions/workflows/ci.yml/badge.svg)](https://github.com/saikeertan07/zipli/actions/workflows/ci.yml)
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/saikeertan07/zipli)
 [![Test Suite](https://img.shields.io/badge/tests-1%2C369%20passed%20%7C%20138%20suites-brightgreen)](backend/tests)
