@@ -1,7 +1,8 @@
 # Zipli Pro — High-Performance Quick-Commerce Engine ⚡
 
-[![CI Pipeline](https://github.com/zipli-pro/zipli/actions/workflows/ci.yml/badge.svg)](https://github.com/zipli-pro/zipli/actions/workflows/ci.yml)
-[![Test Suite](https://img.shields.io/badge/tests-1%2C335%20passed%20%7C%20135%20suites-brightgreen)](backend/tests)
+[![CI Pipeline](https://github.com/saikeertan07/zipli/actions/workflows/ci.yml/badge.svg)](https://github.com/saikeertan07/zipli/actions/workflows/ci.yml)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/saikeertan07/zipli)
+[![Test Suite](https://img.shields.io/badge/tests-1%2C369%20passed%20%7C%20138%20suites-brightgreen)](backend/tests)
 [![Algo Coverage](https://img.shields.io/badge/algo%20coverage-95%25-blue)](backend/src/algo)
 [![Playwright E2E](https://img.shields.io/badge/playwright-51%2F51%20passed%20(3%20viewports)-success)](e2e/zipli.spec.js)
 [![Frontend](https://img.shields.io/badge/frontend-vanilla%20ES%20modules-orange)](frontend)
@@ -100,13 +101,25 @@ Every algorithm is implemented natively in `backend/src/algo/` without external 
 
 ---
 
-## 🚀 Quickstart Guide
+## 🚀 Quickstart & Deployment Guide
 
-### Option A: 1-Line Docker Compose (Recommended)
+### Option 0: 1-Click Cloud Deployment (Render.com)
+
+Deploy the entire full-stack application (Unified Node.js/Express Web Service, Managed PostgreSQL 16 database, automatic schema migrations, and demo grocery catalog seed) directly from GitHub with zero infrastructure setup:
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/saikeertan07/zipli)
+
+1. Click the **Deploy to Render** button above.
+2. Sign in to Render and click **Apply** to provision the blueprint defined in [`render.yaml`](render.yaml).
+3. Render automatically provisions the cloud database, runs migrations and seeds, and spins up your live HTTPS deployment.
+
+---
+
+### Option A: 1-Line Docker Compose (Recommended Local)
 Spins up PostgreSQL 16 (with pgvector), Redis 7 Alpine, the hardened Express API, and the Nginx frontend reverse proxy:
 ```bash
 # Clone the repository
-git clone https://github.com/zipli-pro/zipli.git && cd zipli
+git clone https://github.com/saikeertan07/zipli.git && cd zipli
 
 # Launch complete containerized stack
 docker compose up -d

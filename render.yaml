@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: zipli
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm --prefix backend install && npm --prefix backend run db:migrate && npm --prefix backend run db:seed
+    startCommand: npm --prefix backend start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: zipli-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PAYMENT_PROVIDER
+        value: cod_only
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: AI_ENABLED
+        value: "true"
+      - key: AI_MODEL
+        value: "claude-3-5-sonnet-latest"
+      - key: AI_DAILY_TOKEN_BUDGET
+        value: "50000"
+
+databases:
+  - name: zipli-db
+    databaseName: zipli
+    user: zipli_user
+    plan: free
+    region: oregon

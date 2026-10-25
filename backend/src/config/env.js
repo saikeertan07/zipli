@@ -114,9 +114,9 @@ function validateEnv(rawEnv) {
   const pgPassword = rawEnv.PGPASSWORD || (isProd ? null : 'zipli_pass');
 
   if (isProd) {
-    if (!pgPassword || pgPassword === 'zipli_pass') {
+    if (!databaseUrl && (!pgPassword || pgPassword === 'zipli_pass')) {
       errors.push(
-        'In production, database password (PGPASSWORD) is required and must not be the default placeholder ("zipli_pass").'
+        'In production, database password (PGPASSWORD) or DATABASE_URL is required and must not be the default placeholder ("zipli_pass").'
       );
     }
   }

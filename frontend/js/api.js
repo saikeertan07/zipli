@@ -12,10 +12,9 @@ import { storage } from './utils/storage.js';
 
 export const API_BASE =
   window.ZIPLI_API_BASE ||
-  (typeof window !== 'undefined' &&
-  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  (typeof window !== 'undefined' && window.location && window.location.host
     ? `${window.location.protocol}//${window.location.host}/api`
-    : 'https://zipli-backend.onrender.com/api');
+    : '/api');
 
 let isRefreshing = false;
 let refreshSubscribers = [];

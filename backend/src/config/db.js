@@ -5,7 +5,12 @@ const logger = require('../utils/logger');
 const SLOW_QUERY_THRESHOLD_MS = 200;
 
 const poolConfig = env.DATABASE_URL
-  ? { connectionString: env.DATABASE_URL }
+  ? {
+      connectionString: env.DATABASE_URL,
+      ...(env.DATABASE_URL.includes('localhost') || env.DATABASE_URL.includes('@postgres:')
+        ? {}
+        : { ssl: { rejectUnauthorized: false } }),
+    }
   : {
       host: env.PGHOST,
       port: env.PGPORT,
