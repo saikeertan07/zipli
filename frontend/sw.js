@@ -10,7 +10,7 @@
 
 importScripts('./js/utils/swCachePolicy.js');
 
-const CACHE_NAME = 'zipli-pro-v6';
+const CACHE_NAME = 'zipli-pro-v7';
 
 const STATIC_ASSETS = [
   './',
