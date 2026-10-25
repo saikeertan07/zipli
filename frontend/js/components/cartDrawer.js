@@ -93,7 +93,7 @@ export function renderCartDrawer(cartState, activeReservation = null, basketSugg
                   (item) => html`
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid var(--border-subtle);">
                       <img
-                        src="${item.imageUrl || item.image_url || item.img || (item.productId ? `/images/products/${item.productId}.jpg` : '/images/placeholder.jpg')}"
+                        src="${(item.imageUrl || item.image_url || item.img || (item.productId ? `images/products/${item.productId}.jpg` : 'images/placeholder.jpg')).replace(/^\//, '')}"
                         alt="${item.name || item.productName}"
                         width="52"
                         height="52"

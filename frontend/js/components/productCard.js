@@ -53,11 +53,11 @@ export function resolveProductImage(product) {
   if (url && (url.startsWith('http') || url.startsWith('data:'))) {
     return url;
   }
-  if (url && url.startsWith('/images/products/') && !url.includes('placeholder')) {
-    return url;
+  if (url && (url.startsWith('/images/products/') || url.startsWith('images/products/')) && !url.includes('placeholder')) {
+    return url.replace(/^\//, '');
   }
   if (product.id) {
-    return `/images/products/${product.id}.jpg`;
+    return `images/products/${product.id}.jpg`;
   }
   return generateProductSvgFallback(product.name, product.emoji, product.cat || product.category_id);
 }
