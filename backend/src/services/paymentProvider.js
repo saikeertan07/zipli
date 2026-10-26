@@ -341,6 +341,11 @@ function getPaymentProvider(providerName = null) {
     }
   }
 
+  // If Razorpay keys are not configured in non-production, fallback to fakeProvider for local dev and testing
+  if (!isProd && (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET)) {
+    return fakeProvider;
+  }
+
   if (!razorpayProvider) {
     razorpayProvider = new RazorpayPaymentProvider();
   }
