@@ -203,6 +203,12 @@ function getPubSubClients() {
   try {
     pubClient = new Redis(redisUrl, { lazyConnect: true, maxRetriesPerRequest: 1 });
     subClient = new Redis(redisUrl, { lazyConnect: true, maxRetriesPerRequest: 1 });
+    pubClient.on('error', (err) => {
+      logger.warn('Redis pubClient connection issue, fallback active', { message: err.message });
+    });
+    subClient.on('error', (err) => {
+      logger.warn('Redis subClient connection issue, fallback active', { message: err.message });
+    });
     pubClient.connect().catch(() => {});
     subClient.connect().catch(() => {});
   } catch {

@@ -17,19 +17,6 @@
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/components.css?v=2.2.0">
   <link rel="stylesheet" href="css/style.css">
-
-  <script>
-    // Self-healing cache cleanup: prune stale SW caches
-    if ('caches' in window) {
-      caches.keys().then(function(names) {
-        names.forEach(function(name) {
-          if (name !== 'zipli-pro-v8') {
-            caches.delete(name);
-          }
-        });
-      });
-    }
-  </script>
 </head>
 <body>
   <!-- Offline Alert Banner -->

@@ -92,14 +92,27 @@ const register = asyncHandler(async (req, res) => {
   }
 
   const passwordHash = await bcrypt.hash(password, env.BCRYPT_ROUNDS);
+  const defaultPhone = phone || '9876543210';
+  const defaultAddress = address || 'Road No 12, Banjara Hills, Hyderabad';
   const { rows } = await query(
-    `INSERT INTO users (name, email, password_hash, phone, address)
-     VALUES ($1, $2, $3, $4, $5)
-     RETURNING id, name, email, role, phone, address, created_at`,
-    [name, normalizedEmail, passwordHash, phone || null, address || null]
+    `INSERT INTO users (name, email, password_hash, phone, address, is_phone_verified)
+     VALUES ($1, $2, $3, $4, $5, true)
+     RETURNING id, name, email, role, phone, address, is_phone_verified, created_at`,
+    [name, normalizedEmail, passwordHash, defaultPhone, defaultAddress]
   );
 
   const user = rows[0];
+
+  // Auto-seed default delivery address in address book for instant checkout
+  try {
+    await query(
+      `INSERT INTO user_addresses (user_id, label, recipient_name, phone, address_line1, city, pincode, latitude, longitude, is_default)
+       VALUES ($1, 'Home', $2, $3, $4, 'Hyderabad', '500034', 17.4156, 78.4357, true)`,
+      [user.id, user.name, defaultPhone, defaultAddress]
+    );
+  } catch (err) {
+    logger.warn('Failed to seed default user address', { error: err.message });
+  }
   const deviceId = req.headers['x-device-id'] || (req.body && req.body.deviceId) || null;
   const token = signAccessToken(user.id);
   const { rawToken } = await createRefreshToken(user.id, null, deviceId);

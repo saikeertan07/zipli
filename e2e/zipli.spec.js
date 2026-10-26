@@ -1,7 +1,7 @@
 // @ts-check
 const { test, expect } = require('../backend/node_modules/@playwright/test');
 
-test.describe('Zipli Pro — End-to-End User Experience Suite', () => {
+test.describe('Zipli — End-to-End User Experience Suite', () => {
   test.beforeEach(async ({ page }, testInfo) => {
     page.on('console', (msg) => console.log(`[BROWSER ${msg.type()}]:`, msg.text()));
     if (!testInfo.title.includes('DPDP Compliance')) {
@@ -21,7 +21,7 @@ test.describe('Zipli Pro — End-to-End User Experience Suite', () => {
 
     // 1. Visit homepage
     await page.goto('/');
-    await expect(page).toHaveTitle(/Zipli Pro/i);
+    await expect(page).toHaveTitle(/Zipli/i);
 
     // 2. Open Auth modal & Sign Up
     await page.click('[data-action="open-auth-modal"]');
