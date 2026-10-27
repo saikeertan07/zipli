@@ -87,7 +87,7 @@ async function bootstrap() {
   if ('caches' in window) {
     caches.keys().then((names) => {
       names.forEach((name) => {
-        if (!name.includes('zipli-v') && !name.includes('zipli-cache')) {
+        if (name !== 'zipli-app-v2.2.1') {
           caches.delete(name);
         }
       });
