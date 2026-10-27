@@ -128,10 +128,11 @@ export class ApiClient {
       }
 
       if (!response.ok) {
-        const message = (data && data.message) || `HTTP error ${response.status}`;
+        const message = (data && (data.message || data.error)) || `HTTP error ${response.status}`;
         const error = new Error(message);
         error.status = response.status;
         error.data = data;
+        error.requestId = headers['X-Request-Id'];
         throw error;
       }
 
