@@ -59,3 +59,15 @@ export function calculateDiscountPercent(price, mrp) {
   if (!m || m <= p) return 0;
   return Math.round(((m - p) / m) * 100);
 }
+
+/**
+ * Converts integer paise into Rupee currency string representation.
+ * @param {number|string} paise
+ * @param {boolean} [showDecimals=false]
+ * @returns {string}
+ */
+export function formatPaiseToRupees(paise, showDecimals = false) {
+  const p = Number(paise) || 0;
+  return formatCurrency(p / 100, showDecimals);
+}
+}
