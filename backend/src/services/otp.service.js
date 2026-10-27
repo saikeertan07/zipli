@@ -21,7 +21,7 @@ class OTPService {
    * @param {number} [userId]
    * @returns {Promise<{ success: boolean, message: string }>}
    */
-  async sendOtp(phone, userId = null) {
+  async sendOtp(phone, _userId = null) {
     // Check rate limit: maximum 1 OTP per 30 seconds for the same phone
     const recentRes = await query(
       `SELECT created_at FROM phone_verifications

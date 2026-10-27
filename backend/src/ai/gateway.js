@@ -40,7 +40,7 @@ class AIGateway {
    * @param {number} [context.userId]
    * @returns {Promise<{ toolResult: Object, safeDelimitedOutput: string, products: Array, proposedCart: Array, chip: string }>}
    */
-  async executeTool(toolName, args, context = {}) {
+  async executeTool(toolName, args, _context = {}) {
     let rawOutput = null;
     let products = [];
     let proposedCart = null;
