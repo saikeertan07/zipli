@@ -24,7 +24,7 @@ export function renderHeader(state) {
         <div class="logo-text">zip<span>li</span></div>
       </a>
 
-      <div class="delivery-wrap" data-action="open-address-modal" role="button" tabindex="0">
+      <div class="delivery-wrap" data-action="open-address-modal" role="button" tabindex="0" aria-label="Delivery location selector">
         <div class="d-top">Delivery in <em>10 mins</em> ▾</div>
         <div class="d-addr">Hyderabad, Telangana 500068, India</div>
       </div>
@@ -60,7 +60,7 @@ export function renderHeader(state) {
           ${user
             ? html`
                 <div class="user-menu-wrap">
-                  <button class="btn btn-secondary btn-sm" data-action="toggle-user-menu">
+                  <button class="btn btn-secondary btn-sm" data-action="toggle-user-menu" aria-label="User Account Menu" aria-haspopup="true">
                     👤 ${user.name.split(' ')[0]} ▾
                   </button>
                   <div class="user-dropdown" id="userDropdown" style="display:none;">

@@ -40,6 +40,7 @@ export function renderAssistantDrawer(state) {
       class="drawer-overlay ${assistantDrawerOpen ? 'open' : ''}"
       id="assistantOverlay"
       data-action="close-assistant"
+      aria-hidden="true"
     ></div>
 
     <aside class="drawer ${assistantDrawerOpen ? 'open' : ''}" id="assistantDrawer" aria-label="AI Shopping Assistant">

@@ -29,7 +29,7 @@ export function renderCartDrawer(cartState, activeReservation = null, basketSugg
   const progressPercent = Math.min(100, Math.round((itemTotal / FREE_DELIVERY_THRESHOLD) * 100));
 
   return html`
-    <div class="drawer-overlay" id="cartOverlay" data-action="close-cart"></div>
+    <div class="drawer-overlay" id="cartOverlay" data-action="close-cart" aria-hidden="true"></div>
     <aside class="drawer" id="cartDrawer" aria-label="Shopping Cart Drawer">
       <!-- Drawer Head -->
       <div class="drawer-head">
