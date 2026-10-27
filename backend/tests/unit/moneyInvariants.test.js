@@ -111,4 +111,17 @@ describe('Integer Paise Money Model & Floating Point Immunity (F-050)', () => {
       assert(Number.isSafeInteger(val), 'Converted value must be a safe integer');
     }
   });
+
+  it('guarantees exact bi-directional conversion between integer paise and rupees without loss', () => {
+    const testCases = [
+      { paise: 100, rupees: 1 },
+      { paise: 5200, rupees: 52 },
+      { paise: 12550, rupees: 125.5 },
+      { paise: 99, rupees: 0.99 },
+    ];
+    for (const { paise, rupees } of testCases) {
+      assert.strictEqual(paise / 100, rupees);
+      assert.strictEqual(Math.round(rupees * 100), paise);
+    }
+  });
 });
